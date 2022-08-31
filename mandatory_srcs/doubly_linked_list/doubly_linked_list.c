@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 02:26:04 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/08/30 04:24:08 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/08/31 04:20:53 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,21 @@
 
 void	print_list_forwards(t_double_list *head)
 {
+	t_double_list *last;
 	while (head)
 	{
 		ft_printf("element: %d\n", head->element);
+		if (!head->next)
+			last = head;
 		head = head->next;
 	}
-}
-
-void	print_list_backwards(t_double_list *head)
-{
-	while (head->next)
-		head = head->next;
-	while (head)
+	ft_printf("-------------------------------\n");
+	while (last)
 	{
-		ft_printf("element: %d\n", head->element);
-		head = head->prev;
+		ft_printf("element: %d\n", last->element);
+		last = last->prev;
 	}
 }
-
 
 t_double_list	*ft_create_node(int element)
 {
@@ -44,9 +41,38 @@ t_double_list	*ft_create_node(int element)
 	return (new_node);
 }
 
+int	ft_has_no_head(t_double_list **head)
+{
+	return (head == NULL);
+}
+
+int	ft_is_single_node(t_double_list **head)
+{
+	if ((*head)->next == NULL && (*head)->prev == NULL)
+		return (TRUE);
+	return (FALSE);
+}
+
+void	ft_swap_stack(t_double_list **head)
+{
+	t_double_list	*temp;
+
+	if (ft_has_no_head(head))
+		return ;
+	if ((*head) == NULL || ft_is_single_node(head))
+		return ;
+	temp = (*head)->next;
+	(*head)->next = temp->next;
+	(*head)->prev = temp;
+	temp->next = (*head);
+	temp->prev = NULL;
+	(*head)->next->prev = (*head);
+	(*head) = temp;
+}
+
 void	ft_push_stack(t_double_list **head, t_double_list *new)
 {
-	if (head == NULL || new == NULL)
+	if (ft_has_no_head(head) || new == NULL)
 		return ;
 	new->next = *head;
 	new->prev = NULL;
@@ -59,10 +85,10 @@ void	ft_pop_stack(t_double_list **head)
 {
 	t_double_list	*temp;
 
-	if (head == NULL)
+	if (ft_has_no_head(head))
 		return ;
 	temp = (*head)->next;
-	free((*head));
+	free(*head);
 	*head = temp;
 	if ((*head))
 		(*head)->prev = NULL;
@@ -70,12 +96,10 @@ void	ft_pop_stack(t_double_list **head)
 
 void	ft_clear_stack(t_double_list **head)
 {
-	if (head == NULL)
+	if (ft_has_no_head(head))
 		return ;
 	while ((*head))
-	{
 		ft_pop_stack(head);
-	}
 	head = NULL;
 }
 
@@ -95,7 +119,5 @@ void	populate_stack(t_push_swap *push_swap)
 		last_index--;
 	}
 	print_list_forwards(push_swap->head_stack);
-	ft_printf("-------------------------------\n");
-	print_list_backwards(push_swap->head_stack);
 	ft_clear_stack(&push_swap->head_stack);
 }
