@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 02:26:04 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/01 05:09:41 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/02 04:17:40 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,8 @@ void	ft_clear_stack(t_double_list **head, int *size)
 	if (ft_check_head_nulish(head))
 		return ;
 	while ((*head))
-	{
-		pop_list_return = ft_pop_stack(head, size);
-		free(pop_list_return);
-		pop_list_return = NULL;
-	}
+		ft_pop_stack_free(head, size);
 	head = NULL;
-	
 }
 
 void	ft_populate_stack(t_push_swap *push_swap)
@@ -84,10 +79,10 @@ void	ft_populate_stack(t_push_swap *push_swap)
 	}
 	ft_pop_push_stack_pab(&push_swap->stack_a.head_stack, &push_swap->stack_b.head_stack, 
 	 	&push_swap->stack_a.size, &push_swap->stack_b.size);
-	// ft_pop_push_stack_pab(&push_swap->head_stack_a, &push_swap->head_stack_b);
-	// ft_swap_stack_ss(&push_swap->head_stack_a, &push_swap->head_stack_b);
-	// ft_pop_push_stack_pab(&push_swap->head_stack_a, &push_swap->head_stack_b);
-	ft_rotate_stack_rr(&push_swap->stack_a.head_stack, &push_swap->stack_b.head_stack);
+	ft_pop_push_stack_pab(&push_swap->stack_a.head_stack, &push_swap->stack_b.head_stack, 
+	 	&push_swap->stack_a.size, &push_swap->stack_b.size);
+	ft_rotate_stack_rr(&push_swap->stack_a.head_stack, 
+		&push_swap->stack_b.head_stack);
 	print_list_forwards(push_swap->stack_a, 'A');
 	print_list_forwards(push_swap->stack_b, 'B');
 	ft_clear_stack(&push_swap->stack_a.head_stack, &push_swap->stack_a.size);

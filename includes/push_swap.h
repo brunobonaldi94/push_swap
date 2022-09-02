@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 02:17:58 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/01 05:06:50 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/02 04:16:06 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,16 +60,25 @@ int				ft_head_is_null(t_double_list **head);
 int				ft_check_head_nulish(t_double_list **head);
 t_double_list	*ft_find_last(t_double_list *head);
 // operations push
-void			ft_push_stack(t_double_list **head, t_double_list *new, int *size);
-t_double_list	*ft_pop_stack(t_double_list **head, int *size);
+void			ft_push_stack(t_double_list **head, t_double_list *new,
+					int *size);
+void			ft_pop_stack_free(t_double_list **head, int *size);
+t_double_list	*ft_pop_stack_move_pointer(t_double_list **head, int *size);
 void			ft_pop_push_stack_pab(t_double_list **head_first,
-					t_double_list **head_second, int *size_first, int *size_second);
+					t_double_list **head_second, int *size_first,
+					int *size_second);
 // operations swap		
 void			ft_swap_stack_sab(t_double_list **head);
-void			ft_swap_stack_ss(t_double_list **head_a, t_double_list **head_b);
+void			ft_swap_stack_ss(t_double_list **head_a,
+					t_double_list **head_b);
+// operations rotate reverse
+void			ft_rotate_stack_rrab(t_double_list **head);
+void			ft_rotate_stack_rrr(t_double_list **head_a,
+					t_double_list **head_b);
 // operations rotate
 void			ft_rotate_stack_rab(t_double_list **head);
-void			ft_rotate_stack_rr(t_double_list **head_a, t_double_list **head_b);
+void			ft_rotate_stack_rr(t_double_list **head_a,
+					t_double_list **head_b);
 //start stack
 void			ft_initialize_stack(t_stack *stack);
 void			ft_populate_stack(t_push_swap *push_swap);

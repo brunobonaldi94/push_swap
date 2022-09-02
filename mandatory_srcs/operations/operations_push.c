@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:29:44 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/01 03:16:43 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/02 04:15:45 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,32 @@ void	ft_push_stack(t_double_list **head, t_double_list *new, int *size)
 	*size += 1;
 }
 
-t_double_list	*ft_pop_stack(t_double_list **head, int *size)
+void	ft_pop_stack_free(t_double_list **head, int *size)
 {
 	t_double_list	*temp;
-	t_double_list	*pop_list_item;
 
 	if (ft_check_head_nulish(head) )
-		return (NULL);
+		return ;
 	temp = (*head)->next;
-	pop_list_item = ft_create_node((*head)->element);
 	free(*head);
 	*head = temp;
 	if (*head)
 		(*head)->prev = NULL;
+	*size -= 1;
+}
+
+t_double_list	*ft_pop_stack_move_pointer(t_double_list **head, int *size)
+{
+	t_double_list	*temp;
+
+	if (ft_check_head_nulish(head))
+		return (NULL);
+	*head = (*head)->next;
+	temp = (*head)->prev;
+	if (*head)
+		(*head)->prev = NULL;
 	*size -= 1; 
-	return (pop_list_item);
+	return (temp);
 }
 
 void	ft_pop_push_stack_pab(t_double_list **head_first,
@@ -47,7 +58,7 @@ void	ft_pop_push_stack_pab(t_double_list **head_first,
 	t_double_list	*pop_list_item;
 	if (ft_check_head_nulish(head_second))
 		return ;
-	pop_list_item = ft_pop_stack(head_first, size_first);
+	pop_list_item = ft_pop_stack_move_pointer(head_first, size_first);
 	if (pop_list_item == NULL) 
 		return ;
 	ft_push_stack(head_second, pop_list_item, size_second);

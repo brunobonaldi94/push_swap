@@ -20,7 +20,7 @@ export COMPILE_DONE
 
 SRCS =	$(MANDATORY_PATH)/push_swap.c \
 		$(addprefix $(MANDATORY_PATH)/$(DOUBLY_LINKED_LIST_PATH)/, doubly_linked_list.c doubly_linked_list_utils.c doubly_linked_list_utils_II.c) \
-		$(addprefix $(MANDATORY_PATH)/$(OPERATIONS_PATH)/, operations_push.c operations_swap.c operations_rotate.c)
+		$(addprefix $(MANDATORY_PATH)/$(OPERATIONS_PATH)/, operations_push.c operations_swap.c operations_rotate_reverse.c operations_rotate.c)
 
 OBJS =	$(SRCS:.c=.o)
 NAME =	push_swap
