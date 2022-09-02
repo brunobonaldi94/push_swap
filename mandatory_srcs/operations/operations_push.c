@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:29:44 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/02 04:15:45 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/02 04:43:39 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,12 @@ t_double_list	*ft_pop_stack_move_pointer(t_double_list **head, int *size)
 
 	if (ft_check_head_nulish(head))
 		return (NULL);
+	if (ft_is_single_node(head))
+	{
+		temp = (*head);
+		(*head) = NULL;
+		return temp;
+	}
 	*head = (*head)->next;
 	temp = (*head)->prev;
 	if (*head)
