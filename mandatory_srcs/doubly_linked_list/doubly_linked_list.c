@@ -6,13 +6,13 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 02:26:04 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/02 04:17:40 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/04 21:07:47 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	print_list_forwards(t_stack stack, char A_or_B)
+void	ft_print_stack(t_stack stack, char A_or_B)
 {
 	t_double_list	*last;
 	ft_printf(GREEN);
@@ -36,6 +36,12 @@ void	print_list_forwards(t_stack stack, char A_or_B)
 	}
 }
 
+void	ft_print_all_stack(t_push_swap *push_swap)
+{
+	ft_print_stack(push_swap->stack_a, 'A');
+	ft_print_stack(push_swap->stack_b, 'B');
+}
+
 t_double_list	*ft_create_node(int element)
 {
 	t_double_list	*new_node;
@@ -49,14 +55,17 @@ t_double_list	*ft_create_node(int element)
 
 void	ft_clear_stack(t_double_list **head, int *size)
 {
-	t_double_list	*pop_list_return;
-
-	pop_list_return = NULL;
 	if (ft_check_head_nulish(head))
 		return ;
 	while ((*head))
 		ft_pop_stack_free(head, size);
 	head = NULL;
+}
+
+void	ft_clear_all_stack(t_push_swap *push_swap)
+{
+	ft_clear_stack(&push_swap->stack_a.head_stack, &push_swap->stack_a.size);
+	ft_clear_stack(&push_swap->stack_b.head_stack, &push_swap->stack_a.size);
 }
 
 void	ft_populate_stack(t_push_swap *push_swap)
@@ -65,9 +74,6 @@ void	ft_populate_stack(t_push_swap *push_swap)
 	int				argv_to_int;
 	int				last_index;
 
-	push_swap->stack_a.head_stack = NULL;
-	push_swap->stack_b.head_stack = ft_create_node(10);
-	push_swap->stack_b.size++;
 	last_index = push_swap->argc - 1;
 	while (last_index >= 1)
 	{
@@ -77,14 +83,4 @@ void	ft_populate_stack(t_push_swap *push_swap)
 			&push_swap->stack_a.size);
 		last_index--;
 	}
-	ft_pop_push_stack_pab(&push_swap->stack_a.head_stack, &push_swap->stack_b.head_stack, 
-	 	&push_swap->stack_a.size, &push_swap->stack_b.size);
-	ft_pop_push_stack_pab(&push_swap->stack_a.head_stack, &push_swap->stack_b.head_stack, 
-	 	&push_swap->stack_a.size, &push_swap->stack_b.size);
-	ft_rotate_stack_rr(&push_swap->stack_a.head_stack, 
-		&push_swap->stack_b.head_stack);
-	print_list_forwards(push_swap->stack_a, 'A');
-	print_list_forwards(push_swap->stack_b, 'B');
-	ft_clear_stack(&push_swap->stack_a.head_stack, &push_swap->stack_a.size);
-	ft_clear_stack(&push_swap->stack_b.head_stack, &push_swap->stack_a.size);
 }

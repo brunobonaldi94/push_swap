@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 02:17:58 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/02 04:16:06 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/04 21:16:10 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ int				ft_has_two_nodes(t_double_list **head);
 int				ft_head_is_null(t_double_list **head);
 int				ft_check_head_nulish(t_double_list **head);
 t_double_list	*ft_find_last(t_double_list *head);
+void			ft_print_all_stack(t_push_swap *push_swap);
+void			ft_clear_all_stack(t_push_swap *push_swap);
 // operations push
 void			ft_push_stack(t_double_list **head, t_double_list *new,
 					int *size);
@@ -83,4 +85,7 @@ void			ft_rotate_stack_rr(t_double_list **head_a,
 void			ft_initialize_stack(t_stack *stack);
 void			ft_populate_stack(t_push_swap *push_swap);
 t_double_list	*ft_create_node(int element);
+//sorting 
+void			ft_sort(t_push_swap *push_swap);
+void			ft_quick_sort(t_push_swap *push_swap);
 #endif //PUSH_SWAP_H

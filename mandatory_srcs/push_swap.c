@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 02:16:57 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/01 03:25:42 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/04 21:10:39 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,6 @@ int	main(int argc, char *argv[])
 
 	ft_initialize_push_swap(&push_swap, argc, argv);
 	ft_populate_stack(&push_swap);
+	ft_sort(&push_swap);
 	return (SUCCESS_CODE);
 }

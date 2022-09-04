@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:29:44 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/02 04:43:39 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/04 20:45:02 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	ft_pop_push_stack_pab(t_double_list **head_first,
 			t_double_list **head_second,  int *size_first, int *size_second)
 {
 	t_double_list	*pop_list_item;
-	if (ft_check_head_nulish(head_second))
+	if (ft_check_head_nulish(head_first))
 		return ;
 	pop_list_item = ft_pop_stack_move_pointer(head_first, size_first);
 	if (pop_list_item == NULL) 
