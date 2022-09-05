@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 19:20:41 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/04 20:42:56 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/05 04:16:02 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ int partition_low (int arr[], int low, int high)
 	j = low + 1;
 	while (j <= high)
 	{
-		if (arr[j] < pivot)
+		if (arr[j] < pivot && (i != j + 1))
         { 
-            i++;
+			i++;
             swap(&arr[i], &arr[j]);
         } 
 		j++;

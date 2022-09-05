@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 17:47:48 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/03 19:30:13 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/05 04:07:06 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	main(void)
 	int arr[] = {64,23,4,5,100,8};
 	int n = sizeof(arr) / sizeof(arr[0]);
 	print_arr(arr, n);
-	radix_sort(arr, n);
+	quick_sort(arr, 0, n-1);
 	printf("sorted arr\n");
 	print_arr(arr, n);
 }
