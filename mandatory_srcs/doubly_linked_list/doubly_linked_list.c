@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 02:26:04 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/04 21:07:47 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/06 02:51:18 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,30 @@
 void	ft_print_stack(t_stack stack, char A_or_B)
 {
 	t_double_list	*last;
+	int				index;
+
 	ft_printf(GREEN);
 	ft_printf("===============================\n");
 	ft_printf("stack: %c\nsize is: %d\n", A_or_B, stack.size);
 	ft_printf("===============================\n");
 	ft_printf(RESET);
 	last = NULL;
+	index = 0;
 	while (stack.head_stack)
 	{
-		ft_printf("element: %d\n", stack.head_stack->element);
+		ft_printf("[%d]: %d\n",index, stack.head_stack->element);
 		if (!stack.head_stack->next)
 			last = stack.head_stack;
 		stack.head_stack = stack.head_stack->next;
+		index++;
 	}
 	ft_printf("-------------------------------\n");
-	while (last)
-	{
-		ft_printf("element: %d\n", last->element);
-		last = last->prev;
-	}
+	// while (last)
+	// {
+	// 	index--;
+	// 	ft_printf("[%d]: %d\n",index, last->element);
+	// 	last = last->prev;
+	// }
 }
 
 void	ft_print_all_stack(t_push_swap *push_swap)

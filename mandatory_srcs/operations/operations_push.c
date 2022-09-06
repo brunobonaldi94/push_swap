@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:29:44 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/04 20:45:02 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/06 04:12:38 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	ft_pop_stack_free(t_double_list **head, int *size)
 {
 	t_double_list	*temp;
 
-	if (ft_check_head_nulish(head) )
+	if (ft_check_head_nulish(head))
 		return ;
 	temp = (*head)->next;
 	free(*head);
