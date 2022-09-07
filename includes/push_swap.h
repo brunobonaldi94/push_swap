@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 02:17:58 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/06 02:49:40 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/07 19:33:27 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ void			ft_pop_push_stack_pab(t_double_list **head_first,
 					t_double_list **head_second, int *size_first,
 					int *size_second);
 void			ft_print_stack(t_stack stack, char A_or_B);
-// operations swap		
+// operations swap
+void			ft_swap_stack(t_double_list **head);
 void			ft_swap_stack_sab(t_double_list **head);
 void			ft_swap_stack_ss(t_double_list **head_a,
 					t_double_list **head_b);
