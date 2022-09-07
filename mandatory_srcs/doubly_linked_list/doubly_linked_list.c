@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 02:26:04 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/06 02:51:18 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/07 20:39:25 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,19 +58,19 @@ t_double_list	*ft_create_node(int element)
 	return (new_node);
 }
 
-void	ft_clear_stack(t_double_list **head, int *size)
+void	ft_clear_stack(t_stack *stack)
 {
-	if (ft_check_head_nulish(head))
+	if (ft_head_is_null(stack->head_stack))
 		return ;
-	while ((*head))
-		ft_pop_stack_free(head, size);
-	head = NULL;
+	while (stack->head_stack)
+		ft_pop_stack_free(stack);
+	stack->head_stack = NULL;
 }
 
 void	ft_clear_all_stack(t_push_swap *push_swap)
 {
-	ft_clear_stack(&push_swap->stack_a.head_stack, &push_swap->stack_a.size);
-	ft_clear_stack(&push_swap->stack_b.head_stack, &push_swap->stack_a.size);
+	ft_clear_stack(&push_swap->stack_a);
+	ft_clear_stack(&push_swap->stack_b);
 }
 
 void	ft_populate_stack(t_push_swap *push_swap)
@@ -84,8 +84,7 @@ void	ft_populate_stack(t_push_swap *push_swap)
 	{
 		argv_to_int = ft_atoi(push_swap->argv[last_index]);
 		new_node = ft_create_node(argv_to_int);
-		ft_push_stack(&push_swap->stack_a.head_stack, new_node,
-			&push_swap->stack_a.size);
+		ft_push_stack(&push_swap->stack_a, new_node);
 		last_index--;
 	}
 }

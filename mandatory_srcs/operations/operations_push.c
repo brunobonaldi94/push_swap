@@ -6,66 +6,65 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:29:44 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/06 04:12:38 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/07 20:38:22 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	ft_push_stack(t_double_list **head, t_double_list *new, int *size)
+void	ft_push_stack(t_stack *stack, t_double_list *new)
 {
-	if (ft_has_no_head(head) || new == NULL)
+	if (!stack || new == NULL)
 		return ;
-	new->next = *head;
+	new->next = stack->head_stack;
 	new->prev = NULL;
-	if (*head)
-		(*head)->prev = new;
-	(*head) = new;
-	*size += 1;
+	if (stack->head_stack)
+		(stack->head_stack)->prev = new;
+	(stack->head_stack) = new;
+	stack->size += 1;
 }
 
-void	ft_pop_stack_free(t_double_list **head, int *size)
+void	ft_pop_stack_free(t_stack *stack)
 {
 	t_double_list	*temp;
 
-	if (ft_check_head_nulish(head))
+	if (ft_head_is_null(stack->head_stack))
 		return ;
-	temp = (*head)->next;
-	free(*head);
-	*head = temp;
-	if (*head)
-		(*head)->prev = NULL;
-	*size -= 1;
+	temp = stack->head_stack->next;
+	free(stack->head_stack);
+	stack->head_stack = temp;
+	if (stack->head_stack)
+		stack->head_stack->prev = NULL;
+	stack->size -= 1;
 }
 
-t_double_list	*ft_pop_stack_move_pointer(t_double_list **head, int *size)
+t_double_list	*ft_pop_stack_move_pointer(t_stack *stack)
 {
 	t_double_list	*temp;
 
-	if (ft_check_head_nulish(head))
+	if (ft_head_is_null(stack->head_stack))
 		return (NULL);
-	if (ft_is_single_node(head))
+	if (ft_is_single_node(stack->head_stack))
 	{
-		temp = (*head);
-		(*head) = NULL;
+		temp = stack->head_stack;
+		stack->head_stack = NULL;
 		return temp;
 	}
-	*head = (*head)->next;
-	temp = (*head)->prev;
-	if (*head)
-		(*head)->prev = NULL;
-	*size -= 1; 
+	stack->head_stack = stack->head_stack->next;
+	temp = stack->head_stack->prev;
+	if (stack->head_stack)
+		stack->head_stack->prev = NULL;
+	stack->size -= 1; 
 	return (temp);
 }
 
-void	ft_pop_push_stack_pab(t_double_list **head_first,
-			t_double_list **head_second,  int *size_first, int *size_second)
+void	ft_pop_push_stack_pab(t_stack *stack_first, t_stack *stack_second)
 {
 	t_double_list	*pop_list_item;
-	if (ft_check_head_nulish(head_first))
+	if (ft_head_is_null(stack_first->head_stack))
 		return ;
-	pop_list_item = ft_pop_stack_move_pointer(head_first, size_first);
+	pop_list_item = ft_pop_stack_move_pointer(stack_first);
 	if (pop_list_item == NULL) 
 		return ;
-	ft_push_stack(head_second, pop_list_item, size_second);
+	ft_push_stack(stack_second, pop_list_item);
 }

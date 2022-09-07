@@ -6,38 +6,38 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 02:57:46 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/02 03:53:02 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/07 20:38:38 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	ft_rotate_reverse_stack(t_double_list **head)
+void	ft_rotate_reverse_stack(t_stack *stack)
 {
 	t_double_list	*last;
 
-	last = ft_find_last(*head);
-	(*head)->prev = last;
-	last->next = (*head);
+	last = ft_find_last(stack->head_stack);
+	stack->head_stack->prev = last;
+	last->next = stack->head_stack;
 	last->prev->next = NULL;
 	last->prev = NULL;
-	(*head) = last;
+	stack->head_stack = last;
 }
 
-void	ft_rotate_stack_rrab(t_double_list **head)
+void	ft_rotate_stack_rrab(t_stack *stack)
 {
-	if (ft_check_head_nulish(head) || ft_is_single_node(head))
+	if (ft_head_is_null(stack->head_stack) || ft_is_single_node(stack->head_stack))
 		return ;
-	if (ft_has_two_nodes(head))
+	if (ft_has_two_nodes(stack->head_stack))
 	{
-		ft_swap_stack_sab(head);
+		ft_swap_stack(stack);
 		return ;
 	}
-	ft_rotate_reverse_stack(head);
+	ft_rotate_reverse_stack(stack);
 }
 
-void	ft_rotate_stack_rrr(t_double_list **head_a, t_double_list **head_b)
+void	ft_rotate_stack_rrr(t_stack *stack_a, t_stack *stack_b)
 {
-	ft_rotate_stack_rrab(head_a);
-	ft_rotate_stack_rrab(head_b);
+	ft_rotate_stack_rrab(stack_a);
+	ft_rotate_stack_rrab(stack_b);
 }

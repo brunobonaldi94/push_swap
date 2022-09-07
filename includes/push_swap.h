@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 02:17:58 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/07 19:33:27 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/07 20:39:32 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,36 +53,29 @@ typedef	struct s_push_swap
 }	t_push_swap;
 
 // doubly linked lists utils
-int				ft_has_no_head(t_double_list **head);
-int				ft_is_single_node(t_double_list **head);
-int				ft_has_two_nodes(t_double_list **head);
-int				ft_head_is_null(t_double_list **head);
-int				ft_check_head_nulish(t_double_list **head);
+int				ft_is_single_node(t_double_list *head);
+int				ft_has_two_nodes(t_double_list *head);
+int				ft_head_is_null(t_double_list *head);
+int				ft_head_is_null(t_double_list *head);
 t_double_list	*ft_find_last(t_double_list *head);
 void			ft_print_all_stack(t_push_swap *push_swap);
 void			ft_clear_all_stack(t_push_swap *push_swap);
 // operations push
-void			ft_push_stack(t_double_list **head, t_double_list *new,
-					int *size);
-void			ft_pop_stack_free(t_double_list **head, int *size);
-t_double_list	*ft_pop_stack_move_pointer(t_double_list **head, int *size);
-void			ft_pop_push_stack_pab(t_double_list **head_first,
-					t_double_list **head_second, int *size_first,
-					int *size_second);
+void			ft_push_stack(t_stack *stack, t_double_list *new);
+void			ft_pop_stack_free(t_stack *stack);
+t_double_list	*ft_pop_stack_move_pointer(t_stack *stack);
+void			ft_pop_push_stack_pab(t_stack *stack_first, t_stack *stack_second);
 void			ft_print_stack(t_stack stack, char A_or_B);
 // operations swap
-void			ft_swap_stack(t_double_list **head);
-void			ft_swap_stack_sab(t_double_list **head);
-void			ft_swap_stack_ss(t_double_list **head_a,
-					t_double_list **head_b);
+void			ft_swap_stack(t_stack *stack);
+void			ft_swap_stack_sab(t_stack *stack);
+void			ft_swap_stack_ss(t_stack *stack_a, t_stack *stack_b);
 // operations rotate reverse
-void			ft_rotate_stack_rrab(t_double_list **head);
-void			ft_rotate_stack_rrr(t_double_list **head_a,
-					t_double_list **head_b);
+void			ft_rotate_stack_rrab(t_stack *stack);
+void			ft_rotate_stack_rrr(t_stack *stack_a, t_stack *stack_b);
 // operations rotate
-void			ft_rotate_stack_rab(t_double_list **head);
-void			ft_rotate_stack_rr(t_double_list **head_a,
-					t_double_list **head_b);
+void			ft_rotate_stack_rab(t_stack *stack);
+void			ft_rotate_stack_rr(t_stack *stack_a, t_stack *stack_b);
 //start stack
 void			ft_initialize_stack(t_stack *stack);
 void			ft_populate_stack(t_push_swap *push_swap);

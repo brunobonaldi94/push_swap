@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quick_sort.c                                       :+:      :+:    :+:   */
+/*   _quick_sort.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 20:43:40 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/06 04:15:52 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/07 21:04:47 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ t_stack *partition_low_ps(t_stack *stack_a, t_stack *stack_b)
 	t_double_list	*right_nodes;
 	t_double_list	*left_nodes;
 
-	ft_printf("%d\n", stack_b->size);
 	pivot = stack_a->head_stack->element;
 	left_nodes = stack_a->head_stack;
 	right_nodes = stack_a->head_stack->next;
