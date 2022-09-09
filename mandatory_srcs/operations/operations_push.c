@@ -48,6 +48,7 @@ t_double_list	*ft_pop_stack_move_pointer(t_stack *stack)
 	{
 		temp = stack->head_stack;
 		stack->head_stack = NULL;
+		stack->size -= 1;
 		return temp;
 	}
 	stack->head_stack = stack->head_stack->next;
