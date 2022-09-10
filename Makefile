@@ -3,6 +3,7 @@ PUSH_SWAP_CONSTANT_LOWERCASE = $(echo $(PUSH_SWAP_CONSTANT) | tr A-Z a-z)
 
 MAKE_C					=	make --no-print-directory
 MANDATORY_PATH			=	./mandatory_srcs
+PARSE_ARGS				=	./parse_args
 DOUBLY_LINKED_LIST_PATH	=	doubly_linked_list
 OPERATIONS_PATH			=	operations
 SORTING_ALGORITHM_PATH	=	sorting_algorithm
@@ -21,6 +22,7 @@ export COMPILE_DONE
 
 SRCS =	$(MANDATORY_PATH)/push_swap.c \
 		$(addprefix $(MANDATORY_PATH)/$(DOUBLY_LINKED_LIST_PATH)/, doubly_linked_list.c doubly_linked_list_utils.c doubly_linked_list_utils_II.c) \
+		$(addprefix $(MANDATORY_PATH)/$(PARSE_ARGS)/, parse_args.c) \
 		$(addprefix $(MANDATORY_PATH)/$(OPERATIONS_PATH)/, operations_push.c operations_swap.c operations_rotate_reverse.c operations_rotate.c call_operations.c) \
 		$(addprefix $(MANDATORY_PATH)/$(SORTING_ALGORITHM_PATH)/, sort.c quick_sort.c)
 

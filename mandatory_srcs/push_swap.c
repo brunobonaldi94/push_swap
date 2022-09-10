@@ -32,6 +32,11 @@ int	main(int argc, char *argv[])
 
 	ft_initialize_push_swap(&push_swap, argc, argv);
 	ft_populate_stack(&push_swap);
+	if (push_swap.is_valid == FALSE)
+	{
+		ft_printf("Error\n");
+		return (ERROR_CODE);
+	}
 	ft_sort(&push_swap);
 	return (SUCCESS_CODE);
 }

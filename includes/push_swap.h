@@ -65,6 +65,8 @@ typedef	struct s_push_swap
 {
 	t_stack		stack_a;
 	t_stack		stack_b;
+	t_list		*args_list;
+	int			is_valid;
 	int			argc;
 	char		**argv;
 }	t_push_swap;
@@ -80,6 +82,8 @@ void			ft_print_all_stack(t_push_swap *push_swap);
 void			ft_clear_all_stack(t_push_swap *push_swap);
 void			set_min_max(t_stack *stack, int element);
 void			init_min_max(t_stack *stack, int element);
+//parse args
+int				parse_args(t_push_swap *push_swap);
 // operations push
 void			ft_push_stack(t_stack *stack, t_double_list *new);
 void			ft_pop_stack_free(t_stack *stack);
@@ -98,7 +102,7 @@ void			ft_rotate_stack_rab(t_stack *stack);
 void			ft_rotate_stack_rr(t_stack *stack_a, t_stack *stack_b);
 //start stack
 void			ft_initialize_stack(t_stack *stack);
-void			ft_populate_stack(t_push_swap *push_swap);
+int				ft_populate_stack(t_push_swap *push_swap);
 t_double_list	*ft_create_node(int element);
 // call operations
 void			call_single_operation(t_stack *stack, char *operation);
