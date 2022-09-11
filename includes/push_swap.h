@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 02:17:58 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/09 23:07:07 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/11 23:32:06 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,11 @@
 # define RRB "rrb"
 # define RRR "rrr"
 
-
-typedef	struct s_double_list
+typedef struct s_double_list
 {
 	int						element;
-	struct s_double_list*	prev;
-	struct s_double_list*	next;
+	struct s_double_list	*prev;
+	struct s_double_list	*next;
 }	t_double_list;
 
 typedef struct s_stack
@@ -61,16 +60,15 @@ typedef struct s_stack
 	t_double_list	*head_stack;
 }	t_stack;
 
-typedef	struct s_push_swap
+typedef struct s_push_swap
 {
-	t_stack		stack_a;
-	t_stack		stack_b;
-	t_list		*args_list;
-	int			is_valid;
-	int			argc;
-	char		**argv;
+	t_stack				stack_a;
+	t_stack				stack_b;
+	t_stack				args_list;
+	int					is_valid;
+	int					argc;
+	char				**argv;
 }	t_push_swap;
-
 
 // doubly linked lists utils
 int				ft_is_single_node(t_double_list *head);
@@ -88,7 +86,8 @@ int				parse_args(t_push_swap *push_swap);
 void			ft_push_stack(t_stack *stack, t_double_list *new);
 void			ft_pop_stack_free(t_stack *stack);
 t_double_list	*ft_pop_stack_move_pointer(t_stack *stack);
-void			ft_pop_push_stack_pab(t_stack *stack_first, t_stack *stack_second);
+void			ft_pop_push_stack_pab(t_stack *stack_first,
+					t_stack *stack_second);
 void			ft_print_stack(t_stack stack, char A_or_B);
 // operations swap
 void			ft_swap_stack(t_stack *stack);
@@ -106,7 +105,7 @@ int				ft_populate_stack(t_push_swap *push_swap);
 t_double_list	*ft_create_node(int element);
 // call operations
 void			call_single_operation(t_stack *stack, char *operation);
-void			call_double_operation(t_stack *stack_first, 
+void			call_double_operation(t_stack *stack_first,
 					t_stack *stack_second, char *operation);
 //sorting 
 void			ft_sort(t_push_swap *push_swap);

@@ -39,6 +39,8 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g
 RM = rm -rf
 
+NORMINETTE_PATHS = $(shell find . -maxdepth 1 ! -path . -type d ! -path '*algorithms_studies*' -type d ! -path '*git*' | tr '\n' ' ')
+
 %.o:	%.c
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
@@ -73,6 +75,9 @@ fclean:	clean
 	@$(MAKE_C) fclean -C $(SRCS_LIBFT_PATH)
 	@$(RM) $(NAME) $(NAME_BONUS) $(LIBFT)
 	@tput setaf 7
+
+norm:
+	norminette $(NORMINETTE_PATHS) | grep -v OK
 
 re:	fclean all
 

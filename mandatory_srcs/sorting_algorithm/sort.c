@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 21:01:31 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/10 20:01:42 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/11 23:55:45 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ void	sort_upcoming(t_stack *stack, char *operation)
 	set_min_max(stack, current_element);
 }
 
-int partition_high(t_stack *stack_a, t_stack *stack_b)
+int	partition_high(t_stack *stack_a, t_stack *stack_b)
 {
-	int	pivot;
+	int				pivot;
 	t_double_list	*last;
 	int				is_all_sorted;
 
@@ -54,9 +54,9 @@ int partition_high(t_stack *stack_a, t_stack *stack_b)
 	return (is_all_sorted);
 }
 
-t_stack *partition_low(t_stack *stack_a, t_stack *stack_b)
+t_stack	*partition_low(t_stack *stack_a, t_stack *stack_b)
 {
-	int	pivot;
+	int				pivot;
 	t_double_list	*head;
 
 	if (ft_head_is_null(stack_a->head_stack))

@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 02:26:04 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/10 20:41:44 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/11 23:53:58 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_print_stack(t_stack stack, char A_or_B)
 
 	ft_printf(GREEN);
 	ft_printf("===============================\n");
-	ft_printf("stack: %c\nsize is: %d\nmin: %d\nmax: %d\n", A_or_B, stack.size, 
+	ft_printf("stack: %c\nsize is: %d\nmin: %d\nmax: %d\n", A_or_B, stack.size,
 	stack.min, stack.max);
 	ft_printf("===============================\n");
 	ft_printf(RESET);
@@ -90,16 +90,17 @@ void	set_min_max(t_stack *stack, int element)
 
 int	ft_populate_stack(t_push_swap *push_swap)
 {
- 	int				argv_to_int;
+	int				argv_to_int;
 	int				index;
 	t_double_list	*new_node;
+	t_double_list	*head;
  
 	index = 0;
 	push_swap->is_valid = parse_args(push_swap);
-	while (push_swap->args_list && push_swap->is_valid)
+	head = push_swap->args_list.head_stack;
+	while (head && push_swap->is_valid)
 	{
-		argv_to_int = *((int *)(push_swap->args_list->content));
-		ft_printf("%d", argv_to_int);
+		argv_to_int = (head->element);
 		new_node = ft_create_node(argv_to_int);
 		if (index == 0)
 			init_min_max(&push_swap->stack_a, argv_to_int);
@@ -107,8 +108,8 @@ int	ft_populate_stack(t_push_swap *push_swap)
 			set_min_max(&push_swap->stack_a, argv_to_int);
 		ft_push_stack(&push_swap->stack_a, new_node);
 		index++;
-		push_swap->args_list = push_swap->args_list->next;
+		head = head->next;
 	}
-	ft_lstclear(&push_swap->args_list, free);
+	ft_clear_stack(&push_swap->args_list);
 	return (push_swap->is_valid);
 }
