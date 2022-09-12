@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 20:27:34 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/12 00:07:51 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/13 00:44:18 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ int	split_args(t_push_swap *push_swap, int index_argv)
 	t_double_list	*new;
 	int				argv_to_int;
 
+	if (!*push_swap->argv[index_argv])
+		return (FALSE);
 	split_argv = ft_split(push_swap->argv[index_argv], ' ');
 	split_index = 0;
 	while (split_argv[split_index])

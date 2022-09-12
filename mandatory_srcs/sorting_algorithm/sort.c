@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 21:01:31 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/11 23:55:45 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/13 00:57:13 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,12 @@ t_stack	*partition_low(t_stack *stack_a, t_stack *stack_b)
 
 	if (ft_head_is_null(stack_a->head_stack))
 		return (NULL);
+	if (stack_a->head_stack->element == stack_a->min)
+	{
+		call_double_operation(stack_a, stack_b, PB);
+		sort_upcoming(stack_b, SB);
+		return (stack_a);
+	}
 	pivot = stack_a->head_stack->element;
 	head = stack_a->head_stack;
 	call_single_operation(stack_a, RA);
@@ -70,9 +76,9 @@ t_stack	*partition_low(t_stack *stack_a, t_stack *stack_b)
 		{
 			call_double_operation(stack_a, stack_b, PB);
 			sort_upcoming(stack_b, SB);
-		} 
-		else 
-			call_single_operation(stack_a, RA);	
+		}
+		else
+			call_single_operation(stack_a, RA);
 	}
 	set_min_max(stack_a, stack_a->head_stack->element);
 	call_double_operation(stack_a, stack_b, PB);
@@ -99,7 +105,7 @@ void	ft_sort_iterative(t_stack *stack_first, t_stack *stack_second)
 
 void	ft_sort(t_push_swap *push_swap)
 {
-	ft_print_all_stack(push_swap);
+	//ft_print_all_stack(push_swap);
 	if (push_swap->stack_a.size == 1)
 		return ;
 	ft_sort_iterative(&push_swap->stack_a, &push_swap->stack_b);
