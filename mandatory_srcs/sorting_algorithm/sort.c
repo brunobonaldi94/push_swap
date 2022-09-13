@@ -6,13 +6,13 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 21:01:31 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/13 00:57:13 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/13 05:32:24 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	sort_upcoming(t_stack *stack, char *operation)
+void	sort_upcoming(t_stack *stack, char *operation, int direction)
 {
 	int	current_element;
 
@@ -24,7 +24,9 @@ void	sort_upcoming(t_stack *stack, char *operation)
 		return ;
 	}
 	current_element = stack->head_stack->element;
-	if (current_element < stack->head_stack->next->element)
+	if (direction == TO_B && current_element < stack->head_stack->next->element)
+		call_single_operation(stack, operation);
+	else if (direction == TO_A && current_element > stack->head_stack->next->element)
 		call_single_operation(stack, operation);
 	set_min_max(stack, current_element);
 }
@@ -44,13 +46,13 @@ int	partition_high(t_stack *stack_a, t_stack *stack_b)
 		if (stack_a->head_stack->element > pivot)
 		{
 			call_double_operation(stack_a, stack_b, PB);
-			sort_upcoming(stack_b, SB);
+			sort_upcoming(stack_b, SB, TO_B);
 		} 
 		else 
 			call_single_operation(stack_a, RA);	
 	}
 	call_double_operation(stack_a, stack_b, PB);
-	sort_upcoming(stack_b, SB);
+	sort_upcoming(stack_b, SB, TO_B);
 	return (is_all_sorted);
 }
 
@@ -61,13 +63,13 @@ t_stack	*partition_low(t_stack *stack_a, t_stack *stack_b)
 
 	if (ft_head_is_null(stack_a->head_stack))
 		return (NULL);
-	if (stack_a->head_stack->element == stack_a->min)
-	{
-		call_double_operation(stack_a, stack_b, PB);
-		sort_upcoming(stack_b, SB);
-		return (stack_a);
-	}
 	pivot = stack_a->head_stack->element;
+	// if (pivot == stack_a->min)
+	// {
+	// 	call_double_operation(stack_a, stack_b, PB);
+	// 	sort_upcoming(stack_b, SB, TO_B);
+	// 	return (stack_a);
+	// }
 	head = stack_a->head_stack;
 	call_single_operation(stack_a, RA);
 	while (stack_a->head_stack != head)
@@ -75,7 +77,7 @@ t_stack	*partition_low(t_stack *stack_a, t_stack *stack_b)
 		if (stack_a->head_stack->element < pivot)
 		{
 			call_double_operation(stack_a, stack_b, PB);
-			sort_upcoming(stack_b, SB);
+			sort_upcoming(stack_b, SB, TO_B);
 		}
 		else
 			call_single_operation(stack_a, RA);
@@ -100,15 +102,21 @@ void	ft_sort_iterative(t_stack *stack_first, t_stack *stack_second)
 	while (stack)
 		stack = partition_low(stack, stack_second);
 	while (stack_second->head_stack)
+	{
 		call_double_operation(stack_second, stack_first, PA);
+		sort_upcoming(stack_first, SA, TO_A);
+	}
 }
 
 void	ft_sort(t_push_swap *push_swap)
 {
 	//ft_print_all_stack(push_swap);
-	if (push_swap->stack_a.size == 1)
+	if (push_swap->is_sorted == TRUE)
 		return ;
+	if (push_swap->stack_a.size <= 3)
+		ft_sort_small(&push_swap->stack_a);
+	else
 	ft_sort_iterative(&push_swap->stack_a, &push_swap->stack_b);
-	//ft_print_all_stack(push_swap);
+	ft_print_all_stack(push_swap);
 	ft_clear_all_stack(push_swap);
 }

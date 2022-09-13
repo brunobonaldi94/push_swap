@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 02:26:04 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/11 23:53:58 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/13 03:51:22 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ int	ft_populate_stack(t_push_swap *push_swap)
  
 	index = 0;
 	push_swap->is_valid = parse_args(push_swap);
+	push_swap->is_sorted = TRUE;
 	head = push_swap->args_list.head_stack;
 	while (head && push_swap->is_valid)
 	{
@@ -108,7 +109,10 @@ int	ft_populate_stack(t_push_swap *push_swap)
 			set_min_max(&push_swap->stack_a, argv_to_int);
 		ft_push_stack(&push_swap->stack_a, new_node);
 		index++;
+		if (head->next && argv_to_int < head->next->element)
+			push_swap->is_sorted = FALSE;
 		head = head->next;
+		
 	}
 	ft_clear_stack(&push_swap->args_list);
 	return (push_swap->is_valid);

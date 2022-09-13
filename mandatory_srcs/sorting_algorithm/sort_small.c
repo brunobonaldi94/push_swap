@@ -1,33 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   doubly_linked_list_utils.c                         :+:      :+:    :+:   */
+/*   sort_small.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/01 01:24:15 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/13 03:45:19 by bbonaldi         ###   ########.fr       */
+/*   Created: 2022/09/13 03:35:14 by bbonaldi          #+#    #+#             */
+/*   Updated: 2022/09/13 04:02:26 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	ft_initialize_stack(t_stack *stack)
+void	ft_sort_small(t_stack *stack_a)
 {
-	stack->head_stack = NULL;
-	stack->size = 0;
-	stack->min = 0;
-	stack->max = 0;
-}
-
-int	ft_head_is_null(t_double_list *head)
-{
-	return (head == NULL);
-}
-
-int	ft_is_single_node(t_double_list *head)
-{
-	if (head->next == NULL && head->prev == NULL)
-		return (TRUE);
-	return (FALSE);
+	if (stack_a->size == 1)
+		return ;
+	else if (stack_a->size == 2)
+	{
+		if (stack_a->head_stack->element > stack_a->head_stack->next->element)
+			call_single_operation(stack_a, SA);
+	}
+	else
+		return ;
 }

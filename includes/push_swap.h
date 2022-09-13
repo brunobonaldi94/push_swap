@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 02:17:58 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/11 23:32:06 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/13 04:41:44 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,9 @@
 # define RRB "rrb"
 # define RRR "rrr"
 
+# define TO_B 1
+# define TO_A 0
+
 typedef struct s_double_list
 {
 	int						element;
@@ -66,6 +69,7 @@ typedef struct s_push_swap
 	t_stack				stack_b;
 	t_stack				args_list;
 	int					is_valid;
+	int					is_sorted;
 	int					argc;
 	char				**argv;
 }	t_push_swap;
@@ -110,4 +114,5 @@ void			call_double_operation(t_stack *stack_first,
 //sorting 
 void			ft_sort(t_push_swap *push_swap);
 void			ft_quick_sort(t_push_swap *push_swap);
+void			ft_sort_small(t_stack *stack_a);
 #endif //PUSH_SWAP_H
