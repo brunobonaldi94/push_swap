@@ -6,16 +6,33 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 02:26:04 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/13 03:51:22 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/13 21:55:29 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+void	print_result(int is_sorted)
+{
+	if (is_sorted)
+	{
+		ft_printf(GREEN);
+		ft_printf("%s\n","[OK]");
+		ft_printf(RESET);
+	}
+	else
+	{
+		ft_printf(RED);
+		ft_printf("%s\n","[KO]");
+		ft_printf(RESET);
+	}
+}
+
 void	ft_print_stack(t_stack stack, char A_or_B)
 {
 	t_double_list	*last;
 	int				index;
+	int				is_sorted;
 
 	ft_printf(GREEN);
 	ft_printf("===============================\n");
@@ -25,15 +42,19 @@ void	ft_print_stack(t_stack stack, char A_or_B)
 	ft_printf(RESET);
 	last = NULL;
 	index = 0;
+	is_sorted = TRUE;
 	while (stack.head_stack)
 	{
 		ft_printf("[%d]: %d\n",index, stack.head_stack->element);
 		if (!stack.head_stack->next)
 			last = stack.head_stack;
+		if (stack.head_stack->next && stack.head_stack->element > stack.head_stack->next->element)
+			is_sorted = FALSE;
 		stack.head_stack = stack.head_stack->next;
 		index++;
 	}
 	ft_printf("-------------------------------\n", last);
+	print_result(is_sorted);
 	// while (last)
 	// {
 	// 	index--;
@@ -103,10 +124,7 @@ int	ft_populate_stack(t_push_swap *push_swap)
 	{
 		argv_to_int = (head->element);
 		new_node = ft_create_node(argv_to_int);
-		if (index == 0)
-			init_min_max(&push_swap->stack_a, argv_to_int);
-		else
-			set_min_max(&push_swap->stack_a, argv_to_int);
+		set_min_max(&push_swap->stack_a, argv_to_int);
 		ft_push_stack(&push_swap->stack_a, new_node);
 		index++;
 		if (head->next && argv_to_int < head->next->element)

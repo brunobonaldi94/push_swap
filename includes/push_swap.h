@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 02:17:58 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/13 04:41:44 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/13 22:32:34 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,9 @@
 # define TO_B 1
 # define TO_A 0
 
+# define LONG_INT_MAX 9223372036854775807
+# define LONG_INT_MIN -9223372036854775807
+
 typedef struct s_double_list
 {
 	int						element;
@@ -58,8 +61,8 @@ typedef struct s_double_list
 typedef struct s_stack
 {
 	int				size;
-	int				min;
-	int				max;
+	long int		min;
+	long int		max;
 	t_double_list	*head_stack;
 }	t_stack;
 
@@ -113,6 +116,7 @@ void			call_double_operation(t_stack *stack_first,
 					t_stack *stack_second, char *operation);
 //sorting 
 void			ft_sort(t_push_swap *push_swap);
-void			ft_quick_sort(t_push_swap *push_swap);
 void			ft_sort_small(t_stack *stack_a);
+void			ft_bubble_sort(t_stack *stack_a, t_stack *stack_b);
+void			insertion_sort(t_stack *stack_a, t_stack *stack_b);
 #endif //PUSH_SWAP_H

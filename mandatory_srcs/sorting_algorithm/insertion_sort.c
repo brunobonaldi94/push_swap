@@ -1,33 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   doubly_linked_list_utils.c                         :+:      :+:    :+:   */
+/*   insertion_sort.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/01 01:24:15 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/13 20:58:11 by bbonaldi         ###   ########.fr       */
+/*   Created: 2022/09/13 22:26:40 by bbonaldi          #+#    #+#             */
+/*   Updated: 2022/09/13 22:55:01 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	ft_initialize_stack(t_stack *stack)
+void	insertion_sort(t_stack *stack_a, t_stack *stack_b)
 {
-	stack->head_stack = NULL;
-	stack->size = 0;
-	stack->min = LONG_INT_MAX;
-	stack->max = LONG_INT_MIN;
-}
-
-int	ft_head_is_null(t_double_list *head)
-{
-	return (head == NULL);
-}
-
-int	ft_is_single_node(t_double_list *head)
-{
-	if (head->next == NULL && head->prev == NULL)
-		return (TRUE);
-	return (FALSE);
+	while (stack_a->size != 0)
+	{
+		int cur = stack_a->head_stack->element;
+		call_single_operation(stack_a, RA);
+		while (stack_b->size != 0 && stack_b->head_stack->element < cur)
+		{
+			call_double_operation(stack_b, stack_a, PA);
+		}
+		call_single_operation(stack_a, RRA);
+		call_double_operation(stack_a, stack_b, PB);
+	}
 }
