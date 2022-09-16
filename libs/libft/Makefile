@@ -82,7 +82,7 @@ INCLUDES = ./
 NAME_BONUS = libft_bonus.a
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 AR = ar rc
 RANLIB = ranlib
 RM = rm -rf

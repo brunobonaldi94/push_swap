@@ -6,22 +6,48 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 20:27:34 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/13 00:44:18 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/16 00:24:24 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+int	check_int_min_max(long int atoi_result)
+{
+	return (atoi_result < INT_MIN || atoi_result > INT_MAX);
+}
+
+int ft_compare_atoi_failed(int atoi_result, char *argv_atoi)
+{	
+	char	*itoa_result;
+	size_t	argv_atoi_len;
+
+	argv_atoi_len = ft_strlen(argv_atoi);
+	itoa_result = ft_itoa(atoi_result);
+	if (ft_strncmp(itoa_result, argv_atoi, argv_atoi_len) != 0)
+	{
+		free(itoa_result);
+		return (TRUE);
+	}
+	return (FALSE);
+}
+
 int	has_atoi_failed(int atoi_result, char *argv_atoi)
 {
+	size_t	argv_atoi_len;
+	size_t	index;
+
+	index = 0;
 	while (*argv_atoi)
 	{
 		if(!ft_isdigit(*argv_atoi))
 			return (TRUE);
 		argv_atoi++;
+		index++;
 	}
+	argv_atoi_len = ft_strlen(argv_atoi);
 	if (atoi_result == 0
-		&& ft_strncmp(argv_atoi, "0", ft_strlen(argv_atoi)) != 0)
+		&& ft_strncmp(argv_atoi, "0", argv_atoi_len) != 0)
 		return (TRUE);
 	return (FALSE);
 }
@@ -50,10 +76,10 @@ int	has_unique_args(t_push_swap *push_swap)
 
 int	split_args(t_push_swap *push_swap, int index_argv)
 {
-	char			**split_argv;
-	int				split_index;
-	t_double_list	*new;
-	int				argv_to_int;
+	char					**split_argv;
+	int						split_index;
+	t_double_list			*new;
+	int						argv_to_int;
 
 	if (!*push_swap->argv[index_argv])
 		return (FALSE);
@@ -62,8 +88,9 @@ int	split_args(t_push_swap *push_swap, int index_argv)
 	while (split_argv[split_index])
 	{
 		argv_to_int = ft_atoi(split_argv[split_index]);
-		if (has_atoi_failed(argv_to_int, split_argv[split_index]))
-			return (FALSE);
+  		if (ft_compare_atoi_failed(argv_to_int, split_argv[split_index]) 
+			|| has_atoi_failed(argv_to_int, split_argv[split_index]))
+		 	return (FALSE);
 		new = ft_create_node(argv_to_int);
 		ft_push_stack(&push_swap->args_list, new);
 		free(split_argv[split_index]);

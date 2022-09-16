@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 02:17:58 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/13 22:32:34 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/15 21:12:34 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,18 @@
 # define TO_B 1
 # define TO_A 0
 
-# define LONG_INT_MAX 9223372036854775807
-# define LONG_INT_MIN -9223372036854775807
+# define INT_MAX 2147483647
+# define INT_MIN -2147483648
+
+# define PERCENTILE_CONSTANT 0.25
+# define FIRST_QUARTER 1
+# define MEDIAN 2
+# define THIRD_QUARTER 3
 
 typedef struct s_double_list
 {
 	int						element;
+	int						index;
 	struct s_double_list	*prev;
 	struct s_double_list	*next;
 }	t_double_list;
@@ -61,19 +67,31 @@ typedef struct s_double_list
 typedef struct s_stack
 {
 	int				size;
-	long int		min;
-	long int		max;
+	int				min;
+	int				max;
 	t_double_list	*head_stack;
 }	t_stack;
+
+typedef struct s_percentile
+{
+	int		percentile_id;
+	int		value;
+	double	percentile_const;
+	int		count_unordered;
+}	t_percentile;
 
 typedef struct s_push_swap
 {
 	t_stack				stack_a;
 	t_stack				stack_b;
 	t_stack				args_list;
+	t_stack				stack_ordered;
 	int					is_valid;
 	int					is_sorted;
 	int					argc;
+	t_percentile		first_quarter;
+	t_percentile		median;
+	t_percentile		third_quarter;
 	char				**argv;
 }	t_push_swap;
 
@@ -84,6 +102,7 @@ int				ft_head_is_null(t_double_list *head);
 int				ft_head_is_null(t_double_list *head);
 t_double_list	*ft_find_last(t_double_list *head);
 void			ft_print_all_stack(t_push_swap *push_swap);
+void			ft_clear_stack(t_stack *stack);
 void			ft_clear_all_stack(t_push_swap *push_swap);
 void			set_min_max(t_stack *stack, int element);
 void			init_min_max(t_stack *stack, int element);
@@ -119,4 +138,5 @@ void			ft_sort(t_push_swap *push_swap);
 void			ft_sort_small(t_stack *stack_a);
 void			ft_bubble_sort(t_stack *stack_a, t_stack *stack_b);
 void			insertion_sort(t_stack *stack_a, t_stack *stack_b);
+void			ft_find_percentiles(t_push_swap *push_swap);
 #endif //PUSH_SWAP_H

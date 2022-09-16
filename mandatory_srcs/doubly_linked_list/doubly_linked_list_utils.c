@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:24:15 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/13 20:58:11 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/15 18:59:57 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	ft_initialize_stack(t_stack *stack)
 {
 	stack->head_stack = NULL;
 	stack->size = 0;
-	stack->min = LONG_INT_MAX;
-	stack->max = LONG_INT_MIN;
+	stack->min = INT_MAX;
+	stack->max = INT_MIN;
 }
 
 int	ft_head_is_null(t_double_list *head)

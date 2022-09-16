@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 02:26:04 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/13 21:55:29 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/15 20:48:11 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ void	ft_clear_all_stack(t_push_swap *push_swap)
 {
 	ft_clear_stack(&push_swap->stack_a);
 	ft_clear_stack(&push_swap->stack_b);
+	ft_clear_stack(&push_swap->stack_ordered);
 }
 
 void	init_min_max(t_stack *stack, int element)
