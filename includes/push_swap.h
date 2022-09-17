@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 02:17:58 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/15 21:12:34 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/16 23:58:29 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,9 @@
 # define MEDIAN 2
 # define THIRD_QUARTER 3
 
+# define ASC 0
+# define DESC 0
+
 typedef struct s_double_list
 {
 	int						element;
@@ -92,6 +95,8 @@ typedef struct s_push_swap
 	t_percentile		first_quarter;
 	t_percentile		median;
 	t_percentile		third_quarter;
+	t_percentile		*percentiles;
+	int					percentiles_count;
 	char				**argv;
 }	t_push_swap;
 
@@ -103,6 +108,7 @@ int				ft_head_is_null(t_double_list *head);
 t_double_list	*ft_find_last(t_double_list *head);
 void			ft_print_all_stack(t_push_swap *push_swap);
 void			ft_clear_stack(t_stack *stack);
+void			ft_clear_percentiles(t_push_swap *push_swap);
 void			ft_clear_all_stack(t_push_swap *push_swap);
 void			set_min_max(t_stack *stack, int element);
 void			init_min_max(t_stack *stack, int element);
@@ -139,4 +145,12 @@ void			ft_sort_small(t_stack *stack_a);
 void			ft_bubble_sort(t_stack *stack_a, t_stack *stack_b);
 void			insertion_sort(t_stack *stack_a, t_stack *stack_b);
 void			ft_find_percentiles(t_push_swap *push_swap);
+int				ft_calculate_percentile(t_push_swap *push_swap,
+					t_percentile perc);
+void			ft_set_percentile_count(int size, int *percentile_count);
+void			ft_init_percentiles(t_percentile *perc, int size,
+					int percentile_count, int percentile_nbr);
+void			ft_sort_auxiliary_list(t_push_swap *push_swap,
+					t_stack *stack, int fill_index);
+void			ft_sort_three(t_stack *stack);
 #endif //PUSH_SWAP_H

@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 20:27:34 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/16 00:24:24 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/16 21:11:07 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,15 @@ int ft_compare_atoi_failed(int atoi_result, char *argv_atoi)
 {	
 	char	*itoa_result;
 	size_t	argv_atoi_len;
+	int		has_failed;
 
 	argv_atoi_len = ft_strlen(argv_atoi);
 	itoa_result = ft_itoa(atoi_result);
+	has_failed = FALSE;
 	if (ft_strncmp(itoa_result, argv_atoi, argv_atoi_len) != 0)
-	{
-		free(itoa_result);
-		return (TRUE);
-	}
-	return (FALSE);
+		has_failed = TRUE;
+	free(itoa_result);
+	return (has_failed);
 }
 
 int	has_atoi_failed(int atoi_result, char *argv_atoi)
