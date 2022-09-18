@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 21:01:31 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/17 00:04:30 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/17 21:06:17 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,24 @@ int	ft_is_sorted(t_stack *stack, int order)
 	return (is_sorted);
 }
 
-void	sort_b(t_stack *stack, t_percentile perc)
+void	sort_b(t_push_swap *push_swap)
 {
-	int	current_element;
+	int				current_element;
+	t_percentile	perc;
+	t_stack			*stack;
 
+	stack = &push_swap->stack_b;
+	if (stack->size == 1)
+		return ;
 	if (ft_head_is_null(stack->head_stack))
 		return ;
 	current_element = stack->head_stack->element;	
 	set_min_max(stack, current_element);
 	if (ft_is_single_node(stack->head_stack))
 		return ;
+	ft_init_percentiles(&perc, stack->size, 2, 1);
+	perc.value = ft_recalculate_percentile(push_swap, stack, 
+			perc.percentile_const * perc.percentile_id);
 	if (current_element <= perc.value)
 	{
 		call_single_operation(stack, RB);
@@ -101,27 +109,6 @@ int ft_convert_percentile_cost_to_int(double perc_const)
 
 	perc_index = (int)((perc_const) + 0.5) - 1;
 	return (perc_index);
-}
-
-void	send_to_b(t_push_swap *push_swap, int percentile)
-{
-	t_stack *stack_a;
-	t_stack *stack_b;
-	int		index;
-	int		size;
-
-	index = 0;
-	stack_a = &push_swap->stack_a;
-	stack_b = &push_swap->stack_b;
-	size = stack_a->size;
-	while (index < size)
-	{
-		if (push_swap->stack_a.head_stack->element <= percentile)
-			call_double_operation(stack_a, stack_b, PB);
-		else
-			call_single_operation(stack_a, RA);
-		index++;
-	}
 }
 
 void	send_to_b_index(t_push_swap *push_swap, int max_index)
@@ -187,29 +174,69 @@ void	send_to_a(t_push_swap *push_swap, int percentile)
 	}
 }
 
+void	send_to_b(t_push_swap *push_swap, int percentile)
+{
+	t_stack *stack_a;
+	t_stack *stack_b;
+	int		index;
+	int		size;
+
+	index = 0;
+	stack_a = &push_swap->stack_a;
+	stack_b = &push_swap->stack_b;
+	size = stack_a->size;
+	while (index < size)
+	{
+		if (push_swap->stack_a.head_stack->element <= percentile)
+			call_double_operation(stack_a, stack_b, PB);
+		else
+			call_single_operation(stack_a, RA);
+		index++;
+	}
+}
+
 
 void	ft_sort_big(t_push_swap *push_swap)
 {
+	t_stack	*stack_a;
+	t_stack *stack_b;
+	int		size;
+
+	stack_a = &push_swap->stack_a;
+	stack_b = &push_swap->stack_b;
 	int index;
- 	send_to_b(push_swap, push_swap->percentiles[1].value);
-	send_to_a(push_swap, push_swap->percentiles[0].value);
-	// send_to_a(push_swap, push_swap->percentiles[0].value / 2);
 	index = 0;
-	while (push_swap->stack_b.size >= 2)
+	size = push_swap->stack_ordered.size;
+	while (index < size)
 	{
-		send_to_b_index(push_swap, push_swap->percentiles[0].percentile_const / ((2 + index + 1)));
-		send_to_a_index(push_swap, push_swap->percentiles[0].percentile_const / ((2 + index + 1) * 2));
+		if (stack_a->head_stack->element <= push_swap->percentiles[0].value)
+		{
+			call_double_operation(stack_a, stack_b, PB);
+			sort_b(push_swap);
+		}
+		else
+			call_single_operation(stack_a, RA);
 		index++;
 	}
-	// int max_operations = push_swap->median.percentile_const;
-	// while (max_operations >= 0)
-	// {
-	// 	if (stack_b->head_stack->index < stack_b->head_stack->next->index)
-	// 		call_single_operation(stack_b, SB);
-	// 	call_double_operation(stack_b, stack_a, PA);
-	// 	max_operations--;
-	// }
+	index = 0;
+	size = stack_a->size;
+	t_percentile	perc;
 
+	ft_init_percentiles(&perc, stack_a->size, 2, 1);
+	perc.value = ft_recalculate_percentile(push_swap, stack_a, 
+			perc.percentile_const * perc.percentile_id);
+	while (index < size)
+	{
+		if (stack_a->head_stack->element <= perc.value)
+		{
+			call_double_operation(stack_a, stack_b, PB);
+			sort_b(push_swap);
+		}
+		else
+			call_single_operation(stack_a, RA);
+		index++;
+	}
+	
 }
 
 void	ft_sort(t_push_swap *push_swap)
@@ -219,15 +246,14 @@ void	ft_sort(t_push_swap *push_swap)
 
 	if (push_swap->is_sorted == TRUE)
 		return ;
-	if (push_swap->stack_a.size <= 3)
-		ft_sort_small(&push_swap->stack_a);
+	if (push_swap->stack_a.size <= 5)
+		ft_sort_small(push_swap, STACK_A);
 	else
 	{
 		ft_find_percentiles(push_swap);
 		ft_sort_big(push_swap);
+		ft_clear_percentiles(push_swap);
 	}
-	//ft_print_all_stack(push_swap);
-	//ft_printf("%d|%d|%d", push_swap->first_quarter.value,push_swap->median.value,push_swap->third_quarter.value);
+	ft_print_all_stack(push_swap);
 	ft_clear_all_stack(push_swap);
-	ft_clear_percentiles(push_swap);
 }

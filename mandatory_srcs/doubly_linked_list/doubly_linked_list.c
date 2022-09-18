@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 02:26:04 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/15 20:48:11 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/17 20:27:31 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,8 @@ int	ft_populate_stack(t_push_swap *push_swap)
 		head = head->next;
 		
 	}
+	push_swap->global_min = push_swap->stack_a.min;
+	push_swap->global_max = push_swap->stack_a.max;
 	ft_clear_stack(&push_swap->args_list);
 	return (push_swap->is_valid);
 }
