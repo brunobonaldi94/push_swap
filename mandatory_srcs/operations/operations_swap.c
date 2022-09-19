@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:29:44 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/11 23:33:07 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/18 18:26:11 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,21 @@ void	ft_swap_stack(t_stack *stack)
 	stack->head_stack = temp;
 }
 
-void	ft_swap_stack_sab(t_stack *stack)
+int	ft_swap_stack_sab(t_stack *stack)
 {
 	if (ft_head_is_null(stack->head_stack)
 		|| ft_is_single_node(stack->head_stack))
-		return ;
+		return (FALSE);
 	ft_swap_stack(stack);
+	return (TRUE);
 }
 
-void	ft_swap_stack_ss(t_stack *stack_a, t_stack *stack_b)
+int	ft_swap_stack_ss(t_stack *stack_a, t_stack *stack_b)
 {
-	ft_swap_stack_sab(stack_a);
-	ft_swap_stack_sab(stack_b);
+	int	first_rotate_return;
+	int	second_rotate_return;
+
+	first_rotate_return = ft_swap_stack_sab(stack_a);
+	second_rotate_return = ft_swap_stack_sab(stack_b);
+	return (first_rotate_return || second_rotate_return);
 }

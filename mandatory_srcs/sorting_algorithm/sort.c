@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 21:01:31 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/17 21:06:17 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/18 23:04:32 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,16 @@ void	sort_b(t_push_swap *push_swap)
 			perc.percentile_const * perc.percentile_id);
 	if (current_element <= perc.value)
 	{
-		call_single_operation(stack, RB);
+		call_single_operation(stack,
+			&push_swap->operations.operations_main, R_OP);
 		return ;
 	}
 	if (current_element < stack->head_stack->next->element)
-		call_single_operation(stack, SB);
+		call_single_operation(stack,
+			&push_swap->operations.operations_main, S_OP);
 }
 
-void	sort_a(t_stack *stack)
+void	sort_a(t_push_swap *push_swap, t_stack *stack)
 {
 	int	current_element;
 	int count_of_RAs;
@@ -75,16 +77,20 @@ void	sort_a(t_stack *stack)
 		return ;
 	while (current_element > stack->head_stack->next->element)
 	{
-		call_single_operation(stack, SA);
-		call_single_operation(stack, RA);
+		call_single_operation(stack,
+			&push_swap->operations.operations_main, S_OP);
+		call_single_operation(stack,
+			&push_swap->operations.operations_main, R_OP);
 		count_of_RAs++;
 	}
 	while (stack->head_stack->element != stack->min)
 	{
 		if (count_of_RAs >= (stack->size / 2))
-			call_single_operation(stack, RA);
+			call_single_operation(stack,
+				&push_swap->operations.operations_main, R_OP);
 		else
-			call_single_operation(stack, RRA);
+			call_single_operation(stack,
+				&push_swap->operations.operations_main, RR_OP);
 	}
 }
 
@@ -96,8 +102,7 @@ int	ft_diff_index(t_stack *stack, double perc_const, int current_index, int orde
 		perc_index = (int)((perc_const - current_index) + 0.5) - 1;
 		return ((perc_index - stack->head_stack->index) - 
 				(perc_index - current_index));
-	}
-		
+	}	
 	else if (order == ASC)
 		return (stack->head_stack->index - current_index);
 	return (FALSE);
@@ -125,9 +130,11 @@ void	send_to_b_index(t_push_swap *push_swap, int max_index)
 	while (index < size)
 	{
 		if (push_swap->stack_a.head_stack->index <= max_index)
-			call_double_operation(stack_a, stack_b, PB);
+			call_double_operation(stack_a, stack_b,
+				&push_swap->operations.operations_main, P_OP);
 		else
-			call_single_operation(stack_a, RA);
+			call_single_operation(stack_a,
+				&push_swap->operations.operations_main, R_OP);
 		index++;
 	}
 }
@@ -146,9 +153,11 @@ void	send_to_a_index(t_push_swap *push_swap, int min_index)
 	while (index < size)
 	{
 		if (push_swap->stack_b.head_stack->index > min_index)
-			call_double_operation(stack_b, stack_a, PA);
+			call_double_operation(stack_b, stack_a, 
+				&push_swap->operations.operations_main, P_OP);
 		else
-			call_single_operation(stack_b, RB);
+			call_single_operation(stack_b,
+				&push_swap->operations.operations_main, R_OP);
 		index++;
 	}
 }
@@ -167,9 +176,11 @@ void	send_to_a(t_push_swap *push_swap, int percentile)
 	while (index < size)
 	{
 		if (push_swap->stack_b.head_stack->element > percentile)
-			call_double_operation(stack_b, stack_a, PA);
+			call_double_operation(stack_b, stack_a,
+				&push_swap->operations.operations_main, P_OP);
 		else
-			call_single_operation(stack_b, RB);
+			call_single_operation(stack_b,
+				&push_swap->operations.operations_main, R_OP);
 		index++;
 	}
 }
@@ -188,9 +199,11 @@ void	send_to_b(t_push_swap *push_swap, int percentile)
 	while (index < size)
 	{
 		if (push_swap->stack_a.head_stack->element <= percentile)
-			call_double_operation(stack_a, stack_b, PB);
+			call_double_operation(stack_a, stack_b, 
+				&push_swap->operations.operations_main, P_OP);
 		else
-			call_single_operation(stack_a, RA);
+			call_single_operation(stack_a,
+				&push_swap->operations.operations_main, R_OP);
 		index++;
 	}
 }
@@ -206,16 +219,18 @@ void	ft_sort_big(t_push_swap *push_swap)
 	stack_b = &push_swap->stack_b;
 	int index;
 	index = 0;
-	size = push_swap->stack_ordered.size;
+	size = push_swap->stack_aux.size;
 	while (index < size)
 	{
 		if (stack_a->head_stack->element <= push_swap->percentiles[0].value)
 		{
-			call_double_operation(stack_a, stack_b, PB);
+			call_double_operation(stack_a, stack_b,
+				&push_swap->operations.operations_main, P_OP);
 			sort_b(push_swap);
 		}
 		else
-			call_single_operation(stack_a, RA);
+			call_single_operation(stack_a,
+				&push_swap->operations.operations_main, R_OP);
 		index++;
 	}
 	index = 0;
@@ -229,11 +244,13 @@ void	ft_sort_big(t_push_swap *push_swap)
 	{
 		if (stack_a->head_stack->element <= perc.value)
 		{
-			call_double_operation(stack_a, stack_b, PB);
+			call_double_operation(stack_a, stack_b,
+				&push_swap->operations.operations_main,P_OP);
 			sort_b(push_swap);
 		}
 		else
-			call_single_operation(stack_a, RA);
+			call_single_operation(stack_a,
+				&push_swap->operations.operations_main, R_OP);
 		index++;
 	}
 	
@@ -254,6 +271,8 @@ void	ft_sort(t_push_swap *push_swap)
 		ft_sort_big(push_swap);
 		ft_clear_percentiles(push_swap);
 	}
-	ft_print_all_stack(push_swap);
+	ft_print_operations(push_swap->operations.operations_main);
+	//ft_print_all_stack(push_swap);
 	ft_clear_all_stack(push_swap);
+	ft_clear_operations(push_swap);
 }

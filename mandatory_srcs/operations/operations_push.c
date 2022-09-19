@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:29:44 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/11 23:36:57 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/18 18:20:44 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,15 @@ t_double_list	*ft_pop_stack_move_pointer(t_stack *stack)
 	return (temp);
 }
 
-void	ft_pop_push_stack_pab(t_stack *stack_first, t_stack *stack_second)
+int	ft_pop_push_stack_pab(t_stack *stack_first, t_stack *stack_second)
 {
 	t_double_list	*pop_list_item;
 
 	if (ft_head_is_null(stack_first->head_stack))
-		return ;
+		return (FALSE);
 	pop_list_item = ft_pop_stack_move_pointer(stack_first);
 	if (pop_list_item == NULL)
-		return ;
+		return (FALSE);
 	ft_push_stack(stack_second, pop_list_item);
+	return (TRUE);
 }

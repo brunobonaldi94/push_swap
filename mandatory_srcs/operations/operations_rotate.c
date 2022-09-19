@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 02:57:46 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/11 23:37:24 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/18 18:25:13 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,27 @@ void	ft_rotate_stack(t_stack *stack)
 	last->next->next = NULL;
 }
 
-void	ft_rotate_stack_rab(t_stack *stack)
+int	ft_rotate_stack_rab(t_stack *stack)
 {
 	if (ft_head_is_null(stack->head_stack)
 		|| ft_is_single_node(stack->head_stack))
-		return ;
+		return (FALSE);
 	if (ft_has_two_nodes(stack->head_stack))
 	{
 		ft_swap_stack(stack);
-		return ;
+		return (FALSE);
 	}
 	ft_rotate_stack(stack);
+	return (TRUE);
 }
 
-void	ft_rotate_stack_rr(t_stack *stack_a, t_stack *stack_b)
+int	ft_rotate_stack_rr(t_stack *stack_a, t_stack *stack_b)
 {
-	ft_rotate_stack_rab(stack_a);
-	ft_rotate_stack_rab(stack_b);
+	int	first_rotate_return;
+	int	second_rotate_return;
+
+	first_rotate_return = ft_rotate_stack_rab(stack_a);
+	second_rotate_return = ft_rotate_stack_rab(stack_b);
+	return (first_rotate_return || second_rotate_return);
 }
+

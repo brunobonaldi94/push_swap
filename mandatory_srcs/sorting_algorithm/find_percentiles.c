@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 17:24:32 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/17 17:48:28 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/18 22:48:36 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,36 +59,45 @@ void	ft_quick_sort_recursive(t_double_list *head, t_double_list *last)
 	}
 }
 
-void	ft_fill_list(t_stack *stack_ordered, t_double_list *last_a)
+void	ft_fill_aux_list(t_stack *stack_aux, t_double_list *last_a)
 {
 	t_double_list	*new_node;
 
 	while (last_a)
 	{
 		new_node = ft_create_node(last_a->element);
-		ft_push_stack(stack_ordered, new_node);
+		ft_push_stack(stack_aux, new_node);
 		last_a = last_a->prev;
 	}
 }
 
-void	ft_fill_indexes(t_stack *stack_ordered, t_stack *stack_a)
+void	ft_refill_aux_list(t_stack *stack_aux, t_stack *stack)
+{
+	t_double_list	*last;
+
+	ft_clear_stack(stack_aux);
+	last = ft_find_last(stack->head_stack);
+	ft_fill_aux_list(stack_aux, last);
+}
+
+void	ft_fill_aux_indexes(t_stack *stack_aux, t_stack *stack_a)
 {
 	t_double_list	*head;
 	t_double_list	*head_a;
 	int				index;
 
-	head = stack_ordered->head_stack;
+	head = stack_aux->head_stack;
 	index = 0;
 	while (head)
 	{
 		head->index = index++;
 		head = head->next;
 	}
-	head = stack_ordered->head_stack;
+	head = stack_aux->head_stack;
 	head_a = stack_a->head_stack;
 	while (head_a)
 	{
-		head = stack_ordered->head_stack;
+		head = stack_aux->head_stack;
 		while (head)
 		{
 			if (head_a->element == head->element)
@@ -167,8 +176,8 @@ double	ft_calculate_percentile(t_push_swap *push_swap, t_percentile perc)
 
 	index_calculation = perc.percentile_const *
 		perc.percentile_id;
- 	head = push_swap->stack_ordered.head_stack;
-	if (push_swap->stack_ordered.size % 2 == 0)
+ 	head = push_swap->stack_aux.head_stack;
+	if (push_swap->stack_aux.size % 2 == 0)
 		index_calculation--;
 	index = 0;
 	while (index < index_calculation)
@@ -177,12 +186,29 @@ double	ft_calculate_percentile(t_push_swap *push_swap, t_percentile perc)
 		index++;
 	}
 	elements[0] = head->element;
-	if (push_swap->stack_ordered.size % 2 == 0 && head->next)
+	if (push_swap->stack_aux.size % 2 == 0 && head->next)
 		elements[1] = head->next->element;
 	else
 		elements[1] = head->element;
 	value = (elements[0] + elements[1]) / 2;
 	return (value);
+}
+
+int		ft_get_index(t_stack *stack, int element)
+{
+	t_double_list	*head;
+	int				index;
+
+	head = stack->head_stack;
+	index = 0;
+	while (head)
+	{
+		if (head->element == element)
+			break ;
+		head = head->next;
+		index++;
+	}
+	return (index);
 }
 
 void	ft_find_min_max(t_stack *stack)
@@ -213,11 +239,11 @@ double	ft_recalculate_percentile(t_push_swap *push_swap,
 		return ((stack->head_stack->element + 
 			stack->head_stack->next->element) / 2);
  	ft_find_min_max(stack);
-	ft_clear_stack(&push_swap->stack_ordered);
-	ft_sort_auxiliary_list(push_swap, stack, FALSE);
-	if (push_swap->stack_ordered.size % 2 == 0)
+	ft_clear_stack(&push_swap->stack_aux);
+	ft_sort_aux_list(push_swap, stack, FALSE);
+	if (push_swap->stack_aux.size % 2 == 0)
 		index_calculation--;
-	head = push_swap->stack_ordered.head_stack;
+	head = push_swap->stack_aux.head_stack;
 	index = 0;
 	while (index < index_calculation)
 	{
@@ -225,7 +251,7 @@ double	ft_recalculate_percentile(t_push_swap *push_swap,
 		index++;
 	}
  	elements[0] = head->element;
-	if (push_swap->stack_ordered.size % 2 == 0 && head->next)
+	if (push_swap->stack_aux.size % 2 == 0 && head->next)
 		elements[1] = head->next->element;
 	else
 		elements[1] = head->element;
@@ -237,16 +263,16 @@ void	ft_clear_percentiles(t_push_swap *push_swap)
 	free(push_swap->percentiles);
 }
 
-void	ft_sort_auxiliary_list(t_push_swap *push_swap,
+void	ft_sort_aux_list(t_push_swap *push_swap,
 			t_stack *stack, int fill_index)
 {
 	t_double_list	*last;
 
 	last = ft_find_last(stack->head_stack);
-	ft_fill_list(&push_swap->stack_ordered, last);
-	ft_quick_sort_recursive(push_swap->stack_ordered.head_stack, last);
+	ft_fill_aux_list(&push_swap->stack_aux, last);
+	ft_quick_sort_recursive(push_swap->stack_aux.head_stack, last);
 	if (fill_index)
-		ft_fill_indexes(&push_swap->stack_ordered, stack);
+		ft_fill_aux_indexes(&push_swap->stack_aux, stack);
 }
 
 void	ft_set_percentile_count(int size, int *percentile_count)
@@ -267,7 +293,7 @@ void	ft_find_percentiles(t_push_swap *push_swap)
 	int index;
 
 	size = push_swap->stack_a.size;
-	ft_sort_auxiliary_list(push_swap, &push_swap->stack_a, TRUE);
+	ft_sort_aux_list(push_swap, &push_swap->stack_a, TRUE);
 	ft_set_percentile_count(size, &push_swap->percentiles_count);
 	push_swap->percentiles = (t_percentile *)malloc(sizeof(t_percentile) 
 		* push_swap->percentiles_count);

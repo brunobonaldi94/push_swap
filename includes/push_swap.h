@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 02:17:58 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/17 21:05:25 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/18 22:49:05 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,12 @@
 # define SUCCESS_CODE 0
 # define ERROR_CODE_FUNCTION -1
 
-# define MAX_OPERATION_LEN 3
+# define MAX_OPERATION_LEN 2
 
-# define STACK_A 'a'
-# define STACK_B 'b'
+# define STACK_A "a"
+# define STACK_B "b"
+# define STACK_AUX "x"
+# define STACK_ARGS "g"
 
 # define SA "sa"
 # define SB "sb"
@@ -48,6 +50,11 @@
 # define RRB "rrb"
 # define RRR "rrr"
 
+# define S_OP "s"
+# define P_OP "p"
+# define R_OP "r"
+# define RR_OP "rr"
+
 # define TO_B 1
 # define TO_A 0
 
@@ -60,7 +67,7 @@
 # define THIRD_QUARTER 3
 
 # define ASC 0
-# define DESC 0
+# define DESC 1
 
 typedef struct s_double_list
 {
@@ -75,6 +82,7 @@ typedef struct s_stack
 	int				size;
 	int				min;
 	int				max;
+	char			*str_id;
 	t_double_list	*head_stack;
 }	t_stack;
 
@@ -86,12 +94,20 @@ typedef struct s_percentile
 	int			count_unordered;
 }	t_percentile;
 
+typedef struct s_operations
+{
+	t_list	*operations_main;
+	t_list	*operations_secondary;
+	t_list	*operations_tertiary;
+}	t_operations;
+
 typedef struct s_push_swap
 {
 	t_stack				stack_a;
 	t_stack				stack_b;
 	t_stack				args_list;
-	t_stack				stack_ordered;
+	t_stack				stack_aux;
+	t_operations		operations;
 	int					global_min;
 	int					global_max;
 	int					is_valid;
@@ -117,38 +133,49 @@ void			ft_clear_percentiles(t_push_swap *push_swap);
 void			ft_clear_all_stack(t_push_swap *push_swap);
 void			set_min_max(t_stack *stack, int element);
 void			init_min_max(t_stack *stack, int element);
+int				ft_stack_is_empty(t_stack *stack);
 //parse args
 int				parse_args(t_push_swap *push_swap);
+// operations list
+void			ft_initialize_operations(t_push_swap *push_swap);
+void			ft_addback_operation(t_list **operations,
+					char *operation_string);
+void			ft_clear_operations(t_push_swap *push_swap);
+void			ft_print_operations(t_list *operations);
 // operations push
 void			ft_push_stack(t_stack *stack, t_double_list *new);
 void			ft_pop_stack_free(t_stack *stack);
 t_double_list	*ft_pop_stack_move_pointer(t_stack *stack);
-void			ft_pop_push_stack_pab(t_stack *stack_first,
+int				ft_pop_push_stack_pab(t_stack *stack_first,
 					t_stack *stack_second);
 void			ft_print_stack(t_stack stack, char A_or_B);
 // operations swap
 void			ft_swap_stack(t_stack *stack);
-void			ft_swap_stack_sab(t_stack *stack);
-void			ft_swap_stack_ss(t_stack *stack_a, t_stack *stack_b);
+int				ft_swap_stack_sab(t_stack *stack);
+int				ft_swap_stack_ss(t_stack *stack_a, t_stack *stack_b);
 // operations rotate reverse
-void			ft_rotate_stack_rrab(t_stack *stack);
-void			ft_rotate_stack_rrr(t_stack *stack_a, t_stack *stack_b);
+int				ft_rotate_stack_rrab(t_stack *stack);
+int				ft_rotate_stack_rrr(t_stack *stack_a, t_stack *stack_b);
 // operations rotate
-void			ft_rotate_stack_rab(t_stack *stack);
-void			ft_rotate_stack_rr(t_stack *stack_a, t_stack *stack_b);
+int				ft_rotate_stack_rab(t_stack *stack);
+int				ft_rotate_stack_rr(t_stack *stack_a, t_stack *stack_b);
 //start stack
-void			ft_initialize_stack(t_stack *stack);
+void			ft_initialize_stack(t_stack *stack, char *str_id);
 int				ft_populate_stack(t_push_swap *push_swap);
 t_double_list	*ft_create_node(int element);
 // call operations
-void			call_single_operation(t_stack *stack, char *operation);
+void			call_single_operation(t_stack *stack, 
+				t_list **operation, char *operation_start);
 void			call_double_operation(t_stack *stack_first,
-					t_stack *stack_second, char *operation);
+					t_stack *stack_second, t_list **operation,
+					char *operation_start);
 //sorting 
 void			ft_sort(t_push_swap *push_swap);
-void			ft_sort_small(t_push_swap *push_swap, char a_or_b);
-void			ft_bubble_sort(t_stack *stack_a, t_stack *stack_b);
-void			insertion_sort(t_stack *stack_a, t_stack *stack_b);
+void			ft_sort_small(t_push_swap *push_swap, char *a_or_b);
+void			ft_bubble_sort(t_stack *stack_a, t_stack *stack_b,
+					t_list **operations);
+void			insertion_sort(t_stack *stack_a,
+					t_stack *stack_b, t_list **operations);
 void			ft_find_percentiles(t_push_swap *push_swap);
 double			ft_calculate_percentile(t_push_swap *push_swap,
 					t_percentile perc);
@@ -158,8 +185,10 @@ double			ft_recalculate_percentile(t_push_swap *push_swap,
 					t_stack *stack, double index_calculation);
 void			ft_init_percentiles(t_percentile *perc, int size,
 					int percentile_count, int percentile_nbr);
-void			ft_sort_auxiliary_list(t_push_swap *push_swap,
+void			ft_sort_aux_list(t_push_swap *push_swap,
 					t_stack *stack, int fill_index);
-void			ft_sort_three(t_stack *stack);
+void			ft_refill_aux_list(t_stack *stack_aux, t_stack *stack);
+int				ft_get_index(t_stack *stack, int element);
+void			ft_sort_three(t_stack *stack, t_list **operations);
 void			ft_find_min_max(t_stack *stack);
 #endif //PUSH_SWAP_H
