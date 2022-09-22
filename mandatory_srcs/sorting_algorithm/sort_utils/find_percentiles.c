@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 17:24:32 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/18 22:48:36 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/21 22:29:01 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,8 +208,112 @@ int		ft_get_index(t_stack *stack, int element)
 		head = head->next;
 		index++;
 	}
+	if (index > stack->size)
+		return (-1);
 	return (index);
 }
+
+int		ft_get_index_ordered_of_element(t_stack *stack, int element)
+{
+	t_double_list	*head;
+	int				index;
+
+	head = stack->head_stack;
+	index = 0;
+	while (head)
+	{
+		if (head->element == element)
+			break ;
+		head = head->next;
+		index++;
+	}
+	if (head == NULL)
+		return (-1);
+	return (head->index);
+}
+
+
+int		ft_get_next_index_asc(t_stack *stack, int index_start, int index_max)
+{
+	index_start++;
+	t_double_list	*head;
+	int				index;
+
+	head = stack->head_stack;
+	while (index_start <= index_max)
+	{
+		head = stack->head_stack;
+		index = 0;
+		while (head)
+		{
+			if (head->index == index_start)
+				return (index);
+			head = head->next;
+			index++;
+		}
+		index_start++;
+	}
+	if (index_start > index_max)
+		return (-1);
+	return (index);
+}
+
+int		ft_get_previous_index_asc(t_stack *stack, 
+			int index_start, int index_min)
+{
+	index_start--;
+	t_double_list	*head;
+	int				index;
+
+	head = stack->head_stack;
+	while (index_start >= index_min)
+	{
+		head = stack->head_stack;
+		index = 0;
+		while (head)
+		{
+			if (head->index == index_start)
+				return (index);
+			head = head->next;
+			index++;
+		}
+		index_start--;
+	}
+	if (index_start < index_min)
+		return (-1);
+	return (index);
+}
+
+int		ft_get_index_from_next_index(t_stack *stack, int index_start,
+			int order)
+{
+	int				index;
+	int				index_max;
+
+	index = -1;
+	if (order == ASC)
+	{
+		index_max = ft_get_index_ordered_of_element(stack, stack->max);
+		return (ft_get_next_index_asc(stack, index_start, index_max));
+	}
+	return (index);
+}
+
+int		ft_get_index_from_previous_index(t_stack *stack, int index_start,
+			int order)
+{
+	int				index;
+	int				index_min;
+
+	index = -1;
+	if (order == ASC)
+	{
+		index_min = ft_get_index_ordered_of_element(stack, stack->min);
+		return (ft_get_previous_index_asc(stack, index_start, index_min));
+	}
+	return (index);
+}
+
 
 void	ft_find_min_max(t_stack *stack)
 {
@@ -268,6 +372,8 @@ void	ft_sort_aux_list(t_push_swap *push_swap,
 {
 	t_double_list	*last;
 
+	if (push_swap->stack_aux.head_stack != NULL)
+		ft_clear_stack(&push_swap->stack_aux);
 	last = ft_find_last(stack->head_stack);
 	ft_fill_aux_list(&push_swap->stack_aux, last);
 	ft_quick_sort_recursive(push_swap->stack_aux.head_stack, last);

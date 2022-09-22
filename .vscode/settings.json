@@ -14,6 +14,11 @@
 		"type_traits": "c",
 		"istream": "c",
 		"ostream": "c",
-		"cstdint": "cpp"
+		"cstdint": "cpp",
+		"*.tcc": "c",
+		"string": "c",
+		"chrono": "c",
+		"variant": "c",
+		"semaphore": "c"
 	}
 }

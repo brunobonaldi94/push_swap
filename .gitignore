@@ -6,3 +6,7 @@ push_swap_bonus
 /push_swap_tester
 test_4.sh
 4_n
+test_*.sh
+*_n
+oi.py
+random_numbers

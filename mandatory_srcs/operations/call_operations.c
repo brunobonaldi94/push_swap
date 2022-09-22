@@ -6,13 +6,13 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 21:39:21 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/18 20:24:42 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/21 22:59:55 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	check_operation(char *operation_called, char *operation_check)
+int	ft_check_operation(char *operation_called, char *operation_check)
 {
 	int	are_equal;
 
@@ -27,11 +27,11 @@ void	call_single_operation(t_stack *stack,
 	char	*new_operation;
 	int		operation_result;
 
-	if (check_operation(operation_start, S_OP))
+	if (ft_check_operation(operation_start, S_OP))
 		operation_result = ft_swap_stack_sab(stack);
-	else if (check_operation(operation_start, R_OP))
+	else if (ft_check_operation(operation_start, R_OP))
 		operation_result = ft_rotate_stack_rab(stack);
-	else if (check_operation(operation_start, RR_OP))
+	else if (ft_check_operation(operation_start, RR_OP))
 		operation_result = ft_rotate_stack_rrab(stack);
 	if (operation_result == TRUE)
 	{
@@ -46,18 +46,27 @@ void	call_double_operation(t_stack *stack_first, t_stack *stack_second,
 	char	*new_operation;
 	int		operation_result;
 
-	if (check_operation(operation_start, P_OP))
+	if (ft_check_operation(operation_start, P_OP))
 		operation_result = ft_pop_push_stack_pab(stack_first, stack_second);
-	else if (check_operation(operation_start, R_OP))
+	else if (ft_check_operation(operation_start, R_OP))
 		operation_result = ft_rotate_stack_rr(stack_first, stack_second);
-	else if (check_operation(operation_start, RR_OP))
+	else if (ft_check_operation(operation_start, RR_OP))
 		operation_result = ft_rotate_stack_rrr(stack_first, stack_second);
+	else if (ft_check_operation(operation_start, S_OP))
+		operation_result = ft_swap_stack_ss(stack_first, stack_second);
 	if (operation_result == TRUE)
 	{
-		if (check_operation(operation_start, P_OP))
+		if (ft_check_operation(operation_start, P_OP))
+		{
 			new_operation = ft_strjoin(operation_start, stack_second->str_id);
-		else
+			ft_find_min_max(stack_first);
+			ft_find_min_max(stack_second);
+		}
+		else if (ft_check_operation(operation_start, R_OP) 
+			|| ft_check_operation(operation_start, RR_OP))
 			new_operation = ft_strjoin(operation_start, "r");
+		else
+			new_operation = ft_strjoin(operation_start, "s");
 		ft_addback_operation(operation, new_operation);
 	}
 }

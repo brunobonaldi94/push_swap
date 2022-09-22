@@ -10,7 +10,7 @@ OPERATIONS_PATH			=	operations
 OPERATIONS_LIST_PATH	=	$(OPERATIONS_PATH)/operations_list
 SORTING_ALGORITHM_PATH	=	sorting_algorithm
 SORT_SMALL_PATH			=	$(SORTING_ALGORITHM_PATH)/sort_small
-
+SORT_UTILS_PATH			= 	$(SORTING_ALGORITHM_PATH)/sort_utils
 define COMPILE_DONE
 
   _____  _    _  _____ _    _    _______          __     _____             _____   ____  _   _ ______ 
@@ -28,8 +28,9 @@ SRCS =	$(MANDATORY_PATH)/push_swap.c \
 		$(addprefix $(MANDATORY_PATH)/$(PARSE_ARGS)/, parse_args.c) \
 		$(addprefix $(MANDATORY_PATH)/$(OPERATIONS_PATH)/, operations_push.c operations_swap.c operations_rotate_reverse.c operations_rotate.c call_operations.c) \
 		$(addprefix $(MANDATORY_PATH)/$(OPERATIONS_LIST_PATH)/, operations_list.c) \
-		$(addprefix $(MANDATORY_PATH)/$(SORTING_ALGORITHM_PATH)/, sort.c bubble_sort.c insertion_sort.c find_percentiles.c) \
-		$(addprefix $(MANDATORY_PATH)/$(SORT_SMALL_PATH)/, sort_small.c)
+		$(addprefix $(MANDATORY_PATH)/$(SORTING_ALGORITHM_PATH)/, sort.c bubble_sort.c insertion_sort.c) \
+		$(addprefix $(MANDATORY_PATH)/$(SORT_SMALL_PATH)/, sort_small.c sort_small_utils.c) \
+		$(addprefix $(MANDATORY_PATH)/$(SORT_UTILS_PATH)/, find_percentiles.c)
 
 OBJS =	$(SRCS:.c=.o)
 NAME =	push_swap

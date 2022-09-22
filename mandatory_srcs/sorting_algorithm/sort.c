@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 21:01:31 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/18 23:04:32 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/20 23:59:54 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,11 +259,9 @@ void	ft_sort_big(t_push_swap *push_swap)
 void	ft_sort(t_push_swap *push_swap)
 {
 	//ft_print_all_stack(push_swap);
-	
-
 	if (push_swap->is_sorted == TRUE)
 		return ;
-	if (push_swap->stack_a.size <= 5)
+	if (push_swap->stack_a.size <= 10)
 		ft_sort_small(push_swap, STACK_A);
 	else
 	{
@@ -272,7 +270,7 @@ void	ft_sort(t_push_swap *push_swap)
 		ft_clear_percentiles(push_swap);
 	}
 	ft_print_operations(push_swap->operations.operations_main);
-	//ft_print_all_stack(push_swap);
+	ft_print_all_stack(push_swap);
 	ft_clear_all_stack(push_swap);
 	ft_clear_operations(push_swap);
 }

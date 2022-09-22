@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 02:17:58 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/18 22:49:05 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/21 23:56:32 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,10 @@
 
 # define ASC 0
 # define DESC 1
+# define SWAP 2
 
+# define SECONDARY_OP 2
+# define TERTIARY_OP 3 
 typedef struct s_double_list
 {
 	int						element;
@@ -77,11 +80,18 @@ typedef struct s_double_list
 	struct s_double_list	*next;
 }	t_double_list;
 
+typedef struct s_op_moves
+{
+	char	*op;
+	int		moves;
+}	t_op_moves;
+
 typedef struct s_stack
 {
 	int				size;
 	int				min;
 	int				max;
+	t_op_moves		op_moves;
 	char			*str_id;
 	t_double_list	*head_stack;
 }	t_stack;
@@ -159,6 +169,8 @@ int				ft_rotate_stack_rrr(t_stack *stack_a, t_stack *stack_b);
 // operations rotate
 int				ft_rotate_stack_rab(t_stack *stack);
 int				ft_rotate_stack_rr(t_stack *stack_a, t_stack *stack_b);
+// operations utils
+int				ft_check_operation(char *operation_called, char *operation_check);
 //start stack
 void			ft_initialize_stack(t_stack *stack, char *str_id);
 int				ft_populate_stack(t_push_swap *push_swap);
@@ -191,4 +203,16 @@ void			ft_refill_aux_list(t_stack *stack_aux, t_stack *stack);
 int				ft_get_index(t_stack *stack, int element);
 void			ft_sort_three(t_stack *stack, t_list **operations);
 void			ft_find_min_max(t_stack *stack);
+int				ft_is_sorted(t_stack *stack, int order);
+int				ft_get_index_from_next_index(t_stack *stack, int index_start,
+					int order);
+int				ft_get_index_from_previous_index(t_stack *stack, int index_start,
+					int order);
+int				ft_calculate_less_amount_moves(t_push_swap *push_swap,
+					t_stack *from_stack, t_stack *to_stack);
+void			ft_apply_calculated_moves(t_push_swap *push_swap,
+					t_stack *stack_first, t_stack *stack_second,
+					t_list *operations);
+t_op_moves		ft_pick_smallest_rotate(t_stack *stack,
+					int element, int index_to);
 #endif //PUSH_SWAP_H

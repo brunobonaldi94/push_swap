@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 22:26:40 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/18 20:02:15 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/21 19:03:56 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,5 @@ void	insertion_sort(t_stack *stack_a, t_stack *stack_b,
 		}
 		call_single_operation(stack_a, operations, RR_OP);
 		call_double_operation(stack_a, stack_b, operations, P_OP);
-	}
+	} 
 }
