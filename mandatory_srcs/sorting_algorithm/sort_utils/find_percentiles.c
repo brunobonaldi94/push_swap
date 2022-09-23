@@ -6,70 +6,11 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 17:24:32 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/21 22:29:01 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/22 21:21:00 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-void swap(int *a, int *b)
-{
-	int swap;
-
-	swap = *a;
-	*a = *b;
-	*b = swap;
-}
-
-t_double_list *partition_first(t_double_list *head, t_double_list *last)
-{
-	int				pivot;
-	t_double_list	*right_nodes;
-	t_double_list	*left_nodes;
-
-	pivot = head->element;
-	left_nodes = head;
-	right_nodes = head->next;
-	while (right_nodes != last->next)
-	{
-		if (right_nodes->element < pivot)
-		{
-			if (left_nodes)
-				left_nodes = left_nodes->next;
-			else
-				left_nodes = head;
-			swap(&left_nodes->element, &right_nodes->element);
-		}
-		right_nodes = right_nodes->next;
-	}
-	if (!left_nodes)
-		left_nodes = head;
-	swap(&left_nodes->element, &head->element);
-	return (left_nodes);
-}
-
-void	ft_quick_sort_recursive(t_double_list *head, t_double_list *last)
-{
-	t_double_list	*partition_node;
-	if (last != NULL && head != last && head != last->next)
-	{
-		partition_node = partition_first(head, last);
-		ft_quick_sort_recursive(head, partition_node->prev);
-		ft_quick_sort_recursive(partition_node->next, last);
-	}
-}
-
-void	ft_fill_aux_list(t_stack *stack_aux, t_double_list *last_a)
-{
-	t_double_list	*new_node;
-
-	while (last_a)
-	{
-		new_node = ft_create_node(last_a->element);
-		ft_push_stack(stack_aux, new_node);
-		last_a = last_a->prev;
-	}
-}
 
 void	ft_refill_aux_list(t_stack *stack_aux, t_stack *stack)
 {
@@ -78,34 +19,6 @@ void	ft_refill_aux_list(t_stack *stack_aux, t_stack *stack)
 	ft_clear_stack(stack_aux);
 	last = ft_find_last(stack->head_stack);
 	ft_fill_aux_list(stack_aux, last);
-}
-
-void	ft_fill_aux_indexes(t_stack *stack_aux, t_stack *stack_a)
-{
-	t_double_list	*head;
-	t_double_list	*head_a;
-	int				index;
-
-	head = stack_aux->head_stack;
-	index = 0;
-	while (head)
-	{
-		head->index = index++;
-		head = head->next;
-	}
-	head = stack_aux->head_stack;
-	head_a = stack_a->head_stack;
-	while (head_a)
-	{
-		head = stack_aux->head_stack;
-		while (head)
-		{
-			if (head_a->element == head->element)
-				head_a->index = head->index;
-			head = head->next;
-		}
-		head_a = head_a->next;
-	}
 }
 
 void	ft_set_unordered_count(t_double_list **head, t_percentile *perc, 
@@ -194,24 +107,7 @@ double	ft_calculate_percentile(t_push_swap *push_swap, t_percentile perc)
 	return (value);
 }
 
-int		ft_get_index(t_stack *stack, int element)
-{
-	t_double_list	*head;
-	int				index;
 
-	head = stack->head_stack;
-	index = 0;
-	while (head)
-	{
-		if (head->element == element)
-			break ;
-		head = head->next;
-		index++;
-	}
-	if (index > stack->size)
-		return (-1);
-	return (index);
-}
 
 int		ft_get_index_ordered_of_element(t_stack *stack, int element)
 {
@@ -315,20 +211,6 @@ int		ft_get_index_from_previous_index(t_stack *stack, int index_start,
 }
 
 
-void	ft_find_min_max(t_stack *stack)
-{
-	t_double_list	*head;
-
-	head = stack->head_stack;
-	stack->max = INT_MIN;
-	stack->min = INT_MAX;
-	while (head)
-	{
-		set_min_max(stack, head->element);
-		head = head->next;
-	}
-}
-
 double	ft_recalculate_percentile(t_push_swap *push_swap, 
 		t_stack *stack, double index_calculation)
 {
@@ -367,20 +249,6 @@ void	ft_clear_percentiles(t_push_swap *push_swap)
 	free(push_swap->percentiles);
 }
 
-void	ft_sort_aux_list(t_push_swap *push_swap,
-			t_stack *stack, int fill_index)
-{
-	t_double_list	*last;
-
-	if (push_swap->stack_aux.head_stack != NULL)
-		ft_clear_stack(&push_swap->stack_aux);
-	last = ft_find_last(stack->head_stack);
-	ft_fill_aux_list(&push_swap->stack_aux, last);
-	ft_quick_sort_recursive(push_swap->stack_aux.head_stack, last);
-	if (fill_index)
-		ft_fill_aux_indexes(&push_swap->stack_aux, stack);
-}
-
 void	ft_set_percentile_count(int size, int *percentile_count)
 {
 	if (size <= 10)
@@ -414,3 +282,4 @@ void	ft_find_percentiles(t_push_swap *push_swap)
 	}
  	ft_unordered_percentile_count(push_swap, push_swap->percentiles_count);
 }
+

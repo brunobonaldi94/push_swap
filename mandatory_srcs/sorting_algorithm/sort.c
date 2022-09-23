@@ -6,20 +6,20 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 21:01:31 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/20 23:59:54 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/22 20:41:27 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	ft_is_sorted(t_stack *stack, int order)
+int	ft_is_sorted(t_double_list *head_stack, int order)
 {
 	int				is_sorted;
 	t_double_list	*head;
 	t_double_list	*next;
 
 	is_sorted = TRUE;
-	head = stack->head_stack;
+	head = head_stack;
 	if (head == NULL)
 		return (is_sorted);
 	next = head->next;
@@ -261,6 +261,8 @@ void	ft_sort(t_push_swap *push_swap)
 	//ft_print_all_stack(push_swap);
 	if (push_swap->is_sorted == TRUE)
 		return ;
+	push_swap->global_median = ft_find_median(push_swap,
+		&push_swap->stack_a, TRUE);
 	if (push_swap->stack_a.size <= 10)
 		ft_sort_small(push_swap, STACK_A);
 	else

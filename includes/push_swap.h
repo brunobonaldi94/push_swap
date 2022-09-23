@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 02:17:58 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/21 23:56:32 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/22 22:29:36 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ typedef struct s_stack
 	int				min;
 	int				max;
 	t_op_moves		op_moves;
+	double			median;
 	char			*str_id;
 	t_double_list	*head_stack;
 }	t_stack;
@@ -120,6 +121,7 @@ typedef struct s_push_swap
 	t_operations		operations;
 	int					global_min;
 	int					global_max;
+	double				global_median;
 	int					is_valid;
 	int					is_sorted;
 	int					argc;
@@ -203,7 +205,7 @@ void			ft_refill_aux_list(t_stack *stack_aux, t_stack *stack);
 int				ft_get_index(t_stack *stack, int element);
 void			ft_sort_three(t_stack *stack, t_list **operations);
 void			ft_find_min_max(t_stack *stack);
-int				ft_is_sorted(t_stack *stack, int order);
+int				ft_is_sorted(t_double_list *head_stack, int order);
 int				ft_get_index_from_next_index(t_stack *stack, int index_start,
 					int order);
 int				ft_get_index_from_previous_index(t_stack *stack, int index_start,
@@ -215,4 +217,21 @@ void			ft_apply_calculated_moves(t_push_swap *push_swap,
 					t_list *operations);
 t_op_moves		ft_pick_smallest_rotate(t_stack *stack,
 					int element, int index_to);
+void			ft_put_index_at_top(t_push_swap *push_swap,
+					t_stack *stack, int index);
+void			ft_put_element_at_top(t_push_swap *push_swap,
+					t_stack *stack, int element);
+double			ft_find_median(t_push_swap *push_swap,
+					t_stack *stack, int fill_index);
+
+void			ft_quick_sort_recursive(t_double_list *head,
+					t_double_list *last);
+void			ft_sort_aux_list(t_push_swap *push_swap,
+					t_stack *stack, int fill_index);
+void			ft_fill_aux_list(t_stack *stack_aux,
+					t_double_list *last_a);
+int				ft_smallest_rotate_from_median(double median,
+					t_stack *stack);
+void			ft_less_operations_for_next_below_median(t_push_swap *push_swap,
+					t_stack *stack_first, t_stack *stack_second, double median);
 #endif //PUSH_SWAP_H

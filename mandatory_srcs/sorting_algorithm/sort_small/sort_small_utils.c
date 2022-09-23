@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 22:04:11 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/22 00:02:32 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/22 19:32:56 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_simulate_moves_up_from_b_to_a(t_list **operations_up, int position_to, i
 	}
 	else if (position_to == size - 1)
 	{
-		ft_addback_operation(operations_up, ft_strdup(R_OP));
+		ft_addback_operation(operations_up, ft_strdup(RR_OP));
 		ft_addback_operation(operations_up, ft_strdup(P_OP));
 		return ;
 	}
@@ -91,19 +91,13 @@ int ft_calculate_less_amount_moves(t_push_swap *push_swap,
 	push_swap->operations.operations_tertiary = NULL;
 	if (from_stack->str_id[0] == STACK_B[0])
 	{
-		// if (from_stack->head_stack->index == 0)
-		// {
-		// 	to_stack->op_moves = ft_pick_smallest_rotate(to_stack,
-		// 	to_stack->min, 0);
-		// 	while (to_stack->op_moves.moves)
-		// 	{
-		// 		ft_addback_operation(&push_swap->operations.operations_secondary,
-		// 		ft_strdup(to_stack->op_moves.op));
-		// 		to_stack->op_moves.moves--;
-		// 	}
-		// 	ft_addback_operation(&push_swap->operations.operations_secondary,ft_strdup(P_OP));
-		// 	return (SECONDARY_OP);
-		// }
+		if (from_stack->head_stack->index == 0 && from_stack->size == 1)
+		{
+		 	ft_addback_operation(
+				&push_swap->operations.operations_secondary,
+				ft_strdup(P_OP));
+		 	return (SECONDARY_OP);
+		}
 		index_from = from_stack->head_stack->index;
 		position_to = ft_get_index_from_next_index(to_stack, index_from, ASC);
 		ft_simulate_moves_up_from_b_to_a(
@@ -114,9 +108,11 @@ int ft_calculate_less_amount_moves(t_push_swap *push_swap,
 			&push_swap->operations.operations_tertiary,
 			position_down, to_stack->size);
 	}
+	ft_printf("==============\n");
 	ft_print_operations(push_swap->operations.operations_secondary);
-	ft_printf("------------------\n");
+	ft_printf("--------------\n");
 	ft_print_operations(push_swap->operations.operations_tertiary);
+	ft_printf("==============\n");
  	return (ft_pick_less_moves(push_swap->operations.operations_secondary, 
 			push_swap->operations.operations_tertiary));
 }

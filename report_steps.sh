@@ -7,7 +7,7 @@ QTY=1000
 BIN="push_swap"
 
 create_random_numbers() {
-	seq $QTY | shuf | awk 'NR % 2' | tr '\n' ' ' > random_numbers
+	shuf -i 0-"$QTY" | awk 'NR % 2' | tr '\n' ' ' > random_numbers
 }
 
 run_push_swap () {
@@ -22,7 +22,6 @@ count_of_steps() {
 		printf "%s= %d - (%s%%)\n" $STEP $COUNT_OF_MOVES $(echo "scale=1;$PERCENTAGE / 100" | bc)
 	fi
 }
-
 
 create_random_numbers
 run_push_swap

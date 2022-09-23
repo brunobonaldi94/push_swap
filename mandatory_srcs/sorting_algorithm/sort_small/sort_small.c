@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 03:35:14 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/21 23:25:36 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/23 00:13:15 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	ft_sort_three(t_stack *stack, t_list **operations);
 void	ft_sort_two(t_stack *stack, t_list **operations);
+void	ft_sort_three_desc(t_stack *stack, t_list **operations);
 
 int	return_min_order(int desc, int asc)
 {
@@ -185,112 +186,124 @@ void	ft_sort_five(t_push_swap *push_swap, t_stack *stack_first,
 }
 
 
+// void	ft_sort_small_chunks(t_push_swap *push_swap, t_stack *stack_first,
+// 			t_stack *stack_second)
+// {
+// 		t_list	**operations;
+// 		int		index_min;
+// 		int		index_max;
+// 		int		starting_size;
+
+// 		operations = &push_swap->operations.operations_main;
+// 		starting_size = stack_first->size;
+// 		index_min = ft_get_index(stack_first, -1);
+// 		index_max = ft_get_index(stack_first, stack_first->max);
+// 		if (index_min == 1)
+// 			call_single_operation(stack_first, operations, S_OP);
+// 		else if (index_min == starting_size - 1)
+// 			call_single_operation(stack_first, operations, RR_OP);
+// 		if (index_max == 0)
+// 			call_single_operation(stack_first, operations, R_OP);
+// 		while (stack_second->size != starting_size / 2)
+// 		{
+// 			call_double_operation(stack_first, stack_second, operations, P_OP);
+// 			ft_sort_two(stack_second, operations);
+// 		}
+// 		while (stack_second->size)
+// 		{
+// 			if (ft_calculate_less_amount_moves(push_swap, stack_second, stack_first) == SECONDARY_OP)
+// 				ft_apply_calculated_moves(push_swap, stack_first, stack_second, 
+// 				push_swap->operations.operations_secondary);
+// 			else
+// 				ft_apply_calculated_moves(push_swap, stack_first, stack_second,
+// 				push_swap->operations.operations_tertiary);
+// 		}
+// 		stack_first->op_moves = ft_pick_smallest_rotate(stack_first,
+// 			stack_first->min, 0);
+// 		while (stack_first->op_moves.moves)
+// 		{
+// 			call_single_operation(stack_first, operations, stack_first->op_moves.op);
+// 			stack_first->op_moves.moves--;
+// 		}
+// }
+
+
 void	ft_sort_small_chunks(t_push_swap *push_swap, t_stack *stack_first,
 			t_stack *stack_second)
 {
 		t_list	**operations;
-		int		index_min;
-		int		index_max;
 		int		starting_size;
 
 		operations = &push_swap->operations.operations_main;
 		starting_size = stack_first->size;
-		index_min = ft_get_index(stack_first, -1);
-		index_max = ft_get_index(stack_first, stack_first->max);
-		ft_sort_aux_list(push_swap, &push_swap->stack_a, TRUE);
-		if (index_min == 1)
-			call_single_operation(stack_first, operations, S_OP);
-		else if (index_min == starting_size - 1)
-			call_single_operation(stack_first, operations, RR_OP);
-		if (index_max == 0)
-			call_single_operation(stack_first, operations, R_OP);
-		while (stack_second->size != starting_size / 2)
+		while (stack_second->size < starting_size / 2)
 		{
-			call_double_operation(stack_first, stack_second, operations, P_OP);
-			ft_sort_two(stack_second, operations);
+			if (stack_first->size == 3)
+				ft_sort_three(stack_first, operations);
+			ft_less_operations_for_next_below_median(push_swap, stack_first,
+				stack_second, push_swap->global_median);
+			stack_second->median = ft_find_median(push_swap, stack_second, FALSE);
+			if (stack_second->size > 3 && stack_second->head_stack->element 
+				< stack_second->median)
+				call_single_operation(stack_second, operations, R_OP);
+			if (stack_second->size == 3)
+				ft_sort_three_desc(stack_second, operations);
 		}
+		stack_second->median = ft_find_median(push_swap, stack_second, FALSE);
+		stack_first->median = ft_find_median(push_swap, stack_first, FALSE);
+		while (stack_first->size > 3)
+		{
+			ft_less_operations_for_next_below_median(push_swap, stack_first,
+			stack_second, stack_first->median);
+		}
+		ft_sort_three(stack_first, operations);
 		while (stack_second->size)
-		{
-			if (ft_calculate_less_amount_moves(push_swap, stack_second, stack_first) == SECONDARY_OP)
-				ft_apply_calculated_moves(push_swap, stack_first, stack_second, 
-				push_swap->operations.operations_secondary);
-			else
-				ft_apply_calculated_moves(push_swap, stack_first, stack_second,
-				push_swap->operations.operations_tertiary);
-		}
-		stack_first->op_moves = ft_pick_smallest_rotate(stack_first,
-			stack_first->min, 0);
-		while (stack_first->op_moves.moves)
-		{
-			call_single_operation(stack_first, operations, stack_first->op_moves.op);
-			stack_first->op_moves.moves--;
-		}
+			call_double_operation(stack_second, stack_first, operations, P_OP);
+		ft_sort_two(stack_first, operations);
 }
+
 
 void	ft_sort_four(t_push_swap *push_swap, t_stack *stack_first,
 			t_stack *stack_second)
 {
 
 	t_list	**operations;
-	char	*last_operation;
-	int		index;
-	int		index_min;
-	int		index_max;
 
 	operations = &push_swap->operations.operations_main;
-	index_min = ft_get_index(stack_first, stack_first->min);
-	index_max = ft_get_index(stack_first, stack_first->max);
-	if (index_min == 1)
-	{
-		call_single_operation(stack_first, operations, S_OP);
-		if (ft_is_sorted(stack_first, ASC) == TRUE)
+ 	ft_put_element_at_top(push_swap, stack_first, stack_first->min);
+	if (ft_is_sorted(stack_first->head_stack, ASC) == TRUE)
 			return ;
-	}
-	else if (index_min == 3 || (index_max == 3 && index_min != 1))
-	{
-		call_single_operation(stack_first, operations, RR_OP);
-		if (ft_is_sorted(stack_first, ASC) == TRUE)
-			return ;
-	}
-	else if (index_min == 1 || index_max == 1)
-	{
-		call_single_operation(stack_first, operations, S_OP);
-		if (ft_is_sorted(stack_first, ASC) == TRUE)
-			return ;
-	}
 	call_double_operation(stack_first, stack_second, operations, P_OP);
 	ft_sort_three(stack_first, operations);
-	if (stack_second->head_stack->element == push_swap->global_max)
-	{
-		call_double_operation(stack_first, stack_second, operations, P_OP);
-		call_single_operation(stack_first, operations, R_OP);
-		return ;
-	}
-	if (ft_simulate_shortest_path(stack_first, stack_second) == ASC)
-		last_operation = R_OP;
-	else
-		last_operation = RR_OP;
-	while (stack_second->head_stack->element > stack_first->head_stack->element)
-		call_single_operation(stack_first, operations,
-			last_operation);
 	call_double_operation(stack_second, stack_first, operations, P_OP);
-	if (stack_first->str_id[0] == STACK_A[0])
-		index = ft_get_index(stack_first, push_swap->global_min);
-	else
-		index = ft_get_index(stack_first, push_swap->global_max);
-	if (index > stack_first->size / 2)
+}
+
+
+void	ft_sort_three_desc(t_stack *stack, t_list **operations)
+{
+	int	element_head;
+	int	element_next;
+
+	element_head = stack->head_stack->element;
+	element_next = stack->head_stack->next->element;
+	if (element_head == stack->min && element_next != stack->max)
 	{
-		last_operation = RR_OP;
-		index = stack_first->size - index;
+		call_single_operation(stack, operations, R_OP);
+		call_single_operation(stack, operations, S_OP);
 	}
-	else
-		last_operation = R_OP;
-	while (index != 0)
+	else if (element_head == stack->min && element_next == stack->max)
+		call_single_operation(stack, operations, R_OP);
+	else if (element_head != stack->min && element_next == stack->min)
+		call_single_operation(stack, operations, RR_OP);
+	else if (element_head != stack->max && element_next == stack->max)
+		call_single_operation(stack, operations, S_OP);
+	else if (element_head == stack->max && element_next != stack->min)
 	{
-		call_single_operation(stack_first, operations, last_operation);
-		index--;
+		call_single_operation(stack, operations, S_OP);
+		call_single_operation(stack, operations, R_OP);
 	}
 }
+
 
 void	ft_sort_three(t_stack *stack, t_list **operations)
 {
@@ -316,6 +329,7 @@ void	ft_sort_three(t_stack *stack, t_list **operations)
 		call_single_operation(stack, operations, S_OP);
 	}
 }
+
 
 void	ft_sort_two(t_stack *stack, t_list **operations)
 {
@@ -357,7 +371,7 @@ void	ft_sort_small(t_push_swap *push_swap, char *a_or_b)
 	ft_set_stacks(push_swap, &stack_first, &stack_second, a_or_b);
 	if (push_swap->stack_a.size == 1)
 		return ;
-	else if (push_swap->stack_a.size == 2)
+	if (push_swap->stack_a.size == 2)
 		ft_sort_two(stack_first, &push_swap->operations.operations_main);
 	else if (push_swap->stack_a.size == 3)
 		ft_sort_three(stack_first, &push_swap->operations.operations_main);

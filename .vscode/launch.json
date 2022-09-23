@@ -5,7 +5,7 @@
 		"type": "cppdbg",
 		"request": "launch",
 		"program": "/home/brunobonaldi/Desktop/push_swap/push_swap/push_swap",
-		"args": ["1","4","3","2", "5"],
+		"args": ["100","2","3","10","6", "1"],
 		"stopAtEntry": false,
 		"cwd": "${fileDirname}",
 		"environment": [],

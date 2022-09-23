@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:24:15 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/18 19:03:37 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/22 20:37:27 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	ft_initialize_stack(t_stack *stack, char *str_id)
 	stack->size = 0;
 	stack->min = INT_MAX;
 	stack->max = INT_MIN;
+	stack->median = INT_MIN;
 	stack->str_id = str_id;
 }
 
