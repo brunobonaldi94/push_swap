@@ -22,6 +22,7 @@ do
   COUNT_OK=$(./push_swap $(split_word "$line" " ") | grep KO | wc -l)
   if [ $COUNT_OK -gt 0 ]; then
 	((COUNT_OKS++))
+	echo "$line"
   fi
   COUNT=$(./push_swap $(split_word "$line" " ") | grep -E $(echo "$OPERATIONS" | tr " " "|")  | wc -l)
   ((TOTAL_COUNT=TOTAL_COUNT + COUNT))

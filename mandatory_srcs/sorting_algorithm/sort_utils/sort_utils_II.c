@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 18:58:36 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/22 23:13:03 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/25 16:23:56 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	ft_find_less_from_rotations_below_median(t_push_swap *push_swap,
 		head = head->next;
 	}
 	last = ft_find_last(stack_first->head_stack);
-	if (stack_first->head_stack->element > median)
+	if (stack_first->head_stack->element >= median)
 		index_desc++;
 	while (last)
 	{
@@ -89,6 +89,7 @@ void	ft_find_less_from_rotations_below_median(t_push_swap *push_swap,
 		ft_save_rotations(push_swap, stack_first, index_asc, ASC);
 	else
 		ft_save_rotations(push_swap, stack_first, index_desc, DESC);
+	call_double_operation(stack_first, stack_second, operations, P_OP);
 }
 
 void	ft_less_operations_for_next_below_median(t_push_swap *push_swap,

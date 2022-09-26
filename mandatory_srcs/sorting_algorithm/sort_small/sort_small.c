@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 03:35:14 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/23 00:13:15 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/25 21:48:35 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,122 +144,186 @@ t_op_moves	ft_pick_smallest_rotate(t_stack *stack, int element, int index_to)
 	return (op_moves);
 }
 
-void	ft_sort_five(t_push_swap *push_swap, t_stack *stack_first,
-			t_stack *stack_second)
-{
-	t_list	**operations;
-	int		order;
 
-	operations = &push_swap->operations.operations_main;
-	while (stack_second->size < 2)
-		call_double_operation(stack_first, stack_second, &push_swap->operations.operations_main,P_OP);
-	ft_sort_three(stack_first, operations);
-	ft_sort_two(stack_second, operations);
-	while (stack_second->size != 0)
+void	ft_small_sort(t_stack *stack, t_list **operations)
+{
+	if (stack->size == 2)
+			ft_sort_two(stack, operations);
+	if (stack->size == 3)
 	{
-		if (stack_second->head_stack->element < stack_first->head_stack->next->element)
-		{
-			call_double_operation(stack_second, stack_first, operations, P_OP);
-			ft_sort_two(stack_first, operations);
-		}
+		if (stack->str_id[0] == STACK_A[0])
+			ft_sort_three(stack, operations);
 		else
-		{
-			order = ft_simulate_shortest_path(stack_first, stack_second);
-			if (order == ASC)
-			{
-				while (stack_second->head_stack->element > stack_first->head_stack->next->element)
-					call_single_operation(stack_first, operations, R_OP);
-			}
-			else
-			{
-				while (stack_second->head_stack->element > stack_first->head_stack->next->element)
-					call_single_operation(stack_first, operations, RR_OP);
-			}				
-		}
-	}
-	stack_first->op_moves = ft_pick_smallest_rotate(stack_first, stack_first->min, 0);
-	while (stack_first->op_moves.moves)
-	{
-		call_single_operation(stack_first, operations, stack_first->op_moves.op);
-		stack_first->op_moves.moves--;
+			ft_sort_three_desc(stack, operations);
 	}
 }
 
+void	ft_send_back_sorted_to_a(t_stack *stack_first,
+			t_stack *stack_second, t_list **operations)
+{
+	while (ft_stack_is_empty(stack_second) == FALSE)
+		call_double_operation(stack_second, stack_first, operations, P_OP);
+}
 
-// void	ft_sort_small_chunks(t_push_swap *push_swap, t_stack *stack_first,
-// 			t_stack *stack_second)
-// {
-// 		t_list	**operations;
-// 		int		index_min;
-// 		int		index_max;
-// 		int		starting_size;
+int	ft_check_sorted_and_send_to_a(t_stack *stack_first,
+			t_stack *stack_second, t_list **operations)
+{
+	if (ft_is_sorted(stack_second->head_stack, DESC) 
+		&& ft_is_sorted(stack_first->head_stack, ASC))
+	{
+		ft_send_back_sorted_to_a(stack_first, stack_second, operations);
+		return (TRUE);
+	}
+	return (FALSE);
+}
 
-// 		operations = &push_swap->operations.operations_main;
-// 		starting_size = stack_first->size;
-// 		index_min = ft_get_index(stack_first, -1);
-// 		index_max = ft_get_index(stack_first, stack_first->max);
-// 		if (index_min == 1)
-// 			call_single_operation(stack_first, operations, S_OP);
-// 		else if (index_min == starting_size - 1)
-// 			call_single_operation(stack_first, operations, RR_OP);
-// 		if (index_max == 0)
-// 			call_single_operation(stack_first, operations, R_OP);
-// 		while (stack_second->size != starting_size / 2)
-// 		{
-// 			call_double_operation(stack_first, stack_second, operations, P_OP);
-// 			ft_sort_two(stack_second, operations);
-// 		}
-// 		while (stack_second->size)
-// 		{
-// 			if (ft_calculate_less_amount_moves(push_swap, stack_second, stack_first) == SECONDARY_OP)
-// 				ft_apply_calculated_moves(push_swap, stack_first, stack_second, 
-// 				push_swap->operations.operations_secondary);
-// 			else
-// 				ft_apply_calculated_moves(push_swap, stack_first, stack_second,
-// 				push_swap->operations.operations_tertiary);
-// 		}
-// 		stack_first->op_moves = ft_pick_smallest_rotate(stack_first,
-// 			stack_first->min, 0);
-// 		while (stack_first->op_moves.moves)
-// 		{
-// 			call_single_operation(stack_first, operations, stack_first->op_moves.op);
-// 			stack_first->op_moves.moves--;
-// 		}
-// }
+int	ft_count_elements_below(t_stack *stack, double element)
+{
+	int				count;
+	t_double_list	*head;
 
+	head = stack->head_stack;
+	count = 0;
+	while (head)
+	{
+		if (head->element < element)
+			count++;
+		head = head->next;
+	}
+	return (count);
+}
 
-void	ft_sort_small_chunks(t_push_swap *push_swap, t_stack *stack_first,
+void	ft_send_half_to_b(t_push_swap *push_swap, t_stack *stack_first,
+			t_stack *stack_second, int is_first_half)
+{
+	t_list	**operations;
+	int		b_size_adder;
+	int		starting_size;
+
+	operations = &push_swap->operations.operations_main;
+	b_size_adder = ft_count_elements_below(stack_first, push_swap->median);
+	starting_size = stack_second->size;
+	while (stack_second->size < (starting_size + b_size_adder))
+	{
+		ft_less_operations_for_next_below_median(push_swap, stack_first,
+			stack_second, push_swap->median);
+		if (is_first_half && 
+			stack_second->head_stack->element < push_swap->first_quarter)
+			call_single_operation(stack_second, operations, R_OP);
+	}
+}
+
+int	ft_count_of_chuncks(double size)
+{
+	int		index;
+
+	index = 0;
+	while (size > 3)
+	{
+		index++;
+		size /= 2.0;
+	}
+	return (index);
+}
+
+int	ft_swap_rotate_chunks(t_push_swap *push_swap,
+			t_stack *stack, int count_of_chunks)
+{
+	int		qty_of_moves;
+	t_list	**operations;
+	int		count_of_rotations;
+
+	operations = &push_swap->operations.operations_main;
+	qty_of_moves = push_swap->chunks[count_of_chunks].qty_elements - 1;
+	count_of_rotations = 0;
+	while (stack->head_stack->element < 
+		stack->head_stack->next->element && qty_of_moves > 0)
+	{
+		if (qty_of_moves == 1)
+		{
+			call_single_operation(stack, operations, S_OP);
+			qty_of_moves--;
+			continue;
+		}
+		call_single_operation(stack, operations, S_OP);
+		call_single_operation(stack, operations, R_OP);
+		count_of_rotations++;
+		qty_of_moves--;
+	}
+	return (count_of_rotations);
+}
+
+void	ft_sort_chunks(t_push_swap *push_swap, t_stack *stack_first,
 			t_stack *stack_second)
 {
-		t_list	**operations;
-		int		starting_size;
+	int		count_of_chunks;
+	int		count_of_rotations;
+ 	t_list	**operations;
 
+	count_of_chunks = push_swap->count_of_chunks - 1;
+	operations = &push_swap->operations.operations_main;
+	while (count_of_chunks >= 0)
+	{
+		count_of_rotations = ft_swap_rotate_chunks(push_swap, stack_second, count_of_chunks);
+		while (count_of_rotations)
+		{
+			call_single_operation(stack_second, operations, RR_OP);
+			count_of_rotations--;
+		}
+		if (ft_is_sorted_up_to_index(stack_second->head_stack,
+			push_swap->chunks[count_of_chunks].qty_elements - 1, DESC))
+		{
+			while (push_swap->chunks[count_of_chunks].qty_elements--)
+				call_double_operation(stack_second, stack_first, operations, P_OP);
+			count_of_chunks--;
+		}
+	} 
+}
+
+void	ft_send_chunks_to_b(t_push_swap *push_swap, t_stack *stack_first,
+			t_stack *stack_second)
+{
+	int			count_of_chuncks;
+	int			index;
+	int			starting_size;
+
+	starting_size = stack_second->size;
+	index = 1;
+	count_of_chuncks = push_swap->count_of_chunks;
+	while (index < count_of_chuncks)
+	{
+		push_swap->chunks[index].id = index;
+		push_swap->median = ft_find_median(push_swap, stack_first, FALSE);
+		ft_send_half_to_b(push_swap, stack_first, stack_second, FALSE);
+		push_swap->chunks[index].qty_elements = stack_second->size - starting_size;
+		starting_size = stack_second->size;
+		index++;
+	}
+}
+
+void	ft_sort_small_chunks(t_push_swap *push_swap, t_stack *stack_first,
+			t_stack *stack_second, int is_first_half)
+{
+		t_list	**operations;
+		
 		operations = &push_swap->operations.operations_main;
-		starting_size = stack_first->size;
-		while (stack_second->size < starting_size / 2)
+		push_swap->count_of_chunks = ft_count_of_chuncks(stack_first->size);
+		push_swap->chunks = (t_chunks *)malloc(sizeof(t_chunks) * 
+			push_swap->count_of_chunks);
+		push_swap->chunks[0].id = 0;
+		ft_send_half_to_b(push_swap, stack_first, stack_second, is_first_half);
+		push_swap->chunks[0].qty_elements = stack_second->size;
+		if (stack_first->size <= 3 && stack_second->size <= 3)
 		{
-			if (stack_first->size == 3)
-				ft_sort_three(stack_first, operations);
-			ft_less_operations_for_next_below_median(push_swap, stack_first,
-				stack_second, push_swap->global_median);
-			stack_second->median = ft_find_median(push_swap, stack_second, FALSE);
-			if (stack_second->size > 3 && stack_second->head_stack->element 
-				< stack_second->median)
-				call_single_operation(stack_second, operations, R_OP);
-			if (stack_second->size == 3)
-				ft_sort_three_desc(stack_second, operations);
+			ft_small_sort(stack_first, operations);
+			ft_small_sort(stack_second, operations);
+			ft_send_back_sorted_to_a(stack_first, stack_second, operations);
+			return ;
 		}
-		stack_second->median = ft_find_median(push_swap, stack_second, FALSE);
-		stack_first->median = ft_find_median(push_swap, stack_first, FALSE);
-		while (stack_first->size > 3)
-		{
-			ft_less_operations_for_next_below_median(push_swap, stack_first,
-			stack_second, stack_first->median);
-		}
-		ft_sort_three(stack_first, operations);
-		while (stack_second->size)
-			call_double_operation(stack_second, stack_first, operations, P_OP);
-		ft_sort_two(stack_first, operations);
+		ft_send_chunks_to_b(push_swap, stack_first, stack_second);
+		if (stack_first->size <= 3)
+			ft_small_sort(stack_first, operations);
+		ft_sort_chunks(push_swap, stack_first, stack_second);
 }
 
 
@@ -297,7 +361,7 @@ void	ft_sort_three_desc(t_stack *stack, t_list **operations)
 		call_single_operation(stack, operations, RR_OP);
 	else if (element_head != stack->max && element_next == stack->max)
 		call_single_operation(stack, operations, S_OP);
-	else if (element_head == stack->max && element_next != stack->min)
+	else if (element_head == stack->max && element_next == stack->min)
 	{
 		call_single_operation(stack, operations, S_OP);
 		call_single_operation(stack, operations, R_OP);
@@ -378,5 +442,5 @@ void	ft_sort_small(t_push_swap *push_swap, char *a_or_b)
 	else if (push_swap->stack_a.size == 4)
 		ft_sort_four(push_swap, stack_first, stack_second);
 	else
-		ft_sort_small_chunks(push_swap, stack_first, stack_second);
+		ft_sort_small_chunks(push_swap, stack_first, stack_second, TRUE);
 }

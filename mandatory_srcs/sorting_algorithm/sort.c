@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 21:01:31 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/22 20:41:27 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/25 19:24:41 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,34 +34,83 @@ int	ft_is_sorted(t_double_list *head_stack, int order)
 	return (is_sorted);
 }
 
-void	sort_b(t_push_swap *push_swap)
+int	ft_is_sorted_up_to_index(t_double_list *head_stack, int index, int order)
 {
-	int				current_element;
-	t_percentile	perc;
-	t_stack			*stack;
+	int				is_sorted;
+	t_double_list	*head;
+	t_double_list	*next;
 
-	stack = &push_swap->stack_b;
-	if (stack->size == 1)
-		return ;
-	if (ft_head_is_null(stack->head_stack))
-		return ;
-	current_element = stack->head_stack->element;	
-	set_min_max(stack, current_element);
-	if (ft_is_single_node(stack->head_stack))
-		return ;
-	ft_init_percentiles(&perc, stack->size, 2, 1);
-	perc.value = ft_recalculate_percentile(push_swap, stack, 
-			perc.percentile_const * perc.percentile_id);
-	if (current_element <= perc.value)
-	{
-		call_single_operation(stack,
-			&push_swap->operations.operations_main, R_OP);
-		return ;
+	is_sorted = TRUE;
+	head = head_stack;
+	if (head == NULL)
+		return (is_sorted);
+	next = head->next;
+	while (next && index)
+	{	if (order == ASC && head->element > next->element)
+			return (FALSE);
+		if (order == DESC && head->element < next->element)
+			return (FALSE);
+		head = head->next;
+		next = head->next;
+		index--;
 	}
-	if (current_element < stack->head_stack->next->element)
-		call_single_operation(stack,
-			&push_swap->operations.operations_main, S_OP);
+	return (is_sorted);
 }
+
+int	ft_find_next_unsorted(t_double_list *head_stack, int index, int order)
+{
+	int				is_sorted;
+	t_double_list	*head;
+	t_double_list	*next;
+	int				index_unsorted;
+
+	is_sorted = TRUE;
+	head = head_stack;
+	if (head == NULL)
+		return (is_sorted);
+	next = head->next;
+	index_unsorted = 0;
+	while (next && index)
+	{	if (order == ASC && head->element > next->element)
+			return (index_unsorted);
+		if (order == DESC && head->element < next->element)
+			return (index_unsorted);
+		head = head->next;
+		next = head->next;
+		index--;
+		index_unsorted++;
+	}
+	return (-1);
+}
+
+// void	sort_b(t_push_swap *push_swap)
+// {
+// 	int				current_element;
+// 	t_percentile	perc;
+// 	t_stack			*stack;
+
+// 	stack = &push_swap->stack_b;
+// 	if (stack->size == 1)
+// 		return ;
+// 	if (ft_head_is_null(stack->head_stack))
+// 		return ;
+// 	current_element = stack->head_stack->element;	
+// 	set_min_max(stack, current_element);
+// 	if (ft_is_single_node(stack->head_stack))
+// 		return ;
+// 	ft_init_percentiles(&perc, stack->size, 2, 1);
+// 	perc.value = ft_recalculate_percentile(push_swap, stack, 
+// 			perc.percentile_const * perc.percentile_id);
+// 	if (current_element <= perc.value)
+// 	{
+// 		call_single_operation(stack,
+// 			&push_swap->operations.operations_main, R_OP);
+// 		return ;
+// 	}
+// 	if (current_element < stack->head_stack->next->element)
+// 		call_single_operation(stack,
+// 			&push_swap->operations.operations_main, S_OP);
+// }
 
 void	sort_a(t_push_swap *push_swap, t_stack *stack)
 {
@@ -211,66 +260,20 @@ void	send_to_b(t_push_swap *push_swap, int percentile)
 
 void	ft_sort_big(t_push_swap *push_swap)
 {
-	t_stack	*stack_a;
-	t_stack *stack_b;
-	int		size;
-
-	stack_a = &push_swap->stack_a;
-	stack_b = &push_swap->stack_b;
-	int index;
-	index = 0;
-	size = push_swap->stack_aux.size;
-	while (index < size)
-	{
-		if (stack_a->head_stack->element <= push_swap->percentiles[0].value)
-		{
-			call_double_operation(stack_a, stack_b,
-				&push_swap->operations.operations_main, P_OP);
-			sort_b(push_swap);
-		}
-		else
-			call_single_operation(stack_a,
-				&push_swap->operations.operations_main, R_OP);
-		index++;
-	}
-	index = 0;
-	size = stack_a->size;
-	t_percentile	perc;
-
-	ft_init_percentiles(&perc, stack_a->size, 2, 1);
-	perc.value = ft_recalculate_percentile(push_swap, stack_a, 
-			perc.percentile_const * perc.percentile_id);
-	while (index < size)
-	{
-		if (stack_a->head_stack->element <= perc.value)
-		{
-			call_double_operation(stack_a, stack_b,
-				&push_swap->operations.operations_main,P_OP);
-			sort_b(push_swap);
-		}
-		else
-			call_single_operation(stack_a,
-				&push_swap->operations.operations_main, R_OP);
-		index++;
-	}
-	
+	ft_printf("sort_big", push_swap->argv[0]);
+	return ;
 }
 
 void	ft_sort(t_push_swap *push_swap)
 {
 	//ft_print_all_stack(push_swap);
+	ft_calculate_median_and_first_quarter(push_swap);
 	if (push_swap->is_sorted == TRUE)
 		return ;
-	push_swap->global_median = ft_find_median(push_swap,
-		&push_swap->stack_a, TRUE);
-	if (push_swap->stack_a.size <= 10)
+	if (push_swap->stack_a.size <= 100)
 		ft_sort_small(push_swap, STACK_A);
 	else
-	{
-		ft_find_percentiles(push_swap);
 		ft_sort_big(push_swap);
-		ft_clear_percentiles(push_swap);
-	}
 	ft_print_operations(push_swap->operations.operations_main);
 	ft_print_all_stack(push_swap);
 	ft_clear_all_stack(push_swap);

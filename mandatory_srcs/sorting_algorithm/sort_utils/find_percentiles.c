@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 17:24:32 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/22 21:21:00 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/25 13:18:34 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,94 +20,6 @@ void	ft_refill_aux_list(t_stack *stack_aux, t_stack *stack)
 	last = ft_find_last(stack->head_stack);
 	ft_fill_aux_list(stack_aux, last);
 }
-
-void	ft_set_unordered_count(t_double_list **head, t_percentile *perc, 
-			int value_another_percentile)
-{
-	double			percentile_const;
-
-	percentile_const = perc->percentile_const;
-	int index = 0;
-	while (percentile_const >= 0 && *head)
-	{
-		if (perc->percentile_id == 1 && (*head)->element <= perc->value)
-			perc->count_unordered++;
-		else if (perc->percentile_id != 1 
-			&& (*head)->element > value_another_percentile && (*head)->element <= perc->value)
-			perc->count_unordered++;	 
- 		(*head) = (*head)->next;
-		percentile_const--;
-		index++;
-	}
-}
-
-void	ft_unordered_percentile_count(t_push_swap *push_swap, int count)
-{
-	t_double_list	*head_a;
-	int				index;
-	int				previous_value;
-
-	head_a = push_swap->stack_a.head_stack;
-	index = 0;
-	previous_value = push_swap->stack_a.min;
-	while (index < count)
-	{
-		if (index >= 1)
-			previous_value = push_swap->percentiles[index - 1].value;
-		ft_set_unordered_count(&push_swap->stack_a.head_stack, 
-			&push_swap->percentiles[index], previous_value);
-		index++;
-	}
-	push_swap->stack_a.head_stack = head_a;
-}
-
-double	ft_percentile_const_create(int size, int percentile_count)
-{
-	double percentile_const;
-
-	percentile_const = 1.0 / (double)percentile_count;
-	return (size * percentile_const);
-}
-
-void	ft_init_percentiles(t_percentile *perc, int size,
-			int percentile_count, int percentile_nbr)
-{
-	perc->percentile_const = ft_percentile_const_create(size,
-		percentile_count);
-	perc->count_unordered = 0;
-	perc->percentile_id = percentile_nbr;
-	perc->value = -1;
-}
-
-double	ft_calculate_percentile(t_push_swap *push_swap, t_percentile perc)
-{
-	double			index_calculation;
-	double			elements[2];
-	int				index;
-	t_double_list	*head;
-	double			value;
-
-	index_calculation = perc.percentile_const *
-		perc.percentile_id;
- 	head = push_swap->stack_aux.head_stack;
-	if (push_swap->stack_aux.size % 2 == 0)
-		index_calculation--;
-	index = 0;
-	while (index < index_calculation)
-	{
-		head = head->next;
-		index++;
-	}
-	elements[0] = head->element;
-	if (push_swap->stack_aux.size % 2 == 0 && head->next)
-		elements[1] = head->next->element;
-	else
-		elements[1] = head->element;
-	value = (elements[0] + elements[1]) / 2;
-	return (value);
-}
-
-
 
 int		ft_get_index_ordered_of_element(t_stack *stack, int element)
 {
@@ -244,11 +156,6 @@ double	ft_recalculate_percentile(t_push_swap *push_swap,
 	return (elements[0] + elements[1]) / 2;
 }
 
-void	ft_clear_percentiles(t_push_swap *push_swap)
-{
-	free(push_swap->percentiles);
-}
-
 void	ft_set_percentile_count(int size, int *percentile_count)
 {
 	if (size <= 10)
@@ -261,25 +168,12 @@ void	ft_set_percentile_count(int size, int *percentile_count)
 		*percentile_count = 5;
 }
 
-void	ft_find_percentiles(t_push_swap *push_swap)
+void	ft_calculate_median_and_first_quarter(t_push_swap *push_swap)
 {
-	int	size;
-	int index;
-
-	size = push_swap->stack_a.size;
 	ft_sort_aux_list(push_swap, &push_swap->stack_a, TRUE);
-	ft_set_percentile_count(size, &push_swap->percentiles_count);
-	push_swap->percentiles = (t_percentile *)malloc(sizeof(t_percentile) 
-		* push_swap->percentiles_count);
-	index = 0;
-	while (index < push_swap->percentiles_count)
-	{
-		ft_init_percentiles(&push_swap->percentiles[index], size,
-			push_swap->percentiles_count + 1, index + 1);
-		push_swap->percentiles[index].value = ft_calculate_percentile(push_swap, 
-			push_swap->percentiles[index]);
-		index++;
-	}
- 	ft_unordered_percentile_count(push_swap, push_swap->percentiles_count);
+	push_swap->median = ft_find_percentile(push_swap, &push_swap->stack_aux, 
+		2);
+	push_swap->first_quarter = ft_find_percentile(push_swap,
+		&push_swap->stack_aux, 4);
 }
 
