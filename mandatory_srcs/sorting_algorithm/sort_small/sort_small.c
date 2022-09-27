@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 03:35:14 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/25 21:48:35 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/26 23:36:28 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,135 +15,6 @@
 void	ft_sort_three(t_stack *stack, t_list **operations);
 void	ft_sort_two(t_stack *stack, t_list **operations);
 void	ft_sort_three_desc(t_stack *stack, t_list **operations);
-
-int	return_min_order(int desc, int asc)
-{
-	if (desc < asc)
-		return (DESC);
-	return (ASC);
-}
-
-int	ft_simulate_a_to_b(t_stack *stack_a, t_stack *stack_b)
-{
-	t_double_list	*last;
-	t_double_list	*head;
-	int				index[2];
-
-	last = ft_find_last(stack_b->head_stack);
-	index[0] = 0;
-	head = stack_b->head_stack;
-	while (stack_a->head_stack->element < head->element)
-	{
-		index[ASC]++;
-		head = head->next;
-	}
-	head = stack_b->head_stack;
-	index[1] = 0;
-	while (stack_a->head_stack->element < head->element)
-	{
-		if (index[DESC]++ == 0)
-		{
-			head = last;
-			continue ;
-		}
-		head = last->prev;
-	}
-	return (return_min_order(index[DESC], index[ASC]));
-}
-
-int	ft_simulate_b_to_a(t_stack *stack_a, t_stack *stack_b)
-{
-	t_double_list	*last;
-	t_double_list	*head;
-	int				index[2];
-
-	last = ft_find_last(stack_a->head_stack);
-	index[0] = 0;
-	head = stack_a->head_stack;
-	if (ft_head_is_null(head) || ft_head_is_null(stack_b->head_stack))
-		return (2);
-	while (stack_b->head_stack->element > head->element)
-	{
-		index[ASC]++;
-		head = head->next;
-	}
-	head = stack_a->head_stack;
-	index[1] = 0;
-	while (stack_b->head_stack->element > head->element)
-	{
-		if (index[DESC]++ == 0)
-		{
-			head = last;
-			continue ;
-		}
-		head = last->prev;
-	}
-	return (return_min_order(index[DESC], index[ASC]));
-}
-
-int	ft_simulate_shortest_path(t_stack *stack_first, t_stack *stack_second)
-{
-	if (stack_first->str_id[0] == STACK_A[0])
-		return (ft_simulate_b_to_a(stack_first, stack_second));
-	return (ft_simulate_a_to_b(stack_second, stack_first));
-}
-
-char	*ft_set_operation(int diff, int size, double half, int order)
-{
-	char	*op;
-
-	if (diff == size - 1)
-	{
-		op = R_OP;
-		if (order == DESC)
-			op = RR_OP;
-	}
-	else if (diff <= half)
-		op = R_OP;
-	else
-		op = RR_OP;
-	return (op);
-}
-
-int	ft_set_moves(int diff, int size, double half)
-{
-	int	moves;
-
-	if (diff == size - 1)
-		moves = 1;
-	else if (diff <= half)
-		moves = diff;
-	else
-		moves = size - diff;
-	return(moves);
-}
-
-t_op_moves	ft_pick_smallest_rotate(t_stack *stack, int element, int index_to)
-{
-	t_op_moves	op_moves;
-	int			index_from[2];
-	int			diff;
-	double		half;
-
-	op_moves.moves = 0;
-	index_from[0] = ft_get_index(stack, element);
-	half = (double)stack->size / 2.0;
-	index_from[1] = ASC;
-	if (index_from[0] <= index_to)
-		diff = index_to - index_from[0];
-	else
-	{
-		index_from[1] = DESC;
-		diff = index_from[0] - index_to;
-	}
-	op_moves.op = P_OP;
-	if (diff == 0)
-		return (op_moves);
-	op_moves.op = ft_set_operation(diff, stack->size, half, index_from[1]);
-	op_moves.moves = ft_set_moves(diff, stack->size, half);
-	return (op_moves);
-}
-
 
 void	ft_small_sort(t_stack *stack, t_list **operations)
 {
@@ -226,58 +97,23 @@ int	ft_count_of_chuncks(double size)
 	return (index);
 }
 
-int	ft_swap_rotate_chunks(t_push_swap *push_swap,
-			t_stack *stack, int count_of_chunks)
+void	ft_clear_chunks(t_push_swap *push_swap)
 {
-	int		qty_of_moves;
-	t_list	**operations;
-	int		count_of_rotations;
-
-	operations = &push_swap->operations.operations_main;
-	qty_of_moves = push_swap->chunks[count_of_chunks].qty_elements - 1;
-	count_of_rotations = 0;
-	while (stack->head_stack->element < 
-		stack->head_stack->next->element && qty_of_moves > 0)
-	{
-		if (qty_of_moves == 1)
-		{
-			call_single_operation(stack, operations, S_OP);
-			qty_of_moves--;
-			continue;
-		}
-		call_single_operation(stack, operations, S_OP);
-		call_single_operation(stack, operations, R_OP);
-		count_of_rotations++;
-		qty_of_moves--;
-	}
-	return (count_of_rotations);
+	free(push_swap->chunks);
 }
 
 void	ft_sort_chunks(t_push_swap *push_swap, t_stack *stack_first,
 			t_stack *stack_second)
 {
 	int		count_of_chunks;
-	int		count_of_rotations;
- 	t_list	**operations;
 
 	count_of_chunks = push_swap->count_of_chunks - 1;
-	operations = &push_swap->operations.operations_main;
 	while (count_of_chunks >= 0)
 	{
-		count_of_rotations = ft_swap_rotate_chunks(push_swap, stack_second, count_of_chunks);
-		while (count_of_rotations)
-		{
-			call_single_operation(stack_second, operations, RR_OP);
-			count_of_rotations--;
-		}
-		if (ft_is_sorted_up_to_index(stack_second->head_stack,
-			push_swap->chunks[count_of_chunks].qty_elements - 1, DESC))
-		{
-			while (push_swap->chunks[count_of_chunks].qty_elements--)
-				call_double_operation(stack_second, stack_first, operations, P_OP);
-			count_of_chunks--;
-		}
-	} 
+		ft_selection_sort_chunks_desc(push_swap, stack_second, stack_first,
+		push_swap->chunks[count_of_chunks].qty_elements - 1);
+		count_of_chunks--;
+	}
 }
 
 void	ft_send_chunks_to_b(t_push_swap *push_swap, t_stack *stack_first,
@@ -295,7 +131,8 @@ void	ft_send_chunks_to_b(t_push_swap *push_swap, t_stack *stack_first,
 		push_swap->chunks[index].id = index;
 		push_swap->median = ft_find_median(push_swap, stack_first, FALSE);
 		ft_send_half_to_b(push_swap, stack_first, stack_second, FALSE);
-		push_swap->chunks[index].qty_elements = stack_second->size - starting_size;
+		push_swap->chunks[index].qty_elements = stack_second->size
+			- starting_size;
 		starting_size = stack_second->size;
 		index++;
 	}
@@ -304,26 +141,26 @@ void	ft_send_chunks_to_b(t_push_swap *push_swap, t_stack *stack_first,
 void	ft_sort_small_chunks(t_push_swap *push_swap, t_stack *stack_first,
 			t_stack *stack_second, int is_first_half)
 {
-		t_list	**operations;
-		
-		operations = &push_swap->operations.operations_main;
-		push_swap->count_of_chunks = ft_count_of_chuncks(stack_first->size);
-		push_swap->chunks = (t_chunks *)malloc(sizeof(t_chunks) * 
-			push_swap->count_of_chunks);
-		push_swap->chunks[0].id = 0;
-		ft_send_half_to_b(push_swap, stack_first, stack_second, is_first_half);
-		push_swap->chunks[0].qty_elements = stack_second->size;
-		if (stack_first->size <= 3 && stack_second->size <= 3)
-		{
-			ft_small_sort(stack_first, operations);
-			ft_small_sort(stack_second, operations);
-			ft_send_back_sorted_to_a(stack_first, stack_second, operations);
-			return ;
-		}
-		ft_send_chunks_to_b(push_swap, stack_first, stack_second);
-		if (stack_first->size <= 3)
-			ft_small_sort(stack_first, operations);
-		ft_sort_chunks(push_swap, stack_first, stack_second);
+	t_list	**operations;
+	
+	operations = &push_swap->operations.operations_main;
+	push_swap->count_of_chunks = ft_count_of_chuncks(stack_first->size);
+	push_swap->chunks = (t_chunks *)malloc(sizeof(t_chunks) * 
+		push_swap->count_of_chunks);
+	push_swap->chunks[0].id = 0;
+	ft_send_half_to_b(push_swap, stack_first, stack_second, is_first_half);
+	push_swap->chunks[0].qty_elements = stack_second->size;
+	if (stack_first->size <= 3 && stack_second->size <= 3)
+	{
+		ft_small_sort(stack_first, operations);
+		ft_small_sort(stack_second, operations);
+		ft_send_back_sorted_to_a(stack_first, stack_second, operations);
+		return ;
+	}
+	ft_send_chunks_to_b(push_swap, stack_first, stack_second);
+	if (stack_first->size <= 3)
+		ft_small_sort(stack_first, operations);
+	ft_sort_chunks(push_swap, stack_first, stack_second);
 }
 
 
@@ -442,5 +279,5 @@ void	ft_sort_small(t_push_swap *push_swap, char *a_or_b)
 	else if (push_swap->stack_a.size == 4)
 		ft_sort_four(push_swap, stack_first, stack_second);
 	else
-		ft_sort_small_chunks(push_swap, stack_first, stack_second, TRUE);
+		ft_sort_small_chunks(push_swap, stack_first, stack_second, FALSE);
 }

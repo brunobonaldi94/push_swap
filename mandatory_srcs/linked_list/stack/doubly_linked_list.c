@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 02:26:04 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/22 22:54:08 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/26 20:14:14 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,29 +28,31 @@ void	print_result(int is_sorted)
 	}
 }
 
-void	ft_print_stack(t_stack stack, char A_or_B)
+void	ft_print_stack(t_stack *stack)
 {
 	t_double_list	*last;
+	t_double_list	*head;
 	int				index;
 	int				is_sorted;
 
 	ft_printf(GREEN);
 	ft_printf("===============================\n");
-	ft_printf("stack: %c\nsize is: %d\nmin: %d\nmax: %d\n", A_or_B, stack.size,
-	stack.min, stack.max);
+	ft_printf("stack: %c\nsize is: %d\nmin: %d\nmax: %d\n", stack->str_id[0] - ('a' - 'A'), stack->size,
+	stack->min, stack->max);
 	ft_printf("===============================\n");
 	ft_printf(RESET);
 	last = NULL;
 	index = 0;
 	is_sorted = TRUE;
-	while (stack.head_stack)
+	head = stack->head_stack;
+	while (head)
 	{
-		ft_printf("[%d]: %d\n",index, stack.head_stack->element);
-		if (!stack.head_stack->next)
-			last = stack.head_stack;
-		if (stack.head_stack->next && stack.head_stack->element > stack.head_stack->next->element)
+		ft_printf("[%d]: %d\n",index, head->element);
+		if (!head->next)
+			last = head;
+		if (head->next && head->element > head->next->element)
 			is_sorted = FALSE;
-		stack.head_stack = stack.head_stack->next;
+		head = head->next;
 		index++;
 	}
 	ft_printf("-------------------------------\n", last);
@@ -65,8 +67,8 @@ void	ft_print_stack(t_stack stack, char A_or_B)
 
 void	ft_print_all_stack(t_push_swap *push_swap)
 {
-	ft_print_stack(push_swap->stack_a, 'A');
-	ft_print_stack(push_swap->stack_b, 'B');
+	ft_print_stack(&push_swap->stack_a);
+	ft_print_stack(&push_swap->stack_b);
 }
 
 t_double_list	*ft_create_node(int element)

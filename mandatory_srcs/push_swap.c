@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 02:16:57 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/18 21:24:12 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/26 21:08:03 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	ft_initialize_push_swap(t_push_swap *push_swap, int argc, char *argv[])
 	ft_initialize_stack(&push_swap->stack_b, STACK_B);
 	ft_initialize_stack(&push_swap->args_list, STACK_ARGS);
 	ft_initialize_stack(&push_swap->stack_aux, STACK_AUX);
+	ft_initialize_stack(&push_swap->stack_aux2, "X");
 	ft_initialize_operations(push_swap);
 	return (TRUE);
 }

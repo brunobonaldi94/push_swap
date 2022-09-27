@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 21:15:23 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/22 21:18:17 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/26 19:44:52 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,32 @@ void	ft_fill_aux_indexes(t_stack *stack_aux, t_stack *stack_a)
 	}
 }
 
+void	ft_sort_aux_list_chunks(t_push_swap *push_swap, t_stack *stack,
+			int elements_count)
+{
+	t_double_list	*last_up_to_index;
+	t_double_list	*last_aux;
+
+	if (push_swap->stack_aux.head_stack != NULL)
+		ft_clear_stack(&push_swap->stack_aux);
+	last_up_to_index = ft_find_up_to_index(stack->head_stack, elements_count);
+	ft_fill_aux_list(&push_swap->stack_aux, last_up_to_index);
+	last_aux = ft_find_last(push_swap->stack_aux.head_stack);
+	ft_quick_sort_recursive(push_swap->stack_aux.head_stack, last_aux);
+}
+
 void	ft_sort_aux_list(t_push_swap *push_swap,
 			t_stack *stack, int fill_index)
 {
 	t_double_list	*last;
+	t_double_list	*last_aux;
 
 	if (push_swap->stack_aux.head_stack != NULL)
 		ft_clear_stack(&push_swap->stack_aux);
 	last = ft_find_last(stack->head_stack);
 	ft_fill_aux_list(&push_swap->stack_aux, last);
-	ft_quick_sort_recursive(push_swap->stack_aux.head_stack, last);
+	last_aux = ft_find_last(push_swap->stack_aux.head_stack);
+	ft_quick_sort_recursive(push_swap->stack_aux.head_stack, last_aux);
 	if (fill_index == TRUE)
 		ft_fill_aux_indexes(&push_swap->stack_aux, stack);
 }

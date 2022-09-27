@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 20:43:40 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/18 19:57:31 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/26 23:28:31 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	ft_bubble_sort(t_stack *stack_a, t_stack *stack_b, t_list **operations)
 	i = 0;
 	while (ft_stack_is_empty(stack_a) == FALSE)
 	{
-
 		if (i == 0)
 		{
 			call_double_operation(stack_a, stack_b, operations, P_OP);

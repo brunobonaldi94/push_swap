@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 02:17:58 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/25 19:25:19 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/26 23:39:47 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,16 +80,13 @@ typedef struct s_double_list
 	struct s_double_list	*next;
 }	t_double_list;
 
-typedef struct s_op_moves
-{
-	char	*op;
-	int		moves;
-}	t_op_moves;
-
 typedef struct s_chunks
 {
 	int	id;
 	int	qty_elements;
+	int	min;
+	int	*median;
+	int	max;
 }	t_chunks;
 
 typedef struct s_stack
@@ -97,7 +94,6 @@ typedef struct s_stack
 	int				size;
 	int				min;
 	int				max;
-	t_op_moves		op_moves;
 	double			median;
 	char			*str_id;
 	t_double_list	*head_stack;
@@ -116,6 +112,7 @@ typedef struct s_push_swap
 	t_stack				stack_b;
 	t_stack				args_list;
 	t_stack				stack_aux;
+	t_stack				stack_aux2;
 	t_operations		operations;
 	int					global_min;
 	int					global_max;
@@ -135,6 +132,7 @@ int				ft_has_two_nodes(t_double_list *head);
 int				ft_head_is_null(t_double_list *head);
 int				ft_head_is_null(t_double_list *head);
 t_double_list	*ft_find_last(t_double_list *head);
+t_double_list	*ft_find_up_to_index(t_double_list *head, int max_index);
 void			ft_print_all_stack(t_push_swap *push_swap);
 void			ft_clear_stack(t_stack *stack);
 void			ft_clear_all_stack(t_push_swap *push_swap);
@@ -155,7 +153,7 @@ void			ft_pop_stack_free(t_stack *stack);
 t_double_list	*ft_pop_stack_move_pointer(t_stack *stack);
 int				ft_pop_push_stack_pab(t_stack *stack_first,
 					t_stack *stack_second);
-void			ft_print_stack(t_stack stack, char A_or_B);
+void			ft_print_stack(t_stack *stack);
 // operations swap
 void			ft_swap_stack(t_stack *stack);
 int				ft_swap_stack_sab(t_stack *stack);
@@ -187,22 +185,10 @@ void			insertion_sort(t_stack *stack_a,
 					t_stack *stack_b, t_list **operations);
 void			ft_sort_aux_list(t_push_swap *push_swap,
 					t_stack *stack, int fill_index);
-void			ft_refill_aux_list(t_stack *stack_aux, t_stack *stack);
 int				ft_get_index(t_stack *stack, int element);
 void			ft_sort_three(t_stack *stack, t_list **operations);
 void			ft_find_min_max(t_stack *stack);
 int				ft_is_sorted(t_double_list *head_stack, int order);
-int				ft_get_index_from_next_index(t_stack *stack, int index_start,
-					int order);
-int				ft_get_index_from_previous_index(t_stack *stack, int index_start,
-					int order);
-int				ft_calculate_less_amount_moves(t_push_swap *push_swap,
-					t_stack *from_stack, t_stack *to_stack);
-void			ft_apply_calculated_moves(t_push_swap *push_swap,
-					t_stack *stack_first, t_stack *stack_second,
-					t_list *operations);
-t_op_moves		ft_pick_smallest_rotate(t_stack *stack,
-					int element, int index_to);
 void			ft_put_index_at_top(t_push_swap *push_swap,
 					t_stack *stack, int index);
 void			ft_put_element_at_top(t_push_swap *push_swap,
@@ -215,8 +201,6 @@ void			ft_sort_aux_list(t_push_swap *push_swap,
 					t_stack *stack, int fill_index);
 void			ft_fill_aux_list(t_stack *stack_aux,
 					t_double_list *last_a);
-int				ft_smallest_rotate_from_median(double median,
-					t_stack *stack);
 void			ft_less_operations_for_next_below_median(t_push_swap *push_swap,
 					t_stack *stack_first, t_stack *stack_second, double median);
 void			ft_calculate_median_and_first_quarter(t_push_swap *push_swap);
@@ -224,6 +208,9 @@ double			ft_find_percentile(t_push_swap *push_swap, t_stack *stack,
 					int percentile);
 int				ft_is_sorted_up_to_index(t_double_list *head_stack,
 					int index, int order);
-int				ft_find_next_unsorted(t_double_list *head_stack,
-					int index, int order);
+void			ft_clear_chunks(t_push_swap *push_swap);
+void			ft_sort_aux_list_chunks(t_push_swap *push_swap, t_stack *stack,
+					int elements_count);
+void			ft_selection_sort_chunks_desc(t_push_swap *push_swap,
+					t_stack *stack_b, t_stack *stack_a, int elements_count);
 #endif //PUSH_SWAP_H

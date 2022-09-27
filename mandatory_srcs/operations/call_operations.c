@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 21:39:21 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/22 23:13:00 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/26 21:50:44 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_check_operation(char *operation_called, char *operation_check)
 	return (are_equal == 0);
 }
 
-void	call_single_operation(t_stack *stack, 
+void	call_single_operation(t_stack *stack,
 			t_list **operation, char *operation_start)
 {
 	char	*new_operation;

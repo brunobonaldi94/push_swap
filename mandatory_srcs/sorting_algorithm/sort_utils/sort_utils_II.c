@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 18:58:36 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/25 16:23:56 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/26 23:25:39 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,40 +15,21 @@
 void	ft_save_rotations(t_push_swap *push_swap, t_stack *stack_first,
 			int qty_moves, int order)
 {
-	t_stack			*stack_second;
-	t_list			**operations;
-	t_double_list	*last_second;
+	t_list	**operations;
 
 	operations = &push_swap->operations.operations_main;
-	stack_second = &push_swap->stack_b;
-	last_second = ft_find_last(stack_second->head_stack);
 	if (order == ASC)
 	{
 		while (qty_moves)
 		{
-			if (stack_second->size > 1 &&
-				stack_second->head_stack->element < last_second->element)
-			{
-				last_second = stack_second->head_stack;
-				call_double_operation(stack_first, stack_second,
-					operations, R_OP);
-			}
-			else
-				call_single_operation(stack_first, operations, R_OP);
+			call_single_operation(stack_first, operations, R_OP);
 			qty_moves--;
 		}
 		return ;
 	}
 	while (qty_moves)
 	{
-		if (stack_second->size > 1 &&
-			stack_second->head_stack->element > last_second->element)
-		{
-			last_second = last_second->prev;
-			call_double_operation(stack_first, stack_second,operations, RR_OP);
-		}
-		else
-			call_single_operation(stack_first, operations, RR_OP);
+		call_single_operation(stack_first, operations, RR_OP);
 		qty_moves--;
 	}
 }
@@ -92,14 +73,13 @@ void	ft_find_less_from_rotations_below_median(t_push_swap *push_swap,
 	call_double_operation(stack_first, stack_second, operations, P_OP);
 }
 
+
 void	ft_less_operations_for_next_below_median(t_push_swap *push_swap,
 		t_stack *stack_first, t_stack *stack_second, double median)
 {
 	t_double_list	*head;
 	t_double_list	*last;
 	t_list			**operations;
-	t_double_list	*last_second;
-	
 
 	operations = &push_swap->operations.operations_main;
 	head = stack_first->head_stack;
@@ -109,25 +89,16 @@ void	ft_less_operations_for_next_below_median(t_push_swap *push_swap,
 		return ;
 	}
 	last = ft_find_last(head);
-	last_second = ft_find_last(stack_second->head_stack);
 	if (last->element < median)
 	{
-		if (stack_second->size > 1 && 
-			stack_second->head_stack->element < last_second->element)
-			call_double_operation(stack_first, stack_second, operations, RR_OP);
-		else
-			call_single_operation(stack_first, operations, RR_OP);
+		call_single_operation(stack_first, operations, RR_OP);
 		call_double_operation(stack_first, stack_second, operations, P_OP);
 		return ;
 	}
 	if (head->next && head->element > head->next->element
 		&& head->next->element < median)
 	{
-		if (stack_second->size > 1 && stack_second->head_stack->element 
-			< stack_second->head_stack->next->element)
-			call_double_operation(stack_first, stack_second, operations, S_OP);
-		else
-			call_single_operation(stack_first, operations, S_OP);
+		call_single_operation(stack_first, operations, S_OP);
 		call_double_operation(stack_first, stack_second, operations, P_OP);
 		return ;
 	}

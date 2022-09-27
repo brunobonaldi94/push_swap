@@ -71,8 +71,6 @@ SRCS_PRINTF = $(addprefix $(PRINTF_PATH)/, ft_printf.c) \
 			  		ft_print_char.c ft_print_hex.c ft_print_int.c ft_print_percent.c \
 					ft_print_ptr.c ft_print_str.c ft_print_uint.c) \
 			  $(addprefix $(PRINTF_UTILS_PATH)/print_args/flags_handler/, minus_zero_flag_handler.c) \
-			   
-
 
 OBJS_PRINTF = $(SRCS_PRINTF:.c=.o)
 INCLUDES_PRINTF_GNL = ./includes

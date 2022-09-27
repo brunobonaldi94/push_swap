@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 21:16:24 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/22 21:16:39 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/26 23:24:55 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void swap(int *a, int *b)
 {
-	int swap;
+	int	swap;
 
 	swap = *a;
 	*a = *b;

@@ -28,9 +28,9 @@ SRCS =	$(MANDATORY_PATH)/push_swap.c \
 		$(addprefix $(MANDATORY_PATH)/$(PARSE_ARGS)/, parse_args.c) \
 		$(addprefix $(MANDATORY_PATH)/$(OPERATIONS_PATH)/, operations_push.c operations_swap.c operations_rotate_reverse.c operations_rotate.c call_operations.c) \
 		$(addprefix $(MANDATORY_PATH)/$(OPERATIONS_LIST_PATH)/, operations_list.c) \
-		$(addprefix $(MANDATORY_PATH)/$(SORTING_ALGORITHM_PATH)/, sort.c bubble_sort.c insertion_sort.c) \
-		$(addprefix $(MANDATORY_PATH)/$(SORT_SMALL_PATH)/, sort_small.c sort_small_utils.c) \
-		$(addprefix $(MANDATORY_PATH)/$(SORT_UTILS_PATH)/, find_percentiles.c sort_utils.c median_utils.c quick_sort.c sort_aux.c sort_utils_II.c)
+		$(addprefix $(MANDATORY_PATH)/$(SORTING_ALGORITHM_PATH)/, sort.c bubble_sort.c insertion_sort.c selection_sort.c) \
+		$(addprefix $(MANDATORY_PATH)/$(SORT_SMALL_PATH)/, sort_small.c) \
+		$(addprefix $(MANDATORY_PATH)/$(SORT_UTILS_PATH)/, sort_utils.c median_utils.c quick_sort.c sort_aux.c sort_utils_II.c)
 
 OBJS =	$(SRCS:.c=.o)
 NAME =	push_swap

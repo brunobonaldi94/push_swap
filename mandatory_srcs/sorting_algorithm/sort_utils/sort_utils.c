@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 18:58:36 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/22 21:19:32 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/26 19:40:39 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	ft_put_element_at_top(t_push_swap *push_swap,
 {
 	int		index_element;
 	t_list	**operations;
-
 
 	operations = &push_swap->operations.operations_main;
 	index_element = ft_get_index(stack, element);
@@ -35,7 +34,6 @@ void	ft_put_element_at_top(t_push_swap *push_swap,
 	while (stack->head_stack->element != element)
 		call_single_operation(stack, operations, RR_OP);
 }
-
 
 void	ft_put_index_at_top(t_push_swap *push_swap,
 			t_stack *stack, int index)

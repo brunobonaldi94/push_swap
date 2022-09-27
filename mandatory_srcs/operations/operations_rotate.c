@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 02:57:46 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/18 18:25:13 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/26 21:51:03 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	ft_rotate_stack_rab(t_stack *stack)
 	if (ft_has_two_nodes(stack->head_stack))
 	{
 		ft_swap_stack(stack);
-		return (FALSE);
+		return (TRUE);
 	}
 	ft_rotate_stack(stack);
 	return (TRUE);
