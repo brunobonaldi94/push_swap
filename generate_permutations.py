@@ -1,6 +1,6 @@
 import itertools
 
-permut = list(itertools.permutations([1, 2, 3, 4, 5]))
+permut = list(itertools.permutations([1, 2, 3, 4]))
 for x in permut:
 	y = list(x)
 	y = ' '.join(map(str, y))

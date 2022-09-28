@@ -5,6 +5,7 @@ TOTAL_COUNT=0
 COUNT_OKS=0
 OPERATIONS="ra rb rr pa pb sa sb ss rra rrb rrr"
 
+
 split_word() {
 
 text="$1"
@@ -26,7 +27,9 @@ do
   fi
   COUNT=$(./push_swap $(split_word "$line" " ") | grep -E $(echo "$OPERATIONS" | tr " " "|")  | wc -l)
   ((TOTAL_COUNT=TOTAL_COUNT + COUNT))
-  echo "$line" - "moves:" $COUNT
+  printf "%s\n\nmoves:%s" "$line"
+  printf "\x1b[31m"%s"\x1b[0m\n" "$COUNT"
+
   if [ $COUNT -gt 11 ]; then
 	echo "$line" > 5_more
   fi

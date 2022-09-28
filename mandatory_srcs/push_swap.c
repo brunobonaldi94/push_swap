@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 02:16:57 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/26 21:08:03 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/27 22:08:40 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	load_argc_argv(t_push_swap *push_swap, int argc, char *argv[])
 {
 	push_swap->argc = argc;
 	push_swap->argv = argv;
+	push_swap->chunks = NULL;
 }
 
 int	ft_initialize_push_swap(t_push_swap *push_swap, int argc, char *argv[])

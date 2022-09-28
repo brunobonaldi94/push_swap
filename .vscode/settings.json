@@ -19,6 +19,7 @@
 		"string": "c",
 		"chrono": "c",
 		"variant": "c",
-		"semaphore": "c"
+		"semaphore": "c",
+		"push_swap.h": "c"
 	}
 }

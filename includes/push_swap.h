@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 02:17:58 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/26 23:39:47 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/27 23:44:59 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,19 +82,25 @@ typedef struct s_double_list
 
 typedef struct s_chunks
 {
-	int	id;
-	int	qty_elements;
-	int	min;
-	int	*median;
-	int	max;
+	int		qty_elements;
+	int		min;
+	double	*median;
+	int		max;
 }	t_chunks;
+
+typedef struct s_inner_chunks
+{
+	int		*qty_elements;
+	double	*median;
+}	t_inner_chunks;
 
 typedef struct s_stack
 {
 	int				size;
 	int				min;
 	int				max;
-	double			median;
+	t_inner_chunks	inner_chunks;
+	int				count_of_chunks;
 	char			*str_id;
 	t_double_list	*head_stack;
 }	t_stack;
@@ -114,9 +120,6 @@ typedef struct s_push_swap
 	t_stack				stack_aux;
 	t_stack				stack_aux2;
 	t_operations		operations;
-	int					global_min;
-	int					global_max;
-	double				first_quarter;	
 	double				median;
 	int					is_valid;
 	int					is_sorted;
@@ -178,7 +181,7 @@ void			call_double_operation(t_stack *stack_first,
 					char *operation_start);
 //sorting 
 void			ft_sort(t_push_swap *push_swap);
-void			ft_sort_small(t_push_swap *push_swap, char *a_or_b);
+void			ft_sort_small(t_push_swap *push_swap);
 void			ft_bubble_sort(t_stack *stack_a, t_stack *stack_b,
 					t_list **operations);
 void			insertion_sort(t_stack *stack_a,
@@ -203,7 +206,6 @@ void			ft_fill_aux_list(t_stack *stack_aux,
 					t_double_list *last_a);
 void			ft_less_operations_for_next_below_median(t_push_swap *push_swap,
 					t_stack *stack_first, t_stack *stack_second, double median);
-void			ft_calculate_median_and_first_quarter(t_push_swap *push_swap);
 double			ft_find_percentile(t_push_swap *push_swap, t_stack *stack,
 					int percentile);
 int				ft_is_sorted_up_to_index(t_double_list *head_stack,
@@ -213,4 +215,13 @@ void			ft_sort_aux_list_chunks(t_push_swap *push_swap, t_stack *stack,
 					int elements_count);
 void			ft_selection_sort_chunks_desc(t_push_swap *push_swap,
 					t_stack *stack_b, t_stack *stack_a, int elements_count);
+void			ft_selection_sort_chunks_asc(t_push_swap *push_swap,
+					t_stack *stack_a, int elements_count);
+void			ft_small_sort(t_stack *stack, t_list **operations);
+void			ft_sort_three_desc(t_stack *stack, t_list **operations);
+void			ft_sort_small_chunks(t_push_swap *push_swap, t_stack *stack_first,
+					t_stack *stack_second);
+void			ft_sort_big(t_push_swap *push_swap);
+double			ft_find_percentile_chunck(t_push_swap *push_swap, t_stack *stack,
+					int custom_size, double percentile_fraction);
 #endif //PUSH_SWAP_H

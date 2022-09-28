@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 21:01:31 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/27 00:05:47 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/27 22:53:53 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,22 +91,16 @@ void	ft_apply_steps(t_push_swap *push, t_list *list)
 }
 
 
-void	ft_sort_big(t_push_swap *push_swap)
-{
-	ft_printf("sort_big", push_swap->argv[0]);
-	return ;
-}
-
 void	ft_sort(t_push_swap *push_swap)
 {
 	//ft_print_all_stack(push_swap);
 	//ft_fill_aux_list(&push_swap->stack_aux2, ft_find_last(push_swap->stack_a.head_stack));
 	//ft_print_stack(&push_swap->stack_aux2);
-	ft_calculate_median_and_first_quarter(push_swap);
+	push_swap->median = ft_find_median(push_swap, &push_swap->stack_a, TRUE);
 	if (push_swap->is_sorted == TRUE)
 		return ;
-	if (push_swap->stack_a.size <= 1000)
-		ft_sort_small(push_swap, STACK_A);
+	if (push_swap->stack_a.size <= 100)
+		ft_sort_small(push_swap);
 	else
 		ft_sort_big(push_swap);
 	ft_print_operations(push_swap->operations.operations_main);
@@ -115,7 +109,7 @@ void	ft_sort(t_push_swap *push_swap)
 	//
 	ft_print_all_stack(push_swap);
 	//debug
-	//ft_print_stack(&push_swap->stack_aux2);
+	//ft_print_stack(&push_swap->stack_aux2);make
 	//
 	ft_clear_all_stack(push_swap);
 	ft_clear_operations(push_swap);
