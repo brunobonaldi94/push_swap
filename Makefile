@@ -34,7 +34,7 @@ SRCS =	$(MANDATORY_PATH)/push_swap.c \
 		$(addprefix $(MANDATORY_PATH)/$(SORT_SMALL_PATH)/, sort_small.c) \
 		$(addprefix $(MANDATORY_PATH)/$(SORT_BIG_PATH)/, sort_big.c) \
 		$(addprefix $(MANDATORY_PATH)/$(SORT_UTILS_PATH)/, sort_utils.c median_utils.c quick_sort.c sort_aux.c sort_utils_II.c) \
-		$(addprefix $(MANDATORY_PATH)/$(SORT_CHUNKS_PATH)/, sort_chunks.c) \
+		$(addprefix $(MANDATORY_PATH)/$(SORT_CHUNKS_PATH)/, sort_chunks.c sort_big_chunks.c) \
 
 
 OBJS =	$(SRCS:.c=.o)

@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 02:17:58 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/27 23:44:59 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/28 21:35:17 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ typedef struct s_push_swap
 	int					is_sorted;
 	int					argc;
 	int					count_of_chunks;
+	int					size;
 	t_chunks			*chunks;
 	char				**argv;
 }	t_push_swap;
@@ -189,11 +190,12 @@ void			insertion_sort(t_stack *stack_a,
 void			ft_sort_aux_list(t_push_swap *push_swap,
 					t_stack *stack, int fill_index);
 int				ft_get_index(t_stack *stack, int element);
+int				ft_get_ordered_index(t_stack *stack, int element);
 void			ft_sort_three(t_stack *stack, t_list **operations);
 void			ft_find_min_max(t_stack *stack);
 int				ft_is_sorted(t_double_list *head_stack, int order);
 void			ft_put_index_at_top(t_push_swap *push_swap,
-					t_stack *stack, int index);
+					t_stack *stack, int index_ordered);
 void			ft_put_element_at_top(t_push_swap *push_swap,
 					t_stack *stack, int element);
 double			ft_find_median(t_push_swap *push_swap, t_stack *stack,
@@ -224,4 +226,10 @@ void			ft_sort_small_chunks(t_push_swap *push_swap, t_stack *stack_first,
 void			ft_sort_big(t_push_swap *push_swap);
 double			ft_find_percentile_chunck(t_push_swap *push_swap, t_stack *stack,
 					int custom_size, double percentile_fraction);
+void			ft_less_operations_for_below_index(t_push_swap *push_swap,
+					t_stack *stack_first, t_stack *stack_second, int index);
+void			ft_selection_sort_chunks_index_desc(t_push_swap *push_swap,
+					int count_chunks);
+void			ft_sort_big_chunks(t_push_swap *push_swap, t_stack *stack_first,
+					t_stack *stack_second);
 #endif //PUSH_SWAP_H

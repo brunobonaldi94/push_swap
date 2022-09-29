@@ -20,6 +20,7 @@
 		"chrono": "c",
 		"variant": "c",
 		"semaphore": "c",
-		"push_swap.h": "c"
+		"push_swap.h": "c",
+		"stdlib.h": "c"
 	}
 }

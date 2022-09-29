@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 19:27:48 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/27 23:58:12 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/28 23:07:05 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,23 @@ void	ft_selection_sort_chunks_asc(t_push_swap *push_swap,
 	{
 		ft_put_element_at_top(push_swap, stack_a, head->element);
 		head = head->next;
+	}
+}
+
+void	ft_selection_sort_chunks_index_desc(t_push_swap *push_swap,
+			int count_chunks)
+{
+	t_list			**operations;
+
+	operations = &push_swap->operations.operations_main;
+	while (count_chunks)
+	{
+		if (ft_stack_is_empty(&push_swap->stack_b))
+			return ;
+		ft_put_element_at_top(push_swap, 
+			&push_swap->stack_b, push_swap->stack_b.max);
+		call_double_operation(&push_swap->stack_b,
+			&push_swap->stack_a, operations, P_OP);
+		count_chunks--;
 	}
 }
