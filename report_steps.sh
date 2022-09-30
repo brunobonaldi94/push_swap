@@ -3,7 +3,7 @@
 FILE_NAME_STEPS="steps"
 ALL_STEPS="sa,sb,ss,pa,pb,ra,rb,rr,rra,rrb,rrr"
 TOTAL_MOVES=$(cat "$FILE_NAME_STEPS" | wc -l)
-QTY=1000
+QTY=500
 BIN="push_swap"
 
 create_random_numbers() {

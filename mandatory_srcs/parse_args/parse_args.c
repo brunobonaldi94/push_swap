@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 20:27:34 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/16 21:11:07 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/29 22:17:17 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,7 @@ int	split_args(t_push_swap *push_swap, int index_argv)
 	while (split_argv[split_index])
 	{
 		argv_to_int = ft_atoi(split_argv[split_index]);
-  		if (ft_compare_atoi_failed(argv_to_int, split_argv[split_index]) 
-			|| has_atoi_failed(argv_to_int, split_argv[split_index]))
+  		if (ft_compare_atoi_failed(argv_to_int, split_argv[split_index]))
 		 	return (FALSE);
 		new = ft_create_node(argv_to_int);
 		ft_push_stack(&push_swap->args_list, new);

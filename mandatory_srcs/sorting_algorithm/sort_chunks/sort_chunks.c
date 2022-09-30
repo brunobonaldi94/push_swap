@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 18:43:35 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/28 23:07:39 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/29 23:31:50 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	ft_count_elements_between(t_stack *stack, double low, double high)
 
 
 void	ft_send_half_to_b(t_push_swap *push_swap, t_stack *stack_first,
-			t_stack *stack_second)
+			t_stack *stack_second, int is_first_half)
 {
 	int		b_size_adder;
 	int		starting_size;
@@ -66,6 +66,9 @@ void	ft_send_half_to_b(t_push_swap *push_swap, t_stack *stack_first,
 	{
 		ft_less_operations_for_below_index(push_swap, stack_first,
 			stack_second, half_index);
+		if (is_first_half && stack_second->head_stack->index < half_index / 2)
+			call_single_operation(stack_second, 
+				&push_swap->operations.operations_main, R_OP);
 	}
 }
 
@@ -101,7 +104,7 @@ void	ft_sort_chunks(t_push_swap *push_swap)
 	int	qty_elements;
 	int size_op;
 
-	count_of_chunks = push_swap->count_of_chunks;
+	count_of_chunks = push_swap->count_of_chunks - 1;
 	while (count_of_chunks)
 	{		
 		qty_elements = push_swap->chunks[count_of_chunks].qty_elements;
@@ -132,7 +135,7 @@ void	ft_send_chunks_to_b(t_push_swap *push_swap, t_stack *stack_first,
 		push_swap->count_of_chunks);
 	while (index < push_swap->count_of_chunks)
 	{
-		ft_send_half_to_b(push_swap, stack_first, stack_second);
+		ft_send_half_to_b(push_swap, stack_first, stack_second, index == 0);
 		push_swap->chunks[index].qty_elements = stack_second->size
 			- starting_size;
 		starting_size = stack_second->size;

@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 02:17:58 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/28 21:35:17 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/29 22:01:11 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,6 +227,8 @@ void			ft_sort_big(t_push_swap *push_swap);
 double			ft_find_percentile_chunck(t_push_swap *push_swap, t_stack *stack,
 					int custom_size, double percentile_fraction);
 void			ft_less_operations_for_below_index(t_push_swap *push_swap,
+					t_stack *stack_first, t_stack *stack_second, int index);
+void			ft_less_operations_for_above_index(t_push_swap *push_swap,
 					t_stack *stack_first, t_stack *stack_second, int index);
 void			ft_selection_sort_chunks_index_desc(t_push_swap *push_swap,
 					int count_chunks);

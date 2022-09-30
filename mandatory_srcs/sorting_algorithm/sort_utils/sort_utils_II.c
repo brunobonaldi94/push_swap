@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 18:58:36 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/28 22:43:06 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/29 23:19:50 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,11 +137,6 @@ void	ft_find_less_from_rotations_below_index(t_push_swap *push_swap,
 		index_desc++;
 		last = last->prev;
 	}
-	if (index_asc == 0)
-	{
-		call_double_operation(stack_first, stack_second, operations, P_OP);
-		return ;
-	}
 	if (index_asc <= index_desc)
 		ft_save_rotations(push_swap, stack_first, index_asc, ASC);
 	else
@@ -179,5 +174,77 @@ void	ft_less_operations_for_below_index(t_push_swap *push_swap,
 		return ;
 	}
 	ft_find_less_from_rotations_below_index(push_swap, stack_first,
+		stack_second, index);
+}
+
+
+void	ft_find_less_from_rotations_above_index(t_push_swap *push_swap,
+	t_stack *stack_first, t_stack *stack_second, int index)
+{
+	t_double_list	*head;
+	t_double_list	*last;
+	t_list			**operations;
+	int				index_asc;
+	int				index_desc;
+
+	index_desc = 0;
+	index_asc = 0;
+	operations = &push_swap->operations.operations_main;
+	head = stack_second->head_stack;
+	while (head)
+	{
+		if (head->index > index)
+			break;
+		index_asc++;
+		head = head->next;
+	}
+	last = ft_find_last(stack_second->head_stack);
+	if (stack_second->head_stack->index <= index)
+		index_desc++;
+	while (last)
+	{
+		if (last->index > index)
+			break ;
+		index_desc++;
+		last = last->prev;
+	}
+	if (index_asc <= index_desc)
+		ft_save_rotations(push_swap, stack_second, index_asc, ASC);
+	else
+		ft_save_rotations(push_swap, stack_second, index_desc, DESC);
+	call_double_operation(stack_second, stack_first, operations, P_OP);
+}
+
+
+
+void	ft_less_operations_for_above_index(t_push_swap *push_swap,
+		t_stack *stack_first, t_stack *stack_second, int index)
+{
+	t_double_list	*head;
+	t_double_list	*last;
+	t_list			**operations;
+
+	operations = &push_swap->operations.operations_main;
+	head = stack_second->head_stack;
+	if (head->index > index)
+	{
+		call_double_operation(stack_second, stack_first, operations, P_OP);
+		return ;
+	}
+	last = ft_find_last(head);
+	if (last->index > index)
+	{
+		call_single_operation(stack_second, operations, RR_OP);
+		call_double_operation(stack_second, stack_first, operations, P_OP);
+		return ;
+	}
+	if (head->next && head->index < head->next->index
+		&& head->next->index > index)
+	{
+		call_single_operation(stack_second, operations, S_OP);
+		call_double_operation(stack_second, stack_first, operations, P_OP);
+		return ;
+	}
+	ft_find_less_from_rotations_above_index(push_swap, stack_first,
 		stack_second, index);
 }

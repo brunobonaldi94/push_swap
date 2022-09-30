@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 21:39:21 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/26 21:50:44 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/09/29 21:40:48 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	call_double_operation(t_stack *stack_first, t_stack *stack_second,
 	char	*new_operation;
 	int		operation_result;
 
+	if ((ft_check_operation(operation_start, RR_OP)))
+		ft_printf("oi");
 	if (ft_check_operation(operation_start, P_OP))
 		operation_result = ft_pop_push_stack_pab(stack_first, stack_second);
 	else if (ft_check_operation(operation_start, R_OP))
