@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/18 17:49:17 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/18 20:06:56 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/10/04 19:58:15 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 void	ft_initialize_operations(t_push_swap *push_swap)
 {
 	push_swap->operations.operations_main = NULL;
-	push_swap->operations.operations_secondary = NULL;
-	push_swap->operations.operations_tertiary = NULL;
 }
 
 void	ft_addback_operation(t_list **operations,
@@ -43,6 +41,4 @@ void	ft_print_operations(t_list *operations)
 void	ft_clear_operations(t_push_swap *push_swap)
 {
 	ft_lstclear(&push_swap->operations.operations_main, free);
-	ft_lstclear(&push_swap->operations.operations_secondary, free);
-	ft_lstclear(&push_swap->operations.operations_tertiary, free);
 }

@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 03:35:14 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/27 18:47:39 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/10/04 19:50:17 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,4 @@ void	ft_sort_small(t_push_swap *push_swap)
 		ft_sort_three(stack_first, &push_swap->operations.operations_main);
 	else if (push_swap->stack_a.size == 4)
 		ft_sort_four(push_swap, stack_first, stack_second);
-	else
-		ft_sort_small_chunks(push_swap, stack_first, stack_second);
 }

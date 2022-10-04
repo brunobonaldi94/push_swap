@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 21:16:24 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/26 23:24:55 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/10/04 20:18:45 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ t_double_list *partition_first(t_double_list *head, t_double_list *last)
 void	ft_quick_sort_recursive(t_double_list *head, t_double_list *last)
 {
 	t_double_list	*partition_node;
+
 	if (last != NULL && head != last && head != last->next)
 	{
 		partition_node = partition_first(head, last);
@@ -58,3 +59,4 @@ void	ft_quick_sort_recursive(t_double_list *head, t_double_list *last)
 		ft_quick_sort_recursive(partition_node->next, last);
 	}
 }
+

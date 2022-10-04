@@ -4,15 +4,14 @@ PUSH_SWAP_CONSTANT_LOWERCASE = $(echo $(PUSH_SWAP_CONSTANT) | tr A-Z a-z)
 MAKE_C					=	make --no-print-directory
 MANDATORY_PATH			=	./mandatory_srcs
 PARSE_ARGS				=	./parse_args
-LINKED_LIST_PATH		=	linked_list
-STACK_PATH				=	$(LINKED_LIST_PATH)/stack
+STACK_PATH				=	./stack
 OPERATIONS_PATH			=	operations
 OPERATIONS_LIST_PATH	=	$(OPERATIONS_PATH)/operations_list
 SORTING_ALGORITHM_PATH	=	sorting_algorithm
 SORT_SMALL_PATH			=	$(SORTING_ALGORITHM_PATH)/sort_small
 SORT_BIG_PATH			=	$(SORTING_ALGORITHM_PATH)/sort_big
 SORT_UTILS_PATH			= 	$(SORTING_ALGORITHM_PATH)/sort_utils
-SORT_CHUNKS_PATH		= 	$(SORTING_ALGORITHM_PATH)/sort_chunks
+DEBUG_PATH				=	./debug
 define COMPILE_DONE
 
   _____  _    _  _____ _    _    _______          __     _____             _____   ____  _   _ ______ 
@@ -30,12 +29,9 @@ SRCS =	$(MANDATORY_PATH)/push_swap.c \
 		$(addprefix $(MANDATORY_PATH)/$(PARSE_ARGS)/, parse_args.c) \
 		$(addprefix $(MANDATORY_PATH)/$(OPERATIONS_PATH)/, operations_push.c operations_swap.c operations_rotate_reverse.c operations_rotate.c call_operations.c) \
 		$(addprefix $(MANDATORY_PATH)/$(OPERATIONS_LIST_PATH)/, operations_list.c) \
-		$(addprefix $(MANDATORY_PATH)/$(SORTING_ALGORITHM_PATH)/, sort.c bubble_sort.c insertion_sort.c selection_sort.c) \
-		$(addprefix $(MANDATORY_PATH)/$(SORT_SMALL_PATH)/, sort_small.c) \
-		$(addprefix $(MANDATORY_PATH)/$(SORT_BIG_PATH)/, sort_big.c) \
-		$(addprefix $(MANDATORY_PATH)/$(SORT_UTILS_PATH)/, sort_utils.c median_utils.c quick_sort.c sort_aux.c sort_utils_II.c) \
-		$(addprefix $(MANDATORY_PATH)/$(SORT_CHUNKS_PATH)/, sort_chunks.c sort_big_chunks.c) \
-
+		$(addprefix $(MANDATORY_PATH)/$(SORTING_ALGORITHM_PATH)/, sort.c sort_small.c sort_big.c) \
+		$(addprefix $(MANDATORY_PATH)/$(SORT_UTILS_PATH)/, sort_utils.c quick_sort.c sort_aux.c) \
+		$(addprefix $(MANDATORY_PATH)/$(DEBUG_PATH)/, debug.c)
 
 OBJS =	$(SRCS:.c=.o)
 NAME =	push_swap

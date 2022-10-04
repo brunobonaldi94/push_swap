@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sort_big_chunks.c                                  :+:      :+:    :+:   */
+/*   sort_big.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/28 21:27:49 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/10/04 00:12:45 by bbonaldi         ###   ########.fr       */
+/*   Created: 2022/09/27 18:52:34 by bbonaldi          #+#    #+#             */
+/*   Updated: 2022/10/04 19:54:20 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
 
 void	ft_send_to_b_except_three(t_push_swap *push_swap, t_stack *stack_first,
 			t_stack *stack_second)
@@ -54,7 +53,7 @@ int		ft_find_position(t_stack *stack, int element_index)
 	}
 	if (past_index != INT_MAX)
 		return (pos);
-	return (ft_get_index(stack, stack->max));
+	return (ft_get_index(stack, stack->max) + 1);
 }
 
 t_algo	ft_get_moves(t_stack *stack_a, t_stack *stack_b, int element_index,
@@ -67,7 +66,7 @@ t_algo	ft_get_moves(t_stack *stack_a, t_stack *stack_b, int element_index,
 	if (moves_a > stack_a->size / 2)
 		moves_a = moves_a - stack_a->size;
 	if (current_pos > stack_b->size / 2)
-		current_pos = stack_b->size - current_pos;
+		current_pos = current_pos - stack_b->size;
 	algo.moves_a = moves_a;
 	algo.moves_b = current_pos;
 	return (algo);
@@ -92,40 +91,46 @@ void	ft_save_less_moves(t_algo *algo, t_algo new_algo)
 void	ft_apply_best_move(t_push_swap *push_swap, 
 			t_stack *stack_a, t_stack *stack_b)
 {
-	t_algo	best_algo;
 	t_list	**operations;
 
-	best_algo.moves_a = ft_abs_number(stack_b->algo.moves_a);
-	best_algo.moves_b = ft_abs_number(stack_b->algo.moves_b);
 	operations = &push_swap->operations.operations_main;
-	while (best_algo.moves_a && best_algo.moves_b)
+	while (stack_b->algo.moves_a != 0)
 	{
-		if ((best_algo.moves_a && stack_b->algo.moves_a < 0) 
-			&& (best_algo.moves_b &&stack_b->algo.moves_b < 0))
+		if (stack_b->algo.moves_a < 0 && stack_b->algo.moves_b < 0)
 		{
-			call_double_operation(stack_a, stack_a, operations, RR_OP);
-			best_algo.moves_b--;
+			call_double_operation(stack_a, stack_b, operations, RR_OP);
+			stack_b->algo.moves_a++;
+			stack_b->algo.moves_b++;
 		}
-		if ((best_algo.moves_a && stack_b->algo.moves_a > 0) 
-			&& (best_algo.moves_b &&stack_b->algo.moves_b > 0))
+		else if (stack_b->algo.moves_a > 0 && stack_b->algo.moves_b > 0)
 		{
-			call_double_operation(stack_a, stack_a, operations, R_OP);
-			best_algo.moves_b--;
+			call_double_operation(stack_a, stack_b, operations, R_OP);
+			stack_b->algo.moves_a--;
+			stack_b->algo.moves_b--;
 		}
 		if (stack_b->algo.moves_a < 0)
-			call_single_operation(stack_b, operations, RR_OP);
-		else if (stack_b->algo.moves_a > 0)
-			call_single_operation(stack_b, operations, R_OP);
-		
-		best_algo.moves_a--;
-	}
-	while (best_algo.moves_b)
-	{
-		if (stack_a->algo.moves_a < 0)
+		{
 			call_single_operation(stack_a, operations, RR_OP);
-		else if (stack_a->algo.moves_a > 0)
+			stack_b->algo.moves_a++;
+		}
+		else if (stack_b->algo.moves_a > 0)
+		{
 			call_single_operation(stack_a, operations, R_OP);
-		best_algo.moves_b--;
+			stack_b->algo.moves_a--;
+		}		
+	}
+	while (stack_b->algo.moves_b != 0)
+	{
+		if (stack_b->algo.moves_b < 0)
+		{
+			call_single_operation(stack_b, operations, RR_OP);
+			stack_b->algo.moves_b++;
+		}
+		else
+		{
+			call_single_operation(stack_b, operations, R_OP);
+			stack_b->algo.moves_b--;
+		}
 	}
 	call_double_operation(stack_b, stack_a, operations, P_OP);
 }
@@ -151,14 +156,35 @@ void	ft_sort_smallest_moves(t_push_swap *push_swap,
 	ft_apply_best_move(push_swap, stack_a, stack_b);
 }
 
-void	ft_sort_big_chunks(t_push_swap *push_swap, t_stack *stack_first,
-			t_stack *stack_second)
+void	ft_last_sort_a(t_push_swap *push_swap, t_stack *stack_a)
+{
+	int		min_index;
+	t_list	**operations;
+	char	*op;
+
+	if (ft_is_sorted(stack_a->head_stack, ASC) == TRUE)
+		return ;
+	operations = &push_swap->operations.operations_main;
+ 	min_index = ft_get_index(stack_a, stack_a->min);
+	op = R_OP;
+	if (min_index > stack_a->size / 2)
+		op = RR_OP;
+	while (stack_a->head_stack->element != stack_a->min)
+		call_single_operation(stack_a, operations, op);
+ }
+
+void	ft_sort_big(t_push_swap *push_swap)
 {
 	t_list	**operations;
-	
+	t_stack	*stack_a;
+	t_stack	*stack_b;
+
+	stack_a = &push_swap->stack_a;
+	stack_b = &push_swap->stack_b;
 	operations = &push_swap->operations.operations_main;
-	ft_send_to_b_except_three(push_swap, stack_first, stack_second);
-	ft_small_sort(stack_first, operations);
-	while (ft_stack_is_empty(stack_second) == FALSE)
-		ft_sort_smallest_moves(push_swap, stack_first, stack_second);
+	ft_send_to_b_except_three(push_swap, stack_a, stack_b);
+	ft_small_sort(stack_a, operations);
+	while (ft_stack_is_empty(stack_b) == FALSE)
+		ft_sort_smallest_moves(push_swap, stack_a, stack_b);
+	ft_last_sort_a(push_swap, stack_a);
 }

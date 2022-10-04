@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 02:17:58 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/10/03 23:15:29 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/10/04 20:07:13 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,20 +55,9 @@
 # define R_OP "r"
 # define RR_OP "rr"
 
-# define TO_B 1
-# define TO_A 0
-
-# define PERCENTILE_CONSTANT 0.25
-# define FIRST_QUARTER 1
-# define MEDIAN 2
-# define THIRD_QUARTER 3
-
 # define ASC 0
 # define DESC 1
-# define SWAP 2
 
-# define SECONDARY_OP 2
-# define TERTIARY_OP 3 
 typedef struct s_double_list
 {
 	int						element;
@@ -76,20 +65,6 @@ typedef struct s_double_list
 	struct s_double_list	*prev;
 	struct s_double_list	*next;
 }	t_double_list;
-
-typedef struct s_chunks
-{
-	int		qty_elements;
-	int		min;
-	double	*median;
-	int		max;
-}	t_chunks;
-
-typedef struct s_inner_chunks
-{
-	int		*qty_elements;
-	double	*median;
-}	t_inner_chunks;
 
 typedef struct s_algo
 {
@@ -102,7 +77,6 @@ typedef struct s_stack
 	int				size;
 	int				min;
 	int				max;
-	int				count_of_chunks;
 	t_algo			algo;
 	char			*str_id;
 	t_double_list	*head_stack;
@@ -111,8 +85,6 @@ typedef struct s_stack
 typedef struct s_operations
 {
 	t_list	*operations_main;
-	t_list	*operations_secondary;
-	t_list	*operations_tertiary;
 }	t_operations;
 
 typedef struct s_push_swap
@@ -121,15 +93,12 @@ typedef struct s_push_swap
 	t_stack				stack_b;
 	t_stack				args_list;
 	t_stack				stack_aux;
-	t_stack				stack_aux2;
 	t_operations		operations;
 	double				median;
 	int					is_valid;
 	int					is_sorted;
 	int					argc;
-	int					count_of_chunks;
 	int					size;
-	t_chunks			*chunks;
 	char				**argv;
 }	t_push_swap;
 
@@ -137,9 +106,8 @@ typedef struct s_push_swap
 int				ft_is_single_node(t_double_list *head);
 int				ft_has_two_nodes(t_double_list *head);
 int				ft_head_is_null(t_double_list *head);
-int				ft_head_is_null(t_double_list *head);
 t_double_list	*ft_find_last(t_double_list *head);
-t_double_list	*ft_find_up_to_index(t_double_list *head, int max_index);
+void			ft_print_stack(t_stack *stack);
 void			ft_print_all_stack(t_push_swap *push_swap);
 void			ft_clear_stack(t_stack *stack);
 void			ft_clear_all_stack(t_push_swap *push_swap);
@@ -160,7 +128,6 @@ void			ft_pop_stack_free(t_stack *stack);
 t_double_list	*ft_pop_stack_move_pointer(t_stack *stack);
 int				ft_pop_push_stack_pab(t_stack *stack_first,
 					t_stack *stack_second);
-void			ft_print_stack(t_stack *stack);
 // operations swap
 void			ft_swap_stack(t_stack *stack);
 int				ft_swap_stack_sab(t_stack *stack);
@@ -186,55 +153,19 @@ void			call_double_operation(t_stack *stack_first,
 //sorting 
 void			ft_sort(t_push_swap *push_swap);
 void			ft_sort_small(t_push_swap *push_swap);
-void			ft_bubble_sort(t_stack *stack_a, t_stack *stack_b,
-					t_list **operations);
-void			insertion_sort(t_stack *stack_a,
-					t_stack *stack_b, t_list **operations);
 void			ft_sort_aux_list(t_push_swap *push_swap,
 					t_stack *stack, int fill_index);
 int				ft_get_index(t_stack *stack, int element);
-int				ft_get_ordered_index(t_stack *stack, int element);
 void			ft_sort_three(t_stack *stack, t_list **operations);
 void			ft_find_min_max(t_stack *stack);
 int				ft_is_sorted(t_double_list *head_stack, int order);
-void			ft_put_index_at_top(t_push_swap *push_swap,
-					t_stack *stack, int index_ordered);
 void			ft_put_element_at_top(t_push_swap *push_swap,
 					t_stack *stack, int element);
-double			ft_find_median(t_push_swap *push_swap, t_stack *stack,
-					int fill_index);
 void			ft_quick_sort_recursive(t_double_list *head,
 					t_double_list *last);
-void			ft_sort_aux_list(t_push_swap *push_swap,
-					t_stack *stack, int fill_index);
 void			ft_fill_aux_list(t_stack *stack_aux,
 					t_double_list *last_a);
-void			ft_less_operations_for_next_below_median(t_push_swap *push_swap,
-					t_stack *stack_first, t_stack *stack_second, double median);
-double			ft_find_percentile(t_push_swap *push_swap, t_stack *stack,
-					int percentile);
-int				ft_is_sorted_up_to_index(t_double_list *head_stack,
-					int index, int order);
-void			ft_clear_chunks(t_push_swap *push_swap);
-void			ft_sort_aux_list_chunks(t_push_swap *push_swap, t_stack *stack,
-					int elements_count);
-void			ft_selection_sort_chunks_desc(t_push_swap *push_swap,
-					t_stack *stack_b, t_stack *stack_a, int elements_count);
-void			ft_selection_sort_chunks_asc(t_push_swap *push_swap,
-					t_stack *stack_a, int elements_count);
 void			ft_small_sort(t_stack *stack, t_list **operations);
 void			ft_sort_three_desc(t_stack *stack, t_list **operations);
-void			ft_sort_small_chunks(t_push_swap *push_swap, t_stack *stack_first,
-					t_stack *stack_second);
 void			ft_sort_big(t_push_swap *push_swap);
-double			ft_find_percentile_chunck(t_push_swap *push_swap, t_stack *stack,
-					int custom_size, double percentile_fraction);
-void			ft_less_operations_for_below_index(t_push_swap *push_swap,
-					t_stack *stack_first, t_stack *stack_second, int index);
-void			ft_less_operations_for_above_index(t_push_swap *push_swap,
-					t_stack *stack_first, t_stack *stack_second, int index);
-void			ft_selection_sort_chunks_index_desc(t_push_swap *push_swap,
-					int count_chunks);
-void			ft_sort_big_chunks(t_push_swap *push_swap, t_stack *stack_first,
-					t_stack *stack_second);
 #endif //PUSH_SWAP_H

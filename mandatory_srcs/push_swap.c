@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 02:16:57 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/27 22:08:40 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/10/04 19:56:51 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	load_argc_argv(t_push_swap *push_swap, int argc, char *argv[])
 {
 	push_swap->argc = argc;
 	push_swap->argv = argv;
-	push_swap->chunks = NULL;
 }
 
 int	ft_initialize_push_swap(t_push_swap *push_swap, int argc, char *argv[])
@@ -26,7 +25,6 @@ int	ft_initialize_push_swap(t_push_swap *push_swap, int argc, char *argv[])
 	ft_initialize_stack(&push_swap->stack_b, STACK_B);
 	ft_initialize_stack(&push_swap->args_list, STACK_ARGS);
 	ft_initialize_stack(&push_swap->stack_aux, STACK_AUX);
-	ft_initialize_stack(&push_swap->stack_aux2, "X");
 	ft_initialize_operations(push_swap);
 	return (TRUE);
 }
