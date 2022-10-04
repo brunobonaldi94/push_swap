@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 18:43:35 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/29 23:31:50 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/10/03 23:34:04 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,17 +72,10 @@ void	ft_send_half_to_b(t_push_swap *push_swap, t_stack *stack_first,
 	}
 }
 
-void	ft_clear_inner_chunks(t_stack *stack)
-{
-	free(stack->inner_chunks.median);
-	free(stack->inner_chunks.qty_elements);
-}
 
 void	ft_clear_chunks(t_push_swap *push_swap)
 {
 	free(push_swap->chunks);
-	ft_clear_inner_chunks(&push_swap->stack_a);
-	ft_clear_inner_chunks(&push_swap->stack_b);
 }
 
 int	ft_count_of_chuncks(double size, int min_size)
@@ -147,7 +140,7 @@ void	ft_sort_small_chunks(t_push_swap *push_swap, t_stack *stack_first,
 			t_stack *stack_second)
 {
 	t_list	**operations;
-	
+
 	operations = &push_swap->operations.operations_main;
 	ft_send_chunks_to_b(push_swap, stack_first, stack_second);
 	if (stack_first->size <= 3 && stack_second->size <= 3)

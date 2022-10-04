@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 02:17:58 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/29 22:01:11 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/10/03 23:15:29 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,6 @@
 # define TO_B 1
 # define TO_A 0
 
-# define INT_MAX 2147483647
-# define INT_MIN -2147483648
-
 # define PERCENTILE_CONSTANT 0.25
 # define FIRST_QUARTER 1
 # define MEDIAN 2
@@ -94,13 +91,19 @@ typedef struct s_inner_chunks
 	double	*median;
 }	t_inner_chunks;
 
+typedef struct s_algo
+{
+	long int	moves_a;
+	long int	moves_b;
+}	t_algo;
+
 typedef struct s_stack
 {
 	int				size;
 	int				min;
 	int				max;
-	t_inner_chunks	inner_chunks;
 	int				count_of_chunks;
+	t_algo			algo;
 	char			*str_id;
 	t_double_list	*head_stack;
 }	t_stack;

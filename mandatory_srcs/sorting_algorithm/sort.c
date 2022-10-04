@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 21:01:31 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/29 21:38:48 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/10/04 00:13:57 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	ft_sort(t_push_swap *push_swap)
 	push_swap->median = ft_find_median(push_swap, &push_swap->stack_a, TRUE);
 	if (push_swap->is_sorted == TRUE)
 		return ;
-	if (push_swap->stack_a.size <= 100)
+	if (push_swap->stack_a.size <= 4)
 		ft_sort_small(push_swap);
 	else
 		ft_sort_big(push_swap);
@@ -107,9 +107,8 @@ void	ft_sort(t_push_swap *push_swap)
 	//debug
 	//ft_apply_steps(push_swap, push_swap->operations.operations_main);
 	//
-	//ft_print_all_stack(push_swap);
+	ft_print_all_stack(push_swap);
 	//debug
-	//ft_print_stack(&push_swap->stack_aux2);
 	//
 	ft_clear_all_stack(push_swap);
 	ft_clear_operations(push_swap);
