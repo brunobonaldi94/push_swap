@@ -6,13 +6,13 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 21:16:24 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/10/04 20:18:45 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/10/04 20:59:02 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void swap(int *a, int *b)
+void	swap(int *a, int *b)
 {
 	int	swap;
 
@@ -21,7 +21,7 @@ void swap(int *a, int *b)
 	*b = swap;
 }
 
-t_double_list *partition_first(t_double_list *head, t_double_list *last)
+t_double_list	*partition_first(t_double_list *head, t_double_list *last)
 {
 	int				pivot;
 	t_double_list	*right_nodes;
@@ -59,4 +59,3 @@ void	ft_quick_sort_recursive(t_double_list *head, t_double_list *last)
 		ft_quick_sort_recursive(partition_node->next, last);
 	}
 }
-

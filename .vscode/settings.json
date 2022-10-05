@@ -21,6 +21,11 @@
 		"variant": "c",
 		"semaphore": "c",
 		"push_swap.h": "c",
-		"stdlib.h": "c"
+		"stdlib.h": "c",
+		"atomic": "c",
+		"list": "c",
+		"fstream": "c",
+		"numeric": "c",
+		"streambuf": "c"
 	}
 }

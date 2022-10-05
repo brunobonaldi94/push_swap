@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 02:17:58 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/10/04 20:07:13 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/10/04 23:27:44 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,12 @@ typedef struct s_stack
 	int				max;
 	t_algo			algo;
 	char			*str_id;
-	t_double_list	*head_stack;
+	t_double_list	*head;
 }	t_stack;
 
 typedef struct s_operations
 {
-	t_list	*operations_main;
+	t_list	*main;
 }	t_operations;
 
 typedef struct s_push_swap
@@ -94,33 +94,40 @@ typedef struct s_push_swap
 	t_stack				args_list;
 	t_stack				stack_aux;
 	t_operations		operations;
-	double				median;
 	int					is_valid;
 	int					is_sorted;
 	int					argc;
-	int					size;
 	char				**argv;
 }	t_push_swap;
 
-// doubly linked lists utils
+//init
+void			ft_initialize_operations(t_push_swap *push_swap);
+void			t_initialize_stack(t_stack *stack, char *str_id);
+int				ft_initialize_push_swap(t_push_swap *push_swap, int argc,
+					char *argv[]);
+void			ft_load_argc_argv(t_push_swap *push_swap, int argc,
+					char *argv[]);
+//clear
+void			ft_clear_stack(t_stack *stack);
+void			ft_clear_all_stack(t_push_swap *push_swap);
+void			ft_clear_operations(t_push_swap *push_swap);
+int				ft_print_error(void);
+void			ft_clear_push_swap(t_push_swap *push_swap);
+// stack utils
 int				ft_is_single_node(t_double_list *head);
 int				ft_has_two_nodes(t_double_list *head);
 int				ft_head_is_null(t_double_list *head);
 t_double_list	*ft_find_last(t_double_list *head);
 void			ft_print_stack(t_stack *stack);
 void			ft_print_all_stack(t_push_swap *push_swap);
-void			ft_clear_stack(t_stack *stack);
-void			ft_clear_all_stack(t_push_swap *push_swap);
-void			set_min_max(t_stack *stack, int element);
-void			init_min_max(t_stack *stack, int element);
+void			ft_set_min_max(t_stack *stack, int element);
 int				ft_stack_is_empty(t_stack *stack);
 //parse args
-int				parse_args(t_push_swap *push_swap);
+int				ft_parse_args(t_push_swap *push_swap);
 // operations list
 void			ft_initialize_operations(t_push_swap *push_swap);
 void			ft_addback_operation(t_list **operations,
 					char *operation_string);
-void			ft_clear_operations(t_push_swap *push_swap);
 void			ft_print_operations(t_list *operations);
 // operations push
 void			ft_push_stack(t_stack *stack, t_double_list *new);
@@ -139,15 +146,16 @@ int				ft_rotate_stack_rrr(t_stack *stack_a, t_stack *stack_b);
 int				ft_rotate_stack_rab(t_stack *stack);
 int				ft_rotate_stack_rr(t_stack *stack_a, t_stack *stack_b);
 // operations utils
-int				ft_check_operation(char *operation_called, char *operation_check);
+int				ft_check_operation(char *operation_called,
+					char *operation_check);
 //start stack
 void			ft_initialize_stack(t_stack *stack, char *str_id);
 int				ft_populate_stack(t_push_swap *push_swap);
 t_double_list	*ft_create_node(int element);
 // call operations
-void			call_single_operation(t_stack *stack, 
-				t_list **operation, char *operation_start);
-void			call_double_operation(t_stack *stack_first,
+void			ft_call_single_operation(t_stack *stack,
+					t_list **operation, char *operation_start);
+void			ft_call_double_operation(t_stack *stack_first,
 					t_stack *stack_second, t_list **operation,
 					char *operation_start);
 //sorting 
@@ -156,6 +164,7 @@ void			ft_sort_small(t_push_swap *push_swap);
 void			ft_sort_aux_list(t_push_swap *push_swap,
 					t_stack *stack, int fill_index);
 int				ft_get_index(t_stack *stack, int element);
+void			ft_sort_two(t_stack *stack, t_list **operations);
 void			ft_sort_three(t_stack *stack, t_list **operations);
 void			ft_find_min_max(t_stack *stack);
 int				ft_is_sorted(t_double_list *head_stack, int order);
@@ -168,4 +177,11 @@ void			ft_fill_aux_list(t_stack *stack_aux,
 void			ft_small_sort(t_stack *stack, t_list **operations);
 void			ft_sort_three_desc(t_stack *stack, t_list **operations);
 void			ft_sort_big(t_push_swap *push_swap);
+int				ft_find_position(t_stack *stack, int element_index);
+t_algo			ft_get_moves(t_stack *stack_a, t_stack *stack_b,
+					int element_index, int current_pos);
+void			ft_save_less_moves(t_algo *algo, t_algo new_algo);
+void			ft_apply_best_move_b(t_stack *stack_b, t_list **operations);
+void			ft_apply_best_move_a(t_stack *stack_a, t_stack *stack_b,
+					t_list	**operations);
 #endif //PUSH_SWAP_H

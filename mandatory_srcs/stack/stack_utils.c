@@ -1,20 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_abs_number.c                                    :+:      :+:    :+:   */
+/*   stack_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/03 23:12:47 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/10/04 20:52:59 by bbonaldi         ###   ########.fr       */
+/*   Created: 2022/09/01 01:24:15 by bbonaldi          #+#    #+#             */
+/*   Updated: 2022/10/04 23:21:48 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "push_swap.h"
 
-long int	ft_abs_number(int number)
+int	ft_head_is_null(t_double_list *head)
 {
-	if (number < 0)
-		return (number * -1);
-	return (number);
+	return (head == NULL);
+}
+
+int	ft_is_single_node(t_double_list *head)
+{
+	if (head->next == NULL && head->prev == NULL)
+		return (TRUE);
+	return (FALSE);
+}
+
+void	ft_set_min_max(t_stack *stack, int element)
+{
+	if (stack->min > element)
+		stack->min = element;
+	if (stack->max < element)
+		stack->max = element;
 }

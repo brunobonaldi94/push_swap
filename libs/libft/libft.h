@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 03:14:41 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/10/03 23:58:08 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/10/04 21:52:52 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 
 # define INT_MAX 2147483647
 # define INT_MIN -2147483648
+
 typedef struct s_list
 {
 	void			*content;

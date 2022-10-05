@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 01:29:44 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/18 18:26:11 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/10/04 22:59:52 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,20 @@ void	ft_swap_stack(t_stack *stack)
 {
 	t_double_list	*temp;
 
-	temp = stack->head_stack->next;
-	stack->head_stack->next = temp->next;
-	stack->head_stack->prev = temp;
-	temp->next = stack->head_stack;
+	temp = stack->head->next;
+	stack->head->next = temp->next;
+	stack->head->prev = temp;
+	temp->next = stack->head;
 	temp->prev = NULL;
-	if (stack->head_stack->next != NULL)
-		stack->head_stack->next->prev = stack->head_stack;
-	stack->head_stack = temp;
+	if (stack->head->next != NULL)
+		stack->head->next->prev = stack->head;
+	stack->head = temp;
 }
 
 int	ft_swap_stack_sab(t_stack *stack)
 {
-	if (ft_head_is_null(stack->head_stack)
-		|| ft_is_single_node(stack->head_stack))
+	if (ft_head_is_null(stack->head)
+		|| ft_is_single_node(stack->head))
 		return (FALSE);
 	ft_swap_stack(stack);
 	return (TRUE);

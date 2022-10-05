@@ -6,7 +6,8 @@ MANDATORY_PATH			=	./mandatory_srcs
 PARSE_ARGS				=	./parse_args
 STACK_PATH				=	./stack
 OPERATIONS_PATH			=	operations
-OPERATIONS_LIST_PATH	=	$(OPERATIONS_PATH)/operations_list
+INIT_PATH				=	./init_push_swap
+FREE_PATH				=	./free_push_swap
 SORTING_ALGORITHM_PATH	=	sorting_algorithm
 SORT_SMALL_PATH			=	$(SORTING_ALGORITHM_PATH)/sort_small
 SORT_BIG_PATH			=	$(SORTING_ALGORITHM_PATH)/sort_big
@@ -25,12 +26,14 @@ endef
 export COMPILE_DONE
 
 SRCS =	$(MANDATORY_PATH)/push_swap.c \
-		$(addprefix $(MANDATORY_PATH)/$(STACK_PATH)/, doubly_linked_list.c doubly_linked_list_utils.c doubly_linked_list_utils_II.c) \
+		$(addprefix $(MANDATORY_PATH)/$(STACK_PATH)/, stack.c stack_utils.c stack_utils_II.c) \
+		$(addprefix $(MANDATORY_PATH)/$(INIT_PATH)/, init_push_swap.c) \
+		$(addprefix $(MANDATORY_PATH)/$(FREE_PATH)/, free_push_swap.c) \
 		$(addprefix $(MANDATORY_PATH)/$(PARSE_ARGS)/, parse_args.c) \
-		$(addprefix $(MANDATORY_PATH)/$(OPERATIONS_PATH)/, operations_push.c operations_swap.c operations_rotate_reverse.c operations_rotate.c call_operations.c) \
-		$(addprefix $(MANDATORY_PATH)/$(OPERATIONS_LIST_PATH)/, operations_list.c) \
+		$(addprefix $(MANDATORY_PATH)/$(OPERATIONS_PATH)/, operations_push.c operations_swap.c operations_rotate_reverse.c \
+															operations_list.c operations_rotate.c call_operations.c) \
 		$(addprefix $(MANDATORY_PATH)/$(SORTING_ALGORITHM_PATH)/, sort.c sort_small.c sort_big.c) \
-		$(addprefix $(MANDATORY_PATH)/$(SORT_UTILS_PATH)/, sort_utils.c quick_sort.c sort_aux.c) \
+		$(addprefix $(MANDATORY_PATH)/$(SORT_UTILS_PATH)/, sort_utils.c quick_sort.c sort_aux.c sort_big_utils.c sort_small_utils.c) \
 		$(addprefix $(MANDATORY_PATH)/$(DEBUG_PATH)/, debug.c)
 
 OBJS =	$(SRCS:.c=.o)

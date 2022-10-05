@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 02:57:46 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/26 21:50:49 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/10/04 22:59:52 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,20 @@ void	ft_rotate_reverse_stack(t_stack *stack)
 {
 	t_double_list	*last;
 
-	last = ft_find_last(stack->head_stack);
-	stack->head_stack->prev = last;
-	last->next = stack->head_stack;
+	last = ft_find_last(stack->head);
+	stack->head->prev = last;
+	last->next = stack->head;
 	last->prev->next = NULL;
 	last->prev = NULL;
-	stack->head_stack = last;
+	stack->head = last;
 }
 
 int	ft_rotate_stack_rrab(t_stack *stack)
 {
-	if (ft_head_is_null(stack->head_stack)
-		|| ft_is_single_node(stack->head_stack))
+	if (ft_head_is_null(stack->head)
+		|| ft_is_single_node(stack->head))
 		return (FALSE);
-	if (ft_has_two_nodes(stack->head_stack))
+	if (ft_has_two_nodes(stack->head))
 	{
 		ft_swap_stack(stack);
 		return (TRUE);

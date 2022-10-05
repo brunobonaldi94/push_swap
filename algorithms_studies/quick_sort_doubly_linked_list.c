@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quick_sort copy.c                                  :+:      :+:    :+:   */
+/*   quick_sort_doubly_linked_list.c                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 20:43:40 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/09/06 04:14:58 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/10/04 22:59:52 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	ft_quick_sort(t_push_swap *push_swap)
 {
 	t_double_list *last;
 
-	last = ft_find_last(push_swap->stack_a.head_stack);
-	ft_quick_sort_recursive(push_swap->stack_a.head_stack, last);
+	last = ft_find_last(push_swap->stack_a.head);
+	ft_quick_sort_recursive(push_swap->stack_a.head, last);
 	return ;
 }
