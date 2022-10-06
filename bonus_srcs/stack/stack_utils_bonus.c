@@ -1,29 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   stack_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/30 02:16:57 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/10/04 23:19:27 by bbonaldi         ###   ########.fr       */
+/*   Created: 2022/09/01 01:24:15 by bbonaldi          #+#    #+#             */
+/*   Updated: 2022/10/04 23:21:48 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "push_swap_bonus.h"
 
-int	main(int argc, char *argv[])
+int	ft_head_is_null(t_double_list *head)
 {
-	t_push_swap	push_swap;
+	return (head == NULL);
+}
 
-	if (argc <= 1)
-		return (ERROR_CODE);
-	ft_initialize_push_swap(&push_swap, argc, argv);
-	ft_populate_stack(&push_swap);
-	if (push_swap.is_valid == FALSE)
-		return (ft_print_error(&push_swap));
-	ft_sort(&push_swap);
-	ft_print_operations(push_swap.operations.main);
-	ft_clear_push_swap(&push_swap);
-	return (SUCCESS_CODE);
+int	ft_is_single_node(t_double_list *head)
+{
+	if (head->next == NULL && head->prev == NULL)
+		return (TRUE);
+	return (FALSE);
+}
+
+void	ft_set_min_max(t_stack *stack, int element)
+{
+	if (stack->min > element)
+		stack->min = element;
+	if (stack->max < element)
+		stack->max = element;
 }

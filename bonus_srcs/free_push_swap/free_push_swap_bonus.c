@@ -1,20 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_push_swap.c                                   :+:      :+:    :+:   */
+/*   free_push_swap_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 22:51:42 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/10/04 23:20:21 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/10/06 00:46:10 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "push_swap_bonus.h"
 
 void	ft_clear_operations(t_push_swap *push_swap)
 {
 	ft_lstclear(&push_swap->operations.main, free);
+	ft_lstclear(&push_swap->operations.checker, free);
 }
 
 void	ft_clear_stack(t_stack *stack)

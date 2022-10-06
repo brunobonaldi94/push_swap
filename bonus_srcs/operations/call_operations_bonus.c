@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   call_operations.c                                  :+:      :+:    :+:   */
+/*   call_operations_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 21:39:21 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/10/06 02:44:05 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/10/06 00:46:16 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "push_swap_bonus.h"
 
 int	ft_check_operation(char *operation_called, char *operation_check)
 {

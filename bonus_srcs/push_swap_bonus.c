@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "push_swap_bonus.h"
 
 int	main(int argc, char *argv[])
 {
@@ -22,8 +22,7 @@ int	main(int argc, char *argv[])
 	ft_populate_stack(&push_swap);
 	if (push_swap.is_valid == FALSE)
 		return (ft_print_error(&push_swap));
-	ft_sort(&push_swap);
-	ft_print_operations(push_swap.operations.main);
+	ft_checker_bonus(&push_swap);
 	ft_clear_push_swap(&push_swap);
 	return (SUCCESS_CODE);
 }

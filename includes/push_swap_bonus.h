@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   push_swap_bonus.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 02:17:58 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/10/04 23:27:44 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/10/06 00:45:23 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
-# define PUSH_SWAP_H
+#ifndef PUSH_SWAP_BONUS_H
+# define PUSH_SWAP_BONUS_H
 
 # include <unistd.h>
 # include "libft.h"
@@ -59,6 +59,8 @@
 # define DESC 1
 
 # define ERROR "Error\n"
+# define OK "OK"
+# define KO "KO"
 
 typedef struct s_double_list
 {
@@ -87,6 +89,7 @@ typedef struct s_stack
 typedef struct s_operations
 {
 	t_list	*main;
+	t_list	*checker;
 }	t_operations;
 
 typedef struct s_push_swap
@@ -186,4 +189,7 @@ void			ft_save_less_moves(t_algo *algo, t_algo new_algo);
 void			ft_apply_best_move_b(t_stack *stack_b, t_list **operations);
 void			ft_apply_best_move_a(t_stack *stack_a, t_stack *stack_b,
 					t_list	**operations);
-#endif //PUSH_SWAP_H
+//checker
+void			ft_checker_bonus(t_push_swap *push_swap);
+void			ft_print_result(int is_sorted);
+#endif //PUSH_SWAP_BONUS_H

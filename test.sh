@@ -29,8 +29,8 @@ do
   fi
   COUNT=$(./push_swap $(split_word "$line" " ") | grep -E $(echo "$OPERATIONS" | tr " " "|")  | wc -l)
   ((TOTAL_COUNT=TOTAL_COUNT + COUNT))
-  printf "%s\n\nmoves:%s " "$line"
-  printf "\x1b[31m"%s"\x1b[0m\n" "$COUNT"
+  #printf "%s\n\nmoves:%s " "$line"
+  #printf "\x1b[31m"%s"\x1b[0m\n" "$COUNT"
   if (($MAX_COUNT < $COUNT)); then
 	MAX_COUNT=$COUNT
   fi

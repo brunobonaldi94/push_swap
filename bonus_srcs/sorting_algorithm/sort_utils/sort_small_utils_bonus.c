@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   sort_small_utils_bonus.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/30 02:16:57 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/10/04 23:19:27 by bbonaldi         ###   ########.fr       */
+/*   Created: 2022/10/04 21:30:21 by bbonaldi          #+#    #+#             */
+/*   Updated: 2022/10/06 00:46:39 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "push_swap_bonus.h"
 
-int	main(int argc, char *argv[])
+void	ft_small_sort(t_stack *stack, t_list **operations)
 {
-	t_push_swap	push_swap;
-
-	if (argc <= 1)
-		return (ERROR_CODE);
-	ft_initialize_push_swap(&push_swap, argc, argv);
-	ft_populate_stack(&push_swap);
-	if (push_swap.is_valid == FALSE)
-		return (ft_print_error(&push_swap));
-	ft_sort(&push_swap);
-	ft_print_operations(push_swap.operations.main);
-	ft_clear_push_swap(&push_swap);
-	return (SUCCESS_CODE);
+	if (stack->size == 2)
+		ft_sort_two(stack, operations);
+	if (stack->size == 3)
+	{
+		if (stack->str_id[0] == STACK_A[0])
+			ft_sort_three(stack, operations);
+		else
+			ft_sort_three_desc(stack, operations);
+	}
 }
