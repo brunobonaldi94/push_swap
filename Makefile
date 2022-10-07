@@ -54,7 +54,7 @@ SRCS_BONUS =	$(BONUS_PATH)/push_swap_bonus.c \
 				$(addprefix $(BONUS_PATH)/$(SORTING_ALGORITHM_PATH)/, sort_bonus.c sort_small_bonus.c sort_big_bonus.c) \
 				$(addprefix $(BONUS_PATH)/$(SORT_UTILS_PATH)/, sort_utils_bonus.c quick_sort_bonus.c sort_aux_bonus.c sort_big_utils_bonus.c sort_small_utils_bonus.c) \
 				$(addprefix $(BONUS_PATH)/$(DEBUG_PATH)/, debug_bonus.c) \
-				$(addprefix $(BONUS_PATH)/$(CHECKER_PATH)/, checker_bonus.c)
+				$(addprefix $(BONUS_PATH)/$(CHECKER_PATH)/, checker_bonus.c checker_bonus_utils.c)
 
 OBJS_BONUS =	$(SRCS_BONUS:.c=.o)
 NAME_BONUS =	checker

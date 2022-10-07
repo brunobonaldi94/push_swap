@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 02:17:58 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/10/06 00:45:23 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/10/06 23:25:14 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # define ERROR_CODE_FUNCTION -1
 
 # define MAX_OPERATION_LEN 2
+# define OPERATION_LEN 3
 
 # define STACK_A "a"
 # define STACK_B "b"
@@ -192,4 +193,6 @@ void			ft_apply_best_move_a(t_stack *stack_a, t_stack *stack_b,
 //checker
 void			ft_checker_bonus(t_push_swap *push_swap);
 void			ft_print_result(int is_sorted);
+void			ft_apply_operations_and_print(t_push_swap *push_swap);
+int				ft_apply_operations(t_push_swap *push_swap, t_list *list);
 #endif //PUSH_SWAP_BONUS_H

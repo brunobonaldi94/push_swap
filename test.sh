@@ -41,7 +41,8 @@ do
 done < "$input"
 echo '-------------------------------------------------'
 echo -e "KO: ""$COUNT_OKS"\
-"\nAvg: " $(echo "$TOTAL_COUNT" / $COUNT_LOOP | ) \
+"\nAvg: " $(echo "$TOTAL_COUNT" / $COUNT_LOOP | bc) \
 "\nMax: " "$MAX_COUNT"\
-"\nMin: " "$MIN_COUNT"
+"\nMin: " "$MIN_COUNT"\
+"\nTotal: " "$COUNT_LOOP"
 echo '-------------------------------------------------'

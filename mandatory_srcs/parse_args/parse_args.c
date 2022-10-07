@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 20:27:34 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/10/04 23:22:25 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/10/06 00:15:22 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	has_unique_args(t_push_swap *push_swap)
 	return (TRUE);
 }
 
-void	ft_free_args_split(char **split_argv)
+int	ft_free_args_split(char **split_argv)
 {
 	int	split_index;
 
@@ -60,6 +60,7 @@ void	ft_free_args_split(char **split_argv)
 		split_index++;
 	}
 	free(split_argv);
+	return (FALSE);
 }
 
 int	split_args(t_push_swap *push_swap, int index_argv)
@@ -78,10 +79,7 @@ int	split_args(t_push_swap *push_swap, int index_argv)
 		argv_to_int = ft_atoi(split_argv[split_index]);
 		if (ft_compare_atoi_with_itoa_failed(argv_to_int,
 				split_argv[split_index]))
-		{
-			ft_free_args_split(split_argv);
-			return (FALSE);
-		}
+			return (ft_free_args_split(split_argv));
 		new = ft_create_node(argv_to_int);
 		ft_push_stack(&push_swap->args_list, new);
 		free(split_argv[split_index]);

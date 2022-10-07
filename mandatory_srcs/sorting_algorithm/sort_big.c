@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 18:52:34 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/10/04 23:32:59 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/10/06 21:51:13 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void	ft_sort_smallest_moves(t_push_swap *push_swap, t_stack *stack_a,
 	{
 		algo = ft_get_moves(stack_a, stack_b, head->index, moves_b);
 		ft_save_less_moves(&stack_b->algo, algo);
+		if (ft_abs_number(algo.moves_a) + ft_abs_number(algo.moves_b) == 0)
+			break ;
 		moves_b++;
 		head = head->next;
 	}

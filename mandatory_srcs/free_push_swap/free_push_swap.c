@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 22:51:42 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/10/04 23:20:21 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/10/06 22:44:36 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,7 @@ void	ft_clear_all_stack(t_push_swap *push_swap)
 
 int	ft_print_error(t_push_swap *push_swap)
 {
-	ft_printf(RED);
 	write(2, ERROR, ft_strlen(ERROR));
-	ft_printf(RESET);
 	ft_clear_push_swap(push_swap);
 	return (ERROR_CODE);
 }

@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 20:11:06 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/10/06 00:46:07 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/10/06 22:55:57 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_print_result(int is_sorted)
 	if (is_sorted)
 	{
 		ft_printf(GREEN);
-		ft_printf("%s\n", KO);
+		ft_printf("%s\n", OK);
 		ft_printf(RESET);
 	}
 	else
