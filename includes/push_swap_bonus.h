@@ -6,7 +6,7 @@
 /*   By: bbonaldi <bbonaldi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 02:17:58 by bbonaldi          #+#    #+#             */
-/*   Updated: 2022/10/06 23:25:14 by bbonaldi         ###   ########.fr       */
+/*   Updated: 2022/10/10 20:58:33 by bbonaldi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,31 +165,8 @@ void			ft_call_double_operation(t_stack *stack_first,
 					t_stack *stack_second, t_list **operation,
 					char *op);
 //sorting 
-void			ft_sort(t_push_swap *push_swap);
-void			ft_sort_small(t_push_swap *push_swap);
-void			ft_sort_aux_list(t_push_swap *push_swap,
-					t_stack *stack, int fill_index);
-int				ft_get_index(t_stack *stack, int element);
-void			ft_sort_two(t_stack *stack, t_list **operations);
-void			ft_sort_three(t_stack *stack, t_list **operations);
 void			ft_find_min_max(t_stack *stack);
 int				ft_is_sorted(t_double_list *head_stack, int order);
-void			ft_put_element_at_top(t_push_swap *push_swap,
-					t_stack *stack, int element);
-void			ft_quick_sort_recursive(t_double_list *head,
-					t_double_list *last);
-void			ft_fill_aux_list(t_stack *stack_aux,
-					t_double_list *last_a);
-void			ft_small_sort(t_stack *stack, t_list **operations);
-void			ft_sort_three_desc(t_stack *stack, t_list **operations);
-void			ft_sort_big(t_push_swap *push_swap);
-int				ft_find_position(t_stack *stack, int element_index);
-t_algo			ft_get_moves(t_stack *stack_a, t_stack *stack_b,
-					int element_index, int current_pos);
-void			ft_save_less_moves(t_algo *algo, t_algo new_algo);
-void			ft_apply_best_move_b(t_stack *stack_b, t_list **operations);
-void			ft_apply_best_move_a(t_stack *stack_a, t_stack *stack_b,
-					t_list	**operations);
 //checker
 void			ft_checker_bonus(t_push_swap *push_swap);
 void			ft_print_result(int is_sorted);
